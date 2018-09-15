@@ -1,11 +1,10 @@
-﻿/*********************************************************************
+/*********************************************************************
 *
 *   Class:
-*       Program
+*       model_type
 *
 *   Description:
-*       The main class for the application. Contains
-*       the entry point.
+*       Contains the game data
 *
 *********************************************************************/
 
@@ -29,14 +28,11 @@ namespace super_mario_bros {
                              CLASS
 --------------------------------------------------------------------*/
 
-public static class Program {
+public class model_type {
 
 /*--------------------------------------------------------------------
                            ATTRIBUTES
 --------------------------------------------------------------------*/
-public static model_type        model;
-public static view_type         view;
-public static controller_type   controller;
 
 /*--------------------------------------------------------------------
                             METHODS
@@ -45,26 +41,17 @@ public static controller_type   controller;
 /***********************************************************
 *
 *   Method:
-*       Main
+*       model_type
 *
 *   Description:
-*       Entry point for the application.
+*       Constructor.
 *
 ***********************************************************/
 
-[STAThread]
-static void Main()
+public model_type()
 {
-model      = new model_type();
-controller = new controller_type( model );
-view       = new view_type( model );
 
-using ( Game1 game = new Game1( model, controller, view ) )
-    {
-    game.Run();
-    }
-
-} /* Main() */
+} /* model_type() */
 
 
 }

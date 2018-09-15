@@ -1,83 +1,164 @@
-﻿using Microsoft.Xna.Framework;
+﻿/*********************************************************************
+*
+*   Class:
+*       Game1
+*
+*   Description:
+*       The main class for the game. Contains methods to initialize
+*       game, read input, update game logic, and update the view.
+*
+*********************************************************************/
+
+/*--------------------------------------------------------------------
+                            INCLUDES
+--------------------------------------------------------------------*/
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace super_mario_bros
+/*--------------------------------------------------------------------
+                           NAMESPACE
+--------------------------------------------------------------------*/
+
+namespace super_mario_bros {
+
+/*--------------------------------------------------------------------
+                           DELEGATES
+--------------------------------------------------------------------*/
+
+/*--------------------------------------------------------------------
+                             CLASS
+--------------------------------------------------------------------*/
+
+public class Game1 : Game {
+
+/*--------------------------------------------------------------------
+                           ATTRIBUTES
+--------------------------------------------------------------------*/
+
+private GraphicsDeviceManager   graphics;
+private SpriteBatch             spriteBatch;
+
+private model_type      model;
+private controller_type ctlr;
+private view_type       view;
+
+/*--------------------------------------------------------------------
+                            METHODS
+--------------------------------------------------------------------*/
+
+
+/***********************************************************
+*
+*   Method:
+*       Draw
+*
+*   Description:
+*       Draws the game.
+*
+***********************************************************/
+
+protected override void Draw( GameTime gameTime )
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
-    public class Game1 : Game
+GraphicsDevice.Clear( new Color( 111, 168, 252 ) );
+
+view.draw();
+
+base.Draw( gameTime );
+} /* Draw */
+
+/***********************************************************
+*
+*   Method:
+*       Game1
+*
+*   Description:
+*       Constructor.
+*
+***********************************************************/
+
+public Game1( model_type m, controller_type c, view_type v )
+{
+graphics = new GraphicsDeviceManager( this );
+Content.RootDirectory = "Content";
+
+model = m;
+ctlr = c;
+view = v;
+
+} /* Game1 */
+
+
+/***********************************************************
+*
+*   Method:
+*       Initialize
+*
+*   Description:
+*       Initializes items before game starts to run.
+*
+***********************************************************/
+
+protected override void Initialize()
+{
+
+base.Initialize();
+} /* Initialize */
+
+
+/***********************************************************
+*
+*   Method:
+*       LoadContent
+*
+*   Description:
+*       Draws the game.
+*
+***********************************************************/
+
+protected override void LoadContent()
+{
+spriteBatch = new SpriteBatch( GraphicsDevice );
+
+} /* LoadContent */
+
+
+/***********************************************************
+*
+*   Method:
+*       UnloadContent
+*
+*   Description:
+*       Unloads game content.
+*
+***********************************************************/
+
+protected override void UnloadContent()
+{
+} /* UnloadContent */
+
+
+/***********************************************************
+*
+*   Method:
+*       Update
+*
+*   Description:
+*       Updates the game logic.
+*
+***********************************************************/
+
+protected override void Update( GameTime gameTime )
+{
+if( ( GamePad.GetState( PlayerIndex.One ).Buttons.Back == ButtonState.Pressed ) ||
+    ( Keyboard.GetState().IsKeyDown( Keys.Escape ) ) )
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        
-        public Game1()
-        {
-            graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
-        }
-
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
-        protected override void Initialize()
-        {
-            // TODO: Add your initialization logic here
-
-            base.Initialize();
-        }
-
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
-        protected override void LoadContent()
-        {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
-        }
-
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
-        protected override void UnloadContent()
-        {
-            // TODO: Unload any non ContentManager content here
-        }
-
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Update(GameTime gameTime)
-        {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            // TODO: Add your update logic here
-
-            base.Update(gameTime);
-        }
-
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Draw(GameTime gameTime)
-        {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-
-            base.Draw(gameTime);
-        }
+    Exit();
     }
+
+base.Update( gameTime );
+} /* Update */
+
+}
 }
