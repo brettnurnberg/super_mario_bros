@@ -449,8 +449,91 @@ else if( ( ( c.physics.velocity.Y == 0 ) && ( is_block[1] || is_block[2] ) ) ||
     push_left( c );
     }
 /*----------------------------------------------------------
-Check dual collisions TODO - see line question
+Check dual collisions TODO
 ----------------------------------------------------------*/
+else if( is_block[0] || is_block[1] || is_block[2] || is_block[3] )
+    {
+    int   x_block;
+    int   y_block;
+    int   x_char;
+    int   y_char;
+    float slope = c.physics.velocity.Y / c.physics.velocity.X;
+
+    if( c.physics.velocity.Y < 0 )
+        {
+        if( c.physics.velocity.X > 0 )
+            {
+            x_block = x[1] * Blocks.size.Width;
+            y_block = ( y[1] + 1 ) * Blocks.size.Height;
+
+            x_char = (int)c.physics.position.X + c.physics.hit_box.Width;
+            y_char = (int)c.physics.position.Y;
+
+            if( ( y_block - y_char ) < ( slope * ( x_block - x_char ) ) )
+                {
+                push_down( c );
+                }
+            else
+                {
+                push_left( c );
+                }
+            }
+        else
+            {
+            x_block = ( x[0] + 1 ) * Blocks.size.Width;
+            y_block = ( y[1] + 1 ) * Blocks.size.Height;
+
+            x_char = (int)c.physics.position.X;
+            y_char = (int)c.physics.position.Y;
+
+            if( ( y_block - y_char ) < ( slope * ( x_block - x_char ) ) )
+                {
+                push_down( c );
+                }
+            else
+                {
+                push_right( c );
+                }
+            }
+        }
+    else
+        {
+        /*if( c.physics.velocity.X > 0 )
+            {
+            x_block = x[1] * Blocks.size.Width;
+            y_block = y[0] * Blocks.size.Height;
+
+            x_char = (int)c.physics.position.X + c.physics.hit_box.Width;
+            y_char = (int)c.physics.position.Y + c.physics.hit_box.Height;
+
+            if( ( y_block - y_char ) > ( slope * ( x_block - x_char ) ) )
+                {
+                //push_up( c );
+                }
+            else
+                {
+                push_right( c );
+                }
+            }
+        else
+            {
+            x_block = ( x[0] + 1 ) * Blocks.size.Width;
+            y_block = ( y[1] + 1 ) * Blocks.size.Height;
+
+            x_char = (int)c.physics.position.X;
+            y_char = (int)c.physics.position.Y;
+
+            if( ( y_block - y_char ) < ( slope * ( x_block - x_char ) ) )
+                {
+                push_down( c );
+                }
+            else
+                {
+                push_right( c );
+                }
+            }*/
+        }
+    }
 
 /*----------------------------------------------------------
 Check feet on ground
@@ -521,7 +604,6 @@ c.physics.acceleration.X = 0;
 c.physics.velocity.X = 0;
 c.physics.position.X -= subx;
 c.physics.position.X--;
-//set equal to the view_dims most right point in the left block
 //may need to change physics to pixel, subpixel, subsubpixel, and subsubsubpixel mode
 
 } /* push_left() */
