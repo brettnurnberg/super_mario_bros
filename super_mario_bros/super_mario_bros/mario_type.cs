@@ -1,10 +1,12 @@
 /*********************************************************************
 *
 *   Class:
-*       model_type
+*       mario_type
 *
 *   Description:
-*       Contains the game data
+*       Contains data for Mario
+*
+*       Need a way to load all the sprites for the characters
 *
 *********************************************************************/
 
@@ -31,15 +33,13 @@ namespace super_mario_bros {
                              CLASS
 --------------------------------------------------------------------*/
 
-public class model_type {
+public class mario_type : character_type {
 
 /*--------------------------------------------------------------------
                            ATTRIBUTES
 --------------------------------------------------------------------*/
 
-public  level_type  level;
-public  int         life_count;
-public  int         score;
+public  mario_status_enum status;
 
 /*--------------------------------------------------------------------
                             METHODS
@@ -48,23 +48,55 @@ public  int         score;
 /***********************************************************
 *
 *   Method:
-*       model_type
+*       mario_type
 *
 *   Description:
 *       Constructor.
 *
 ***********************************************************/
 
-public model_type()
+public mario_type()
 {
-level = new level_type();
-} /* model_type() */
+physics = new physics_type();
+physics.hit_box.Width = 12;
+physics.hit_box.Height = 16;
+status = mario_status_enum.STILL;
+ground_status = char_status_enum.GROUND;
+} /* mario_type() */
 
-//temp
-public void temp_load( ContentManager c )
+
+/***********************************************************
+*
+*   Method:
+*       draw
+*
+*   Description:
+*       Draws the given character.
+*
+***********************************************************/
+
+public override void draw( SpriteBatch s )
 {
-level.temp_load( c );
-} /* model_type() */
+Vector2 p = new Vector2( physics.position.X * ViewDims.scale.X, physics.position.Y * ViewDims.scale.Y );
+s.Draw( sprite, p , null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, 0 );
+} /* draw() */
+
+
+/***********************************************************
+*
+*   Method:
+*       load_content
+*
+*   Description:
+*       Loads content for the given character.
+*
+***********************************************************/
+
+public override void load_content( ContentManager c )
+{
+sprite = c.Load<Texture2D>( "mario_0" );
+} /* load_content() */
+
 
 }
 }

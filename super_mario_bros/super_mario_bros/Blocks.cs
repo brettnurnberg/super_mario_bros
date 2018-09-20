@@ -1,17 +1,19 @@
-﻿/*********************************************************************
+/*********************************************************************
 *
 *   Class:
-*       Program
+*       Blocks
 *
 *   Description:
-*       The main class for the application. Contains
-*       the entry point.
+*       Static list of all blocks
 *
-*   TODO:
-*       Change physics floats to ints (pixel, subpixel...)
-*       Create integer vector for integer physics
-*       Create hit box implementation - mario can't hit walls or ceilings
-*       add mario status update in controller (for animations)
+*       I don't believe this will work for behavioral blocks
+*       The behavioral blocks will all point to the same object,
+*       causing them to all share behavior
+*
+*       But it MAY work for creating loading all block textures
+*       Would we just want a static list of all block textures, not block types??
+*
+*       Also create static list of character textures - could have list for each character type
 *
 *********************************************************************/
 
@@ -19,6 +21,9 @@
                             INCLUDES
 --------------------------------------------------------------------*/
 
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 
 /*--------------------------------------------------------------------
@@ -35,42 +40,62 @@ namespace super_mario_bros {
                              CLASS
 --------------------------------------------------------------------*/
 
-public static class Program {
+public static class Blocks {
 
 /*--------------------------------------------------------------------
                            ATTRIBUTES
 --------------------------------------------------------------------*/
-public static model_type        model;
-public static view_type         view;
-public static controller_type   controller;
+
+static public block_type[] list;
+static public Rectangle    size;
 
 /*--------------------------------------------------------------------
                             METHODS
 --------------------------------------------------------------------*/
 
+
 /***********************************************************
 *
 *   Method:
-*       Main
+*       Blocks
 *
 *   Description:
-*       Entry point for the application.
+*       Constructor.
 *
 ***********************************************************/
 
-[STAThread]
-static void Main()
+static Blocks()
 {
-model      = new model_type();
-controller = new controller_type( model );
-view       = new view_type( model );
+list = new block_type[(int)block_enum.BLOCK_COUNT];
 
-using ( Game1 game = new Game1( model, controller, view ) )
+list[(int)block_enum.EMPTY]      = null;
+list[(int)block_enum.RED_COBBLE] = new block_red_cobble_type();
+
+size.Width = 16;
+size.Height = 16;
+
+} /* Blocks() */
+
+
+/***********************************************************
+*
+*   Method:
+*       load_content
+*
+*   Description:
+*       Loads all images for all blocks.
+*
+***********************************************************/
+
+static public void load_content( ContentManager c )
+{
+
+for( int i = 1; i < (int)block_enum.BLOCK_COUNT; i++ )
     {
-    game.Run();
+    list[i].load_content( c );
     }
 
-} /* Main() */
+} /* load_content() */
 
 
 }

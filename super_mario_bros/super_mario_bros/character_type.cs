@@ -1,17 +1,10 @@
-﻿/*********************************************************************
+/*********************************************************************
 *
 *   Class:
-*       Program
+*       character_type
 *
 *   Description:
-*       The main class for the application. Contains
-*       the entry point.
-*
-*   TODO:
-*       Change physics floats to ints (pixel, subpixel...)
-*       Create integer vector for integer physics
-*       Create hit box implementation - mario can't hit walls or ceilings
-*       add mario status update in controller (for animations)
+*       Contains data on a single character
 *
 *********************************************************************/
 
@@ -19,6 +12,9 @@
                             INCLUDES
 --------------------------------------------------------------------*/
 
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 
 /*--------------------------------------------------------------------
@@ -35,14 +31,18 @@ namespace super_mario_bros {
                              CLASS
 --------------------------------------------------------------------*/
 
-public static class Program {
+public abstract class character_type {
 
 /*--------------------------------------------------------------------
                            ATTRIBUTES
 --------------------------------------------------------------------*/
-public static model_type        model;
-public static view_type         view;
-public static controller_type   controller;
+
+public  Vector2             position_initial;
+public  Vector2             position;
+public  physics_type        physics;
+public  Texture2D           sprite;
+public  char_dir_enum       direction;
+public  char_status_enum    ground_status;
 
 /*--------------------------------------------------------------------
                             METHODS
@@ -51,26 +51,43 @@ public static controller_type   controller;
 /***********************************************************
 *
 *   Method:
-*       Main
+*       character_type
 *
 *   Description:
-*       Entry point for the application.
+*       Constructor.
 *
 ***********************************************************/
 
-[STAThread]
-static void Main()
+public character_type()
 {
-model      = new model_type();
-controller = new controller_type( model );
-view       = new view_type( model );
 
-using ( Game1 game = new Game1( model, controller, view ) )
-    {
-    game.Run();
-    }
+} /* character_type() */
 
-} /* Main() */
+
+/***********************************************************
+*
+*   Method:
+*       draw
+*
+*   Description:
+*       Draws the given character.
+*
+***********************************************************/
+
+public abstract void draw( SpriteBatch s );
+
+
+/***********************************************************
+*
+*   Method:
+*       load_content
+*
+*   Description:
+*       Loads content for the given block.
+*
+***********************************************************/
+
+public abstract void load_content( ContentManager c );
 
 
 }

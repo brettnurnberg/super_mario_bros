@@ -1,17 +1,15 @@
-﻿/*********************************************************************
+/*********************************************************************
 *
 *   Class:
-*       Program
+*       block_type
 *
 *   Description:
-*       The main class for the application. Contains
-*       the entry point.
+*       Contains the data for a single block
 *
-*   TODO:
-*       Change physics floats to ints (pixel, subpixel...)
-*       Create integer vector for integer physics
-*       Create hit box implementation - mario can't hit walls or ceilings
-*       add mario status update in controller (for animations)
+*   Can contain behavior for hit from any side
+*   Can contain list of textures as necessaru
+*   Can contain draw method
+*   Should there be a static list of blocks?
 *
 *********************************************************************/
 
@@ -19,6 +17,9 @@
                             INCLUDES
 --------------------------------------------------------------------*/
 
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 
 /*--------------------------------------------------------------------
@@ -35,14 +36,13 @@ namespace super_mario_bros {
                              CLASS
 --------------------------------------------------------------------*/
 
-public static class Program {
+public abstract class block_type {
 
 /*--------------------------------------------------------------------
                            ATTRIBUTES
 --------------------------------------------------------------------*/
-public static model_type        model;
-public static view_type         view;
-public static controller_type   controller;
+
+public  Texture2D   texture;
 
 /*--------------------------------------------------------------------
                             METHODS
@@ -51,26 +51,43 @@ public static controller_type   controller;
 /***********************************************************
 *
 *   Method:
-*       Main
+*       block_type
 *
 *   Description:
-*       Entry point for the application.
+*       Constructor.
 *
 ***********************************************************/
 
-[STAThread]
-static void Main()
+public block_type()
 {
-model      = new model_type();
-controller = new controller_type( model );
-view       = new view_type( model );
 
-using ( Game1 game = new Game1( model, controller, view ) )
-    {
-    game.Run();
-    }
+} /* block_type() */
 
-} /* Main() */
+
+/***********************************************************
+*
+*   Method:
+*       draw
+*
+*   Description:
+*       Draws the given block.
+*
+***********************************************************/
+
+public abstract void draw( SpriteBatch s, int x, int y );
+
+
+/***********************************************************
+*
+*   Method:
+*       load_content
+*
+*   Description:
+*       Loads content for the given block.
+*
+***********************************************************/
+
+public abstract void load_content( ContentManager c );
 
 
 }

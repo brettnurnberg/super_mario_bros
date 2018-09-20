@@ -42,11 +42,27 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Blocks.cs" />
+    <Compile Include="block_enum.cs" />
+    <Compile Include="block_red_cobble_type.cs" />
+    <Compile Include="block_type.cs" />
+    <Compile Include="character_type.cs" />
+    <Compile Include="char_dir_enum.cs" />
+    <Compile Include="char_status_enum.cs" />
     <Compile Include="controller_type.cs" />
+    <Compile Include="DrawShape.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="KeyBinding.cs" />
+    <Compile Include="level_type.cs" />
+    <Compile Include="map_type.cs" />
+    <Compile Include="mario_status_enum.cs" />
+    <Compile Include="mario_type.cs" />
     <Compile Include="model_type.cs" />
+    <Compile Include="physics_mario_type.cs" />
+    <Compile Include="physics_type.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewDims.cs" />
     <Compile Include="view_type.cs" />
   </ItemGroup>
   <ItemGroup>

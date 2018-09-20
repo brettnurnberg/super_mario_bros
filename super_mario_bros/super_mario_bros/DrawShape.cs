@@ -1,11 +1,10 @@
-﻿/*********************************************************************
+/*********************************************************************
 *
 *   Class:
-*       Game1
+*       DrawShape
 *
 *   Description:
-*       The main class for the game. Contains methods to initialize
-*       game, read input, update game logic, and update the view.
+*       Draws shapes
 *
 *********************************************************************/
 
@@ -13,9 +12,10 @@
                             INCLUDES
 --------------------------------------------------------------------*/
 
+using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 /*--------------------------------------------------------------------
                            NAMESPACE
@@ -31,61 +31,18 @@ namespace super_mario_bros {
                              CLASS
 --------------------------------------------------------------------*/
 
-public class Game1 : Game {
+public static class DrawShape {
 
 /*--------------------------------------------------------------------
                            ATTRIBUTES
 --------------------------------------------------------------------*/
 
-private model_type      model;
-private controller_type ctlr;
-private view_type       view;
+private static Texture2D solid;
+private static SpriteBatch spriteBatch;
 
 /*--------------------------------------------------------------------
                             METHODS
 --------------------------------------------------------------------*/
-
-
-/***********************************************************
-*
-*   Method:
-*       Draw
-*
-*   Description:
-*       Draws the game.
-*
-***********************************************************/
-
-protected override void Draw( GameTime gameTime )
-{
-/*----------------------------------------------------------
-Draw the view
-----------------------------------------------------------*/
-view.draw();
-
-base.Draw( gameTime );
-} /* Draw */
-
-/***********************************************************
-*
-*   Method:
-*       Game1
-*
-*   Description:
-*       Constructor.
-*
-***********************************************************/
-
-public Game1( model_type m, controller_type c, view_type v )
-{
-model = m;
-ctlr = c;
-view = v;
-
-view.construct( this );
-
-} /* Game1 */
-
 
 /***********************************************************
 *
@@ -93,69 +50,88 @@ view.construct( this );
 *       Initialize
 *
 *   Description:
-*       Initializes items before game starts to run.
+*       Saves the spritebatch
 *
 ***********************************************************/
 
-protected override void Initialize()
+public static void Initialize( SpriteBatch _spriteBatch )
 {
-base.Initialize();
-} /* Initialize */
+spriteBatch = _spriteBatch;
+
+} /* Initialize() */
 
 
 /***********************************************************
 *
 *   Method:
-*       LoadContent
+*       LoadTextures
 *
 *   Description:
-*       Draws the game.
+*       Loads the necessary textures for drawing
 *
 ***********************************************************/
 
-protected override void LoadContent()
+public static void LoadTextures( ContentManager Content )
 {
-view.load_content();
-} /* LoadContent */
+
+/*----------------------------------------------------------
+Load necessary textures
+----------------------------------------------------------*/
+solid = Content.Load<Texture2D>( "solid" );
+
+} /* LoadTextures() */
 
 
 /***********************************************************
 *
 *   Method:
-*       UnloadContent
+*       Rectangle
 *
 *   Description:
-*       Unloads game content.
+*       Draws rectangle at given location with given color
 *
 ***********************************************************/
 
-protected override void UnloadContent()
+public static void Rectangle( Rectangle r, Color c )
 {
-} /* UnloadContent */
+/*----------------------------------------------------------
+Draw the rectangle with the given color
+----------------------------------------------------------*/
+spriteBatch.Begin();
+spriteBatch.Draw( solid, r, c );
+spriteBatch.End();
+
+} /* Rectangle() */
 
 
 /***********************************************************
 *
 *   Method:
-*       Update
+*       BorderedRectangle
 *
 *   Description:
-*       Updates the game logic.
+*       Draws rectangle at given location with given color
+*       and with given border
 *
 ***********************************************************/
 
-protected override void Update( GameTime gameTime )
+public static void BorderedRectangle( Rectangle r, int b_width, Color r_color, Color b_color )
 {
-if( ( GamePad.GetState( PlayerIndex.One ).Buttons.Back == ButtonState.Pressed ) ||
-    ( Keyboard.GetState().IsKeyDown( Keys.Escape ) ) )
-    {
-    Exit();
-    }
+/*----------------------------------------------------------
+Determine inner rectangle size
+----------------------------------------------------------*/
+Rectangle inner = new Rectangle( r.X + b_width, r.Y + b_width, r.Width - 2 * b_width, r.Height - 2 * b_width );
 
-ctlr.update();
+/*----------------------------------------------------------
+Draw the rectangle with the given color
+----------------------------------------------------------*/
+spriteBatch.Begin();
+spriteBatch.Draw( solid, r,     b_color );
+spriteBatch.Draw( solid, inner, r_color );
+spriteBatch.End();
 
-base.Update( gameTime );
-} /* Update */
+} /* BorderedRectangle() */
+
 
 }
 }

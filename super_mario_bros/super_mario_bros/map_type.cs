@@ -1,10 +1,10 @@
 /*********************************************************************
 *
 *   Class:
-*       model_type
+*       map_type
 *
 *   Description:
-*       Contains the game data
+*       Contains the data for a level map
 *
 *********************************************************************/
 
@@ -13,7 +13,6 @@
 --------------------------------------------------------------------*/
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
@@ -31,15 +30,17 @@ namespace super_mario_bros {
                              CLASS
 --------------------------------------------------------------------*/
 
-public class model_type {
+public class map_type {
 
 /*--------------------------------------------------------------------
                            ATTRIBUTES
 --------------------------------------------------------------------*/
 
-public  level_type  level;
-public  int         life_count;
-public  int         score;
+public  block_type[,]   blocks;
+public  int             width;
+public  int             height;
+public  int             min_height;
+public  int             max_height;
 
 /*--------------------------------------------------------------------
                             METHODS
@@ -48,23 +49,68 @@ public  int         score;
 /***********************************************************
 *
 *   Method:
-*       model_type
+*       map_type
 *
 *   Description:
 *       Constructor.
 *
 ***********************************************************/
 
-public model_type()
+public map_type()
 {
-level = new level_type();
-} /* model_type() */
+height = 13;
+width = 210;
+blocks = new block_type[width, height];
 
-//temp
-public void temp_load( ContentManager c )
+min_height = Blocks.size.Height * ( height - 1 );
+max_height = min_height + ViewDims.view.Height;
+
+for( int i = 0; i < width;  i++ )
+for( int j = 0; j < height; j++ )
+    {
+    blocks[i, j] = null;
+    }
+
+for( int i = 0;  i < width;  i++ )
+for( int j = 11; j < height; j++ )
+    {
+    blocks[i, j] = Blocks.list[(int)block_enum.RED_COBBLE];
+    }
+
+for( int i = 8;  i < 13;  i++ )
+    {
+    blocks[i, 7] = Blocks.list[(int)block_enum.RED_COBBLE];
+    }
+
+for( int j = 4;  j < 11;  j++ )
+    {
+    blocks[16, j] = Blocks.list[(int)block_enum.RED_COBBLE];
+    }
+
+} /* map_type() */
+
+/***********************************************************
+*
+*   Method:
+*       draw
+*
+*   Description:
+*       Draw the map.
+*
+***********************************************************/
+
+public void draw( SpriteBatch s )
 {
-level.temp_load( c );
-} /* model_type() */
+for( int i = 0; i < width;  i++ )
+for( int j = 0; j < height; j++ )
+    {
+    if( blocks[i, j] != null )
+        {
+        blocks[i, j].draw( s, i, j );
+        }
+    }
+} /* draw() */
+
 
 }
 }

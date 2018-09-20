@@ -1,17 +1,10 @@
-﻿/*********************************************************************
+/*********************************************************************
 *
 *   Class:
-*       Program
+*       physics_type
 *
 *   Description:
-*       The main class for the application. Contains
-*       the entry point.
-*
-*   TODO:
-*       Change physics floats to ints (pixel, subpixel...)
-*       Create integer vector for integer physics
-*       Create hit box implementation - mario can't hit walls or ceilings
-*       add mario status update in controller (for animations)
+*       Contains the game data
 *
 *********************************************************************/
 
@@ -19,6 +12,8 @@
                             INCLUDES
 --------------------------------------------------------------------*/
 
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 
 /*--------------------------------------------------------------------
@@ -35,43 +30,39 @@ namespace super_mario_bros {
                              CLASS
 --------------------------------------------------------------------*/
 
-public static class Program {
+public  class physics_type {
 
 /*--------------------------------------------------------------------
                            ATTRIBUTES
 --------------------------------------------------------------------*/
-public static model_type        model;
-public static view_type         view;
-public static controller_type   controller;
+
+public  Vector2     velocity;
+public  Vector2     init_velocity;
+public  Vector2     acceleration;
+public  Rectangle   hit_box;
+public  Vector2     position;
 
 /*--------------------------------------------------------------------
                             METHODS
 --------------------------------------------------------------------*/
 
+
 /***********************************************************
 *
 *   Method:
-*       Main
+*       physics_type
 *
 *   Description:
-*       Entry point for the application.
+*       Constructor.
 *
 ***********************************************************/
 
-[STAThread]
-static void Main()
+public physics_type()
 {
-model      = new model_type();
-controller = new controller_type( model );
-view       = new view_type( model );
-
-using ( Game1 game = new Game1( model, controller, view ) )
-    {
-    game.Run();
-    }
-
-} /* Main() */
-
+position = new Vector2( 0, 0 );
+velocity = new Vector2( 0, 0 );
+acceleration = new Vector2( 0, 0 );
+} /* physics_type() */
 
 }
 }
