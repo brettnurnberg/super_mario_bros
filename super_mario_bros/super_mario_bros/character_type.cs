@@ -37,11 +37,8 @@ public abstract class character_type {
                            ATTRIBUTES
 --------------------------------------------------------------------*/
 
-public  Vector2             position_initial;
-public  Vector2             position;
 public  physics_type        physics;
 public  Texture2D           sprite;
-public  char_dir_enum       direction;
 public  char_status_enum    ground_status;
 
 /*--------------------------------------------------------------------

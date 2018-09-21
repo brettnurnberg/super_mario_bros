@@ -77,7 +77,11 @@ ground_status = char_status_enum.GROUND;
 
 public override void draw( SpriteBatch s )
 {
-Vector2 p = new Vector2( physics.position.X * ViewDims.scale.X, physics.position.Y * ViewDims.scale.Y );
+float x = (float)physics.position.x * ViewDims.scale / (float)( 1 << 12 );
+float y = (float)physics.position.y * ViewDims.scale / (float)( 1 << 12 );
+y++;
+
+Vector2 p = new Vector2( (int)( x ), (int)( y ) );
 s.Draw( sprite, p , null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, 0 );
 } /* draw() */
 

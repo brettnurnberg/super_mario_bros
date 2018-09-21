@@ -36,34 +36,34 @@ public static class MarioPhysics {
                            ATTRIBUTES
 --------------------------------------------------------------------*/
 
-public const float v_walk_min           = 0.07421875F;
-public const float v_walk_max           = 1.5625F;
-public const float v_walk_water_max     = 1.0625F;
-public const float v_walk_no_ctrl_max   = 0.8125F;
-public const float v_run_max            = 2.5625F;
-public const float v_skid_thresh        = 0.5625F;
+public const int vx_walk_min          = 0x0130;
+public const int vx_walk_max          = 0x1900;
+public const int vx_walk_water_max    = 0x1100;
+public const int vx_walk_no_ctrl_max  = 0x0D00;
+public const int vx_run_max           = 0x2900;
+public const int vx_skid_thresh       = 0x0900;
 
-public const float a_walk               = 0.037109375F;
-public const float a_run                = 0.0556640625F;
-public const float a_release            = 0.05078125F;
-public const float a_skid               = 0.1015625F;
+public const int ax_walk              = 0x0098;
+public const int ax_run               = 0x00E4;
+public const int ax_release           = 0x00D0;
+public const int ax_skid              = 0x01A0;
 
 
-public const float ax_jf_walk           = 0.037109375F;
-public const float ax_jf_run            = 0.0556640625F;
-public const float ax_jb_run            = -0.0556640625F;
-public const float ax_jb_run_walk       = -0.05078125F;
-public const float ax_jb_walk           = -0.037109375F;
-public const float vx_j_thresh          = 1.875F;
+public const int ax_jf_walk           = 0x0098;
+public const int ax_jf_run            = 0x00E4;
+public const int ax_jb_run            = -0x00E4;
+public const int ax_jb_run_walk       = -0x00A0;
+public const int ax_jb_walk           = -0x0068;
+public const int vx_j_thresh          = 0x1D00;
 
-public const float vy_j_thresh1         = 1.0F;
-public const float vy_j_thresh2         = 2.3125F;
+public const int vy_j_thresh1         = 0x1000;
+public const int vy_j_thresh2         = 0x2500;
 
-public static readonly float[] vy_j_init = { 4.0F, 4.0F, 5.0F };
-public static readonly float[] ay_j_a    = { 0.09375F, 0.09375F, 0.1328125F };
-public static readonly float[] ay_j_f    = { 0.265625F, 0.2421875F, 0.36328125F };
+public static readonly int[] vy_j_init = { -0x4000, -0x4000, -0x5000 };
+public static readonly int[] ay_j_a    = {  0x0180,  0x0180,  0x0220 };
+public static readonly int[] ay_j_f    = {  0x0440,  0x03E0,  0x05D0 };
 
-public const float vy_j_max             = 4.8F;
+public const int vy_j_max             = 0x4800;
 
 
 /*--------------------------------------------------------------------

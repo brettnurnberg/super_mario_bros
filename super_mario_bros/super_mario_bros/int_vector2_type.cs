@@ -1,10 +1,10 @@
 /*********************************************************************
 *
 *   Class:
-*       level_type
+*       int_vector2_type
 *
 *   Description:
-*       Contains the data for a single level
+*       Contains the game data
 *
 *********************************************************************/
 
@@ -13,10 +13,8 @@
 --------------------------------------------------------------------*/
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 
 /*--------------------------------------------------------------------
                            NAMESPACE
@@ -32,74 +30,94 @@ namespace super_mario_bros {
                              CLASS
 --------------------------------------------------------------------*/
 
-public class level_type {
+public  class int_vector2_type {
 
 /*--------------------------------------------------------------------
                            ATTRIBUTES
 --------------------------------------------------------------------*/
 
-public  mario_type              mario;
-public  map_type                map;
-public  List<character_type>    enemies;
-public  int                     time_initial;
-public  int                     time_current;
+public int x;
+public int y;
 
 /*--------------------------------------------------------------------
                             METHODS
 --------------------------------------------------------------------*/
 
+
 /***********************************************************
 *
 *   Method:
-*       level_type
+*       int_vector2_type
 *
 *   Description:
 *       Constructor.
 *
 ***********************************************************/
 
-public level_type()
+public int_vector2_type()
 {
-enemies = new List<character_type>();
-mario = new mario_type();
-map = new map_type();
-int x_init = ( 3 * Blocks.size.Width ) << 12;
-int y_init = ( ( 11 * Blocks.size.Height - mario.physics.hit_box.Height ) + 1 ) << 12;
+x = 0;
+y = 0;
+} /* int_vector2_type() */
 
-mario.physics.init_position = new int_vector2_type( x_init, y_init );
-mario.physics.position = mario.physics.init_position;
-
-} /* level_type() */
-
-//temp
-public void temp_load( ContentManager c )
-{
-mario.load_content( c ); //temp
-
-} /* level_type() */
 
 /***********************************************************
 *
 *   Method:
-*       draw
+*       int_vector2_type
 *
 *   Description:
-*       Draw the level.
+*       Constructor.
 *
 ***********************************************************/
 
-public void draw( SpriteBatch s )
+public int_vector2_type( int _x, int _y )
 {
-map.draw( s );
-mario.draw( s );
-foreach( character_type enemy in enemies )
-    {
-    enemy.draw( s );
-    }
+x = _x;
+y = _y;
+} /* int_vector2_type() */
 
+/***********************************************************
+*
+*   Method:
+*       Operator Overloads
+*
+***********************************************************/
 
-} /* draw() */
+public static int_vector2_type operator +( int_vector2_type value1, int_vector2_type value2 )
+{
+return new int_vector2_type( value1.x + value2.x, value1.y + value2.y );
+}
 
+public static int_vector2_type operator -( int_vector2_type value1, int_vector2_type value2 )
+{
+return new int_vector2_type( value1.x - value2.x, value1.y - value2.y );
+}
+
+public static int_vector2_type operator *( int scaleFactor, int_vector2_type value )
+{
+return new int_vector2_type( value.x * scaleFactor, value.y * scaleFactor );
+}
+
+public static int_vector2_type operator *( int_vector2_type value, int scaleFactor )
+{
+return new int_vector2_type( value.x * scaleFactor, value.y * scaleFactor );
+}
+
+public static int_vector2_type operator /( int_vector2_type value, int scaleFactor )
+{
+return new int_vector2_type( value.x / scaleFactor, value.y / scaleFactor );
+}
+
+public static bool operator ==( int_vector2_type value1, int_vector2_type value2 )
+{
+return ( ( value1.x == value2.x ) && ( value1.y == value2.y ) );
+}
+
+public static bool operator !=( int_vector2_type value1, int_vector2_type value2 )
+{
+return ( ( value1.x != value2.x ) || ( value1.y != value2.y ) );
+}
 
 }
 }

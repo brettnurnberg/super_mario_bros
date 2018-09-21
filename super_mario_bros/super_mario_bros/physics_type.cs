@@ -36,11 +36,12 @@ public  class physics_type {
                            ATTRIBUTES
 --------------------------------------------------------------------*/
 
-public  Vector2     velocity;
-public  Vector2     init_velocity;
-public  Vector2     acceleration;
-public  Rectangle   hit_box;
-public  Vector2     position;
+public  int_vector2_type    position;
+public  int_vector2_type    init_position;
+public  int_vector2_type    velocity;
+public  int_vector2_type    init_velocity;
+public  int_vector2_type    acceleration;
+public  Rectangle           hit_box;
 
 /*--------------------------------------------------------------------
                             METHODS
@@ -59,9 +60,9 @@ public  Vector2     position;
 
 public physics_type()
 {
-position = new Vector2( 0, 0 );
-velocity = new Vector2( 0, 0 );
-acceleration = new Vector2( 0, 0 );
+position     = new int_vector2_type( 0, 0 );
+velocity     = new int_vector2_type( 0, 0 );
+acceleration = new int_vector2_type( 0, 0 );
 } /* physics_type() */
 
 }

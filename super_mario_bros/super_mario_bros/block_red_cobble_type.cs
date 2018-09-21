@@ -69,7 +69,7 @@ public block_red_cobble_type()
 
 public override void draw( SpriteBatch s, int x, int y )
 {
-Vector2 position = new Vector2( x * Blocks.size.Width * ViewDims.scale.X, y * Blocks.size.Height * ViewDims.scale.Y );
+Vector2 position = new Vector2( x * Blocks.size.Width * ViewDims.scale, y * Blocks.size.Height * ViewDims.scale );
 s.Draw( texture, position , null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, 0 );
 }
 
