@@ -90,6 +90,11 @@ if( location == char_status_enum.GROUND && KeyBinding.A_BTN_pressed )
     physics.init_velocity.x = physics.velocity.x;
     physics.init_velocity.y = physics.velocity.y;
 
+    if( KeyBinding.B_BTN_pressed )
+        {
+        physics.init_velocity.x++;
+        }
+
     v_idx = 0;
     if( physics.velocity.x >= MarioPhysics.vy_j_thresh1 )
         {
@@ -112,6 +117,11 @@ else if( prev_location == char_status_enum.GROUND &&
     {
     physics.init_velocity.x = physics.velocity.x;
     physics.init_velocity.y = physics.velocity.y;
+
+    if( KeyBinding.B_BTN_pressed )
+        {
+        physics.init_velocity.x++;
+        }
 
     v_idx = 0;
     if( physics.velocity.x >= MarioPhysics.vy_j_thresh1 )
@@ -348,15 +358,13 @@ else if( location == char_status_enum.GROUND )
     }
 
 /*----------------------------------------------------------
-Temporarily update position for testing
-----------------------------------------------------------*/
-physics.position += physics.velocity;
-
-/*----------------------------------------------------------
 Handle all collisions
 ----------------------------------------------------------*/
 update_hit_box( model.level.mario );
 
+/*----------------------------------------------------------
+Never scroll screen left
+----------------------------------------------------------*/
 if( physics.position.x < ViewDims.view.X )
     {
     physics.position.x = ViewDims.view.X;
@@ -379,7 +387,69 @@ if( physics.position.x < ViewDims.view.X )
 
 private void update_hit_box( character_type c )
 {
-push_up( c );
+/*----------------------------------------------------------
+Local variables
+----------------------------------------------------------*/
+int[] x = new int[2];
+int[] y = new int[2];
+int suby;
+
+/*----------------------------------------------------------
+Update y position and find character boundaries
+----------------------------------------------------------*/
+c.physics.position.y += c.physics.velocity.y;
+
+x[0] = ( c.physics.position.x >> 12 ) / Blocks.size.Width;
+x[1] = ( ( c.physics.position.x >> 12 ) + c.physics.hit_box.Width  ) / Blocks.size.Width;
+y[0] = ( ( c.physics.position.y >> 12 ) + c.physics.hit_box.Height ) / Blocks.size.Height;
+y[1] = ( c.physics.position.y >> 12 ) / Blocks.size.Height;
+
+prev_location = c.ground_status;
+
+/*----------------------------------------------------------
+Check for y collisions
+----------------------------------------------------------*/
+if( contains_block( x, y[1] ) )
+    {
+    push_down( c );
+    }
+else if( contains_block( x, y[0] ) )
+    {
+    push_up( c );
+    }
+else
+    {
+    c.ground_status = char_status_enum.AIR;
+    }
+
+/*----------------------------------------------------------
+Update x position and find character boundaries
+----------------------------------------------------------*/
+c.physics.position.x += c.physics.velocity.x;
+
+x[0] = ( c.physics.position.x >> 12 ) / Blocks.size.Width;
+x[1] = ( ( c.physics.position.x >> 12 ) + c.physics.hit_box.Width  ) / Blocks.size.Width;
+y[0] = ( ( c.physics.position.y >> 12 ) + c.physics.hit_box.Height ) / Blocks.size.Height;
+y[1] = ( c.physics.position.y >> 12 ) / Blocks.size.Height;
+suby = ( c.physics.position.y >> 12 ) % Blocks.size.Height;
+
+if( c.ground_status == char_status_enum.GROUND )
+    {
+    y[0]--;
+    }
+
+/*----------------------------------------------------------
+Check for x collisions
+----------------------------------------------------------*/
+if( contains_block( x[0], y ) )
+    {
+    push_right( c );
+    }
+else if( contains_block( x[1], y ) )
+    {
+    push_left( c );
+    }
+
 } /* update_hit_box() */
 
 
@@ -395,11 +465,13 @@ push_up( c );
 
 private void push_down( character_type c )
 {
-int suby = (int)( c.physics.position.y - c.physics.hit_box.Height ) % (int)Blocks.size.Height;
+int y = ( ( c.physics.position.y >> 12 ) / Blocks.size.Height ) + 1;
 
 c.physics.acceleration.y = 0;
 c.physics.velocity.y = 0;
-c.physics.position.y += ( Blocks.size.Height - suby );
+c.physics.position.y = ( y * Blocks.size.Height ) << 12;
+
+c.ground_status = char_status_enum.AIR;
 
 } /* push_down() */
 
@@ -416,25 +488,10 @@ c.physics.position.y += ( Blocks.size.Height - suby );
 
 public void push_up( character_type c )
 {
-map_type m = model.level.map;
-int x1   = ( c.physics.position.x >> 12 ) / Blocks.size.Width;
-int x2   = ( ( c.physics.position.x >> 12 ) + c.physics.hit_box.Width ) / Blocks.size.Width;
-int y    = (int)( ( ( c.physics.position.y >> 12 ) + c.physics.hit_box.Height ) / Blocks.size.Height );
-int suby = (int)( c.physics.position.y >> 12 ) % (int)Blocks.size.Height;
+int y    = ( ( c.physics.position.y >> 12 ) + c.physics.hit_box.Height ) / Blocks.size.Height;
 
-prev_location = c.ground_status;
-
-//this method will fail when mario falls off map - access out of bounds
-//call lose_life function when we try to access out of bounds
-if( ( m.blocks[x1, y] != null || m.blocks[x2, y] != null ) && suby > 0 )    //replace with block status == air??
-    {
-    c.ground_status = char_status_enum.GROUND;
-    c.physics.position.y = ( ( ( y * Blocks.size.Height ) - c.physics.hit_box.Height ) + 1 ) << 12;
-    }
-else
-    {
-    c.ground_status = char_status_enum.AIR;
-    }
+c.ground_status = char_status_enum.GROUND;
+c.physics.position.y = ( ( ( y * Blocks.size.Height ) - c.physics.hit_box.Height ) + 1 ) << 12;
 
 } /* push_up() */
 
@@ -451,11 +508,11 @@ else
 
 private void push_right( character_type c )
 {
-int subx = (int)c.physics.position.x % (int)Blocks.size.Width;
+int x = ( c.physics.position.x >> 12 ) / Blocks.size.Width + 1;
 
 c.physics.acceleration.x = 0;
 c.physics.velocity.x = 0;
-c.physics.position.x += ( Blocks.size.Width - subx );
+c.physics.position.x = ( x * Blocks.size.Width ) << 12;
 
 } /* push_right() */
 
@@ -472,12 +529,11 @@ c.physics.position.x += ( Blocks.size.Width - subx );
 
 private void push_left( character_type c )
 {
-int subx = (int)( c.physics.position.x + c.physics.hit_box.Width ) % (int)Blocks.size.Width;
+int x = ( ( c.physics.position.x >> 12 ) + c.physics.hit_box.Width ) / Blocks.size.Width;
 
 c.physics.acceleration.x = 0;
 c.physics.velocity.x = 0;
-c.physics.position.x -= subx;
-c.physics.position.x--;
+c.physics.position.x = ( ( ( x * Blocks.size.Width ) - c.physics.hit_box.Width ) << 12 ) - 1;
 
 } /* push_left() */
 
@@ -488,23 +544,73 @@ c.physics.position.x--;
 *       contains_block
 *
 *   Description:
-*       Returns true if the given map block is solid.
+*       Returns true if the given series of blocks
+*       contains a solid block.
+*
+*   TODO:
+//this method will fail when mario falls off map - access out of bounds
+//call lose_life function when we try to access out of bounds
 *
 ***********************************************************/
 
-private Boolean contains_block( int x, int y )
+private Boolean contains_block( int[] x, int y )
 {
-if( ( x >= model.level.map.width )  ||
-    ( x < 0 )                       ||
-    ( y >= model.level.map.height ) ||
-    ( y < 0 ) )
+Boolean result = false;
+
+for( int i = x[0]; i <= x[1]; i++ )
     {
-    /* Infinite loop to avoid out of bounds access */
-    while( true );
+    check_boundary( i, y );
+    if( model.level.map.blocks[i, y] != null )
+        {
+        result = true;
+        break;
+        }
     }
 
-return ( model.level.map.blocks[x, y] != null );
+return result;
 } /* contains_block() */
+
+private Boolean contains_block( int x, int[] y )
+{
+Boolean result = false;
+
+for( int j = y[1]; j <= y[0]; j++ )
+    {
+    check_boundary( x, j );
+    if( model.level.map.blocks[x, j] != null )
+        {
+        result = true;
+        break;
+        }
+    }
+
+return result;
+} /* contains_block() */
+
+
+/***********************************************************
+*
+*   Method:
+*       check_boundary
+*
+*   Description:
+*       If Mario has left the map, lose a life.
+*
+***********************************************************/
+
+private void check_boundary( int x, int y )
+{
+if( x < 0 || x >= model.level.map.width || y < 0 || y >= model.level.map.height )
+    {
+    model.level.mario.physics.position.x = model.level.mario.physics.init_position.x;
+    model.level.mario.physics.position.y = model.level.mario.physics.init_position.y;
+    model.level.mario.physics.velocity.x = 0;
+    model.level.mario.physics.velocity.y = 0;
+    model.level.mario.physics.acceleration.x = 0;
+    model.level.mario.physics.acceleration.y = 0;
+    while( true );
+    }
+} /* check_boundary() */
 
 }
 }

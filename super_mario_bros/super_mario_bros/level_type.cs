@@ -67,7 +67,8 @@ int x_init = ( 3 * Blocks.size.Width ) << 12;
 int y_init = ( ( 11 * Blocks.size.Height - mario.physics.hit_box.Height ) + 1 ) << 12;
 
 mario.physics.init_position = new int_vector2_type( x_init, y_init );
-mario.physics.position = mario.physics.init_position;
+mario.physics.position.x = mario.physics.init_position.x;
+mario.physics.position.y = mario.physics.init_position.y;
 
 } /* level_type() */
 

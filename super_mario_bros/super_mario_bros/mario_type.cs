@@ -79,6 +79,11 @@ public override void draw( SpriteBatch s )
 {
 float x = (float)physics.position.x * ViewDims.scale / (float)( 1 << 12 );
 float y = (float)physics.position.y * ViewDims.scale / (float)( 1 << 12 );
+
+if( ( physics.position.x & 0x0FFF ) == 0 )
+    {
+    x++;
+    }
 y++;
 
 Vector2 p = new Vector2( (int)( x ), (int)( y ) );
