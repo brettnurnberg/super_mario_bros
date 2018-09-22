@@ -8,10 +8,17 @@
 *       the entry point.
 *
 *   TODO:
-*       Change physics floats to ints (pixel, subpixel...)
-*       Create integer vector for integer physics
-*       Create hit box implementation - mario can't hit walls or ceilings
+*       Add more blocks
+*       Add static vs non-static block implementation
+*           (if block is static, just draw the texture)
+*       Add block behavior (on hit)
 *       add mario status update in controller (for animations)
+*       add mario animations
+*       add enemies
+*       add pipes
+*       add mario sounds
+*       add music
+*       add background images
 *
 *********************************************************************/
 

@@ -70,7 +70,6 @@ v_idx = 0;
 *   Description:
 *       Updates the game logic.
 *       //update mario's status (for use with animations)
-*       Mario seems to stop moving when hitting the ground?
 *
 ***********************************************************/
 

@@ -1,10 +1,10 @@
 /*********************************************************************
 *
 *   Class:
-*       map_type
+*       block_stair_type
 *
 *   Description:
-*       Contains the data for a level map
+*       Contains data for red cobblestone block
 *
 *********************************************************************/
 
@@ -13,6 +13,7 @@
 --------------------------------------------------------------------*/
 
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
@@ -30,70 +31,16 @@ namespace super_mario_bros {
                              CLASS
 --------------------------------------------------------------------*/
 
-public class map_type {
+public class block_stair_type: block_type {
 
 /*--------------------------------------------------------------------
                            ATTRIBUTES
 --------------------------------------------------------------------*/
 
-public  block_type[,]   blocks;
-public  int             width;
-public  int             height;
-public  int             min_height;
-public  int             max_height;
-
 /*--------------------------------------------------------------------
                             METHODS
 --------------------------------------------------------------------*/
 
-/***********************************************************
-*
-*   Method:
-*       map_type
-*
-*   Description:
-*       Constructor.
-*
-***********************************************************/
-
-public map_type()
-{
-height = 13;
-width = 210;
-blocks = new block_type[width, height];
-block_type cobble = new block_red_cobble_type();
-block_type stair = new block_stair_type();
-
-min_height = Blocks.size.Height * ( height - 1 );
-max_height = min_height + ViewDims.view.Height;
-
-for( int i = 0; i < width;  i++ )
-for( int j = 0; j < height; j++ )
-    {
-    blocks[i, j] = null;
-    }
-
-for( int i = 0;  i < width;  i++ )
-for( int j = 11; j < height; j++ )
-    {
-    blocks[i, j] = cobble;
-    }
-
-for( int i = 8;  i < 13;  i++ )
-    {
-    blocks[i, 7] = new block_brick_type();
-    }
-
-for( int i = 20; i < 26; i++ )
-for( int j = 10; j > 5;  j-- )
-    {
-    if( j + 15 > i )
-        {
-        blocks[ ( 46 - i ), j ] = stair;
-        }
-    }
-
-} /* map_type() */
 
 /***********************************************************
 *
@@ -101,21 +48,16 @@ for( int j = 10; j > 5;  j-- )
 *       draw
 *
 *   Description:
-*       Draw the map.
+*       Draws the given block.
 *
 ***********************************************************/
 
-public void draw( SpriteBatch s )
+public override void draw( SpriteBatch s, int x, int y )
 {
-for( int i = 0; i < width;  i++ )
-for( int j = 0; j < height; j++ )
-    {
-    if( blocks[i, j] != null )
-        {
-        blocks[i, j].draw( s, i, j );
-        }
-    }
-} /* draw() */
+Texture2D texture = Blocks.textures[(int)block_static_enum.STAIR];
+Vector2 position = new Vector2( x * Blocks.size.Width * ViewDims.scale, y * Blocks.size.Height * ViewDims.scale );
+s.Draw( texture, position , null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, 0 );
+}
 
 
 }

@@ -41,21 +41,6 @@ public class block_red_cobble_type: block_type {
                             METHODS
 --------------------------------------------------------------------*/
 
-/***********************************************************
-*
-*   Method:
-*       block_red_cobble_type
-*
-*   Description:
-*       Constructor.
-*
-***********************************************************/
-
-public block_red_cobble_type()
-{
-
-} /* block_red_cobble_type() */
-
 
 /***********************************************************
 *
@@ -69,25 +54,10 @@ public block_red_cobble_type()
 
 public override void draw( SpriteBatch s, int x, int y )
 {
+Texture2D texture = Blocks.textures[(int)block_static_enum.RED_COBBLE];
 Vector2 position = new Vector2( x * Blocks.size.Width * ViewDims.scale, y * Blocks.size.Height * ViewDims.scale );
 s.Draw( texture, position , null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, 0 );
 }
-
-
-/***********************************************************
-*
-*   Method:
-*       load_content
-*
-*   Description:
-*       Loads content for the given block.
-*
-***********************************************************/
-
-public override void load_content( ContentManager c )
-{
-texture = c.Load<Texture2D>( "block_red_cobble" );
-} /* load_content() */
 
 
 }

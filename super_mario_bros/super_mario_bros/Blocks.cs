@@ -46,7 +46,7 @@ public static class Blocks {
                            ATTRIBUTES
 --------------------------------------------------------------------*/
 
-static public block_type[] list;
+static public Texture2D[]  textures;
 static public Rectangle    size;
 
 /*--------------------------------------------------------------------
@@ -66,10 +66,7 @@ static public Rectangle    size;
 
 static Blocks()
 {
-list = new block_type[(int)block_enum.BLOCK_COUNT];
-
-list[(int)block_enum.EMPTY]      = null;
-list[(int)block_enum.RED_COBBLE] = new block_red_cobble_type();
+textures = new Texture2D[(int)block_enum.BLOCK_COUNT];
 
 size.Width = 16;
 size.Height = 16;
@@ -89,10 +86,15 @@ size.Height = 16;
 
 static public void load_content( ContentManager c )
 {
+int count = (int)block_static_enum.BLOCK_COUNT;
 
-for( int i = 1; i < (int)block_enum.BLOCK_COUNT; i++ )
+for( int i = 1; i < count; i++ )
     {
-    list[i].load_content( c );
+    textures[i] = c.Load<Texture2D>( String.Format( "static_block_" + i ) );
+    }
+for( int i = 0; i < (int)block_enum.BLOCK_COUNT - count; i++ )
+    {
+    textures[ count + i ] = c.Load<Texture2D>( String.Format( "block_" + i ) );
     }
 
 } /* load_content() */

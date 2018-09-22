@@ -18,10 +18,18 @@ namespace super_mario_bros {
                              ENUM
 --------------------------------------------------------------------*/
 
+public enum block_static_enum
+{
+AIR,
+RED_COBBLE,
+STAIR,
+
+BLOCK_COUNT
+}
+
 public enum block_enum
 {
-EMPTY,
-RED_COBBLE,
+BRICK = (int)block_static_enum.BLOCK_COUNT,
 
 BLOCK_COUNT
 }
