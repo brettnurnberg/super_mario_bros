@@ -87,7 +87,8 @@ Update mario Y location on jump
 ----------------------------------------------------------*/
 if( location == char_status_enum.GROUND && KeyBinding.A_BTN_pressed )
     {
-    physics.init_velocity = physics.velocity;
+    physics.init_velocity.x = physics.velocity.x;
+    physics.init_velocity.y = physics.velocity.y;
 
     v_idx = 0;
     if( physics.velocity.x >= MarioPhysics.vy_j_thresh1 )
@@ -109,7 +110,8 @@ else if( prev_location == char_status_enum.GROUND &&
          location == char_status_enum.AIR &&
          physics.velocity.y == 0 )
     {
-    physics.init_velocity = physics.velocity;
+    physics.init_velocity.x = physics.velocity.x;
+    physics.init_velocity.y = physics.velocity.y;
 
     v_idx = 0;
     if( physics.velocity.x >= MarioPhysics.vy_j_thresh1 )
@@ -142,7 +144,7 @@ else if( location == char_status_enum.AIR )
 
     if( KeyBinding.D_RIGHT_pressed )
         {
-        if( physics.velocity.x < MarioPhysics.vx_walk_max )
+        if( physics.velocity.x <= MarioPhysics.vx_walk_max )
             {
             physics.acceleration.x = MarioPhysics.ax_jf_walk;
             }

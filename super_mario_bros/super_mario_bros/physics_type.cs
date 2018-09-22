@@ -60,9 +60,11 @@ public  Rectangle           hit_box;
 
 public physics_type()
 {
-position     = new int_vector2_type( 0, 0 );
-velocity     = new int_vector2_type( 0, 0 );
-acceleration = new int_vector2_type( 0, 0 );
+init_position = new int_vector2_type( 0, 0 );
+init_velocity = new int_vector2_type( 0, 0 );
+position      = new int_vector2_type( 0, 0 );
+velocity      = new int_vector2_type( 0, 0 );
+acceleration  = new int_vector2_type( 0, 0 );
 } /* physics_type() */
 
 }
