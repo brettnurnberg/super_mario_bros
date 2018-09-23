@@ -45,6 +45,7 @@
     <Compile Include="Blocks.cs" />
     <Compile Include="block_brick_type.cs" />
     <Compile Include="block_enum.cs" />
+    <Compile Include="block_question_type.cs" />
     <Compile Include="block_red_cobble_type.cs" />
     <Compile Include="block_stair_type.cs" />
     <Compile Include="block_type.cs" />

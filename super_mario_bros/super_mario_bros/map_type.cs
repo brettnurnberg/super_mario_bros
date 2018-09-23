@@ -76,22 +76,69 @@ for( int j = 0; j < height; j++ )
 for( int i = 0;  i < width;  i++ )
 for( int j = 11; j < height; j++ )
     {
-    blocks[i, j] = cobble;
+    if( ( i != 69 && i != 70 && i != 86 ) &&
+        ( i != 87 && i != 88 && i != 153 ) && i != 154 )
+        {
+        blocks[i, j] = cobble;
+        }
     }
 
-for( int i = 8;  i < 13;  i++ )
+blocks[16, 7] = new block_question_type();
+blocks[20, 7] = new block_brick_type();
+blocks[21, 7] = new block_question_type();
+blocks[22, 7] = new block_brick_type();
+blocks[22, 3] = new block_question_type();
+blocks[23, 7] = new block_question_type();
+blocks[24, 7] = new block_brick_type();
+
+blocks[77, 7] = new block_brick_type();
+blocks[78, 7] = new block_question_type();
+blocks[79, 7] = new block_brick_type();
+
+for( int i = 80; i < 88; i++ )
     {
-    blocks[i, 7] = new block_brick_type();
+    blocks[i, 3] = new block_brick_type();
     }
 
-for( int i = 20; i < 26; i++ )
+for( int i = 91; i < 94; i++ )
+    {
+    blocks[i, 3] = new block_brick_type();
+    }
+
+blocks[94, 3] = new block_question_type();
+blocks[94, 7] = new block_brick_type();
+blocks[100, 7] = new block_brick_type();
+blocks[101, 7] = new block_brick_type();
+blocks[106, 7] = new block_question_type();
+blocks[109, 7] = new block_question_type();
+blocks[109, 3] = new block_question_type();
+blocks[112, 7] = new block_question_type();
+blocks[118, 7] = new block_brick_type();
+blocks[121, 3] = new block_brick_type();
+blocks[122, 3] = new block_brick_type();
+blocks[123, 3] = new block_brick_type();
+blocks[128, 3] = new block_brick_type();
+blocks[129, 7] = new block_brick_type();
+blocks[130, 7] = new block_brick_type();
+blocks[131, 3] = new block_brick_type();
+blocks[129, 3] = new block_question_type();
+blocks[130, 3] = new block_question_type();
+blocks[168, 7] = new block_brick_type();
+blocks[169, 7] = new block_brick_type();
+blocks[170, 7] = new block_question_type();
+blocks[171, 7] = new block_brick_type();
+
+blocks[198, 10] = stair;
+
+
+/*for( int i = 20; i < 26; i++ )
 for( int j = 10; j > 5;  j-- )
     {
     if( j + 15 > i )
         {
         blocks[ ( 46 - i ), j ] = stair;
         }
-    }
+    }*/
 
 } /* map_type() */
 

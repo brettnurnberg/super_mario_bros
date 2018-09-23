@@ -30,6 +30,7 @@ BLOCK_COUNT
 public enum block_enum
 {
 BRICK = (int)block_static_enum.BLOCK_COUNT,
+QUESTION_LIT,
 
 BLOCK_COUNT
 }
