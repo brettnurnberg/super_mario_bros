@@ -1,21 +1,10 @@
-﻿/*********************************************************************
+/*********************************************************************
 *
 *   Class:
-*       Program
+*       decor_type
 *
 *   Description:
-*       The main class for the application. Contains
-*       the entry point.
-*
-*   TODO:
-*       Add block behavior (on hit)
-*       add mario status update in controller (for animations)
-*       add mario animations
-*       add enemies
-*       add pipes
-*       add mario sounds
-*       add music
-*       add background images
+*       Draws a given decoration
 *
 *********************************************************************/
 
@@ -23,6 +12,9 @@
                             INCLUDES
 --------------------------------------------------------------------*/
 
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 
 /*--------------------------------------------------------------------
@@ -39,42 +31,31 @@ namespace super_mario_bros {
                              CLASS
 --------------------------------------------------------------------*/
 
-public static class Program {
+public abstract class decor_type {
 
 /*--------------------------------------------------------------------
                            ATTRIBUTES
 --------------------------------------------------------------------*/
-public static model_type        model;
-public static view_type         view;
-public static controller_type   controller;
+
+protected int x;
+protected int y;
 
 /*--------------------------------------------------------------------
                             METHODS
 --------------------------------------------------------------------*/
 
+
 /***********************************************************
 *
 *   Method:
-*       Main
+*       draw
 *
 *   Description:
-*       Entry point for the application.
+*       Draws the given decoration.
 *
 ***********************************************************/
 
-[STAThread]
-static void Main()
-{
-model      = new model_type();
-controller = new controller_type( model );
-view       = new view_type( model );
-
-using ( Game1 game = new Game1( model, controller, view ) )
-    {
-    game.Run();
-    }
-
-} /* Main() */
+public abstract void draw( SpriteBatch s );
 
 
 }

@@ -53,6 +53,12 @@
     <Compile Include="char_dir_enum.cs" />
     <Compile Include="char_status_enum.cs" />
     <Compile Include="controller_type.cs" />
+    <Compile Include="Decor.cs" />
+    <Compile Include="decor_bush_type.cs" />
+    <Compile Include="decor_cloud_type.cs" />
+    <Compile Include="decor_enum.cs" />
+    <Compile Include="decor_hill_type.cs" />
+    <Compile Include="decor_type.cs" />
     <Compile Include="DrawShape.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="int_vector2_type.cs" />

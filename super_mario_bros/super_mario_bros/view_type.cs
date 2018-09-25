@@ -136,6 +136,7 @@ DrawShape.Initialize( spriteBatch );
 DrawShape.LoadTextures( game.Content );
 
 Blocks.load_content( game.Content );
+Decor.load_content( game.Content );
 
 model.temp_load( game.Content ); //temp load
 
