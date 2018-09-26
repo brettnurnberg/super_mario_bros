@@ -65,6 +65,8 @@
     <Compile Include="KeyBinding.cs" />
     <Compile Include="level_type.cs" />
     <Compile Include="map_type.cs" />
+    <Compile Include="Marios.cs" />
+    <Compile Include="mario_enum.cs" />
     <Compile Include="mario_status_enum.cs" />
     <Compile Include="mario_type.cs" />
     <Compile Include="model_type.cs" />

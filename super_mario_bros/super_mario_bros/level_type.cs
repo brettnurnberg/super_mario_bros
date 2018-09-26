@@ -72,12 +72,6 @@ mario.physics.position.y = mario.physics.init_position.y;
 
 } /* level_type() */
 
-//temp
-public void temp_load( ContentManager c )
-{
-mario.load_content( c ); //temp
-
-} /* level_type() */
 
 /***********************************************************
 *

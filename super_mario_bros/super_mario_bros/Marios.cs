@@ -1,10 +1,10 @@
 /*********************************************************************
 *
 *   Class:
-*       character_type
+*       Marios
 *
 *   Description:
-*       Contains data on a single character
+*       Static list of all mario sprites
 *
 *********************************************************************/
 
@@ -31,46 +31,56 @@ namespace super_mario_bros {
                              CLASS
 --------------------------------------------------------------------*/
 
-public abstract class character_type {
+public static class Marios {
 
 /*--------------------------------------------------------------------
                            ATTRIBUTES
 --------------------------------------------------------------------*/
 
-public  physics_type        physics;
-public  char_status_enum    ground_status;
+static public Texture2D[]  textures;
 
 /*--------------------------------------------------------------------
                             METHODS
 --------------------------------------------------------------------*/
 
+
 /***********************************************************
 *
 *   Method:
-*       character_type
+*       Blocks
 *
 *   Description:
 *       Constructor.
 *
 ***********************************************************/
 
-public character_type()
+static Marios()
 {
+textures = new Texture2D[(int)mario_enum.COUNT];
 
-} /* character_type() */
+} /* Blocks() */
 
 
 /***********************************************************
 *
 *   Method:
-*       draw
+*       load_content
 *
 *   Description:
-*       Draws the given character.
+*       Loads all images for all blocks.
 *
 ***********************************************************/
 
-public abstract void draw( SpriteBatch s );
+static public void load_content( ContentManager c )
+{
+int count = (int)mario_enum.COUNT;
+
+for( int i = 0; i < count; i++ )
+    {
+    textures[i] = c.Load<Texture2D>( String.Format( "mario_" + i ) );
+    }
+
+} /* load_content() */
 
 
 }

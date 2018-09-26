@@ -60,11 +60,5 @@ public model_type()
 level = new level_type();
 } /* model_type() */
 
-//temp
-public void temp_load( ContentManager c )
-{
-level.temp_load( c );
-} /* model_type() */
-
 }
 }

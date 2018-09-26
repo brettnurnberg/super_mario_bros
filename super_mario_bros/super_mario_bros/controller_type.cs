@@ -78,6 +78,7 @@ public void update()
 KeyBinding.set_key_states();
 physics_type physics = model.level.mario.physics;
 char_status_enum location;
+mario_status_enum status = mario_status_enum.STILL;
 
 location = model.level.mario.ground_status;
 
@@ -228,6 +229,7 @@ if( ( KeyBinding.D_RIGHT_pressed ) &&
     {
     physics.acceleration.x = MarioPhysics.ax_skid;
     physics.velocity.x += physics.acceleration.x;
+    status = mario_status_enum.SKID;
     }
 /*----------------------------------------------------------
 Skidding right
@@ -238,6 +240,7 @@ else if( ( KeyBinding.D_LEFT_pressed ) &&
     {
     physics.acceleration.x = -1 * MarioPhysics.ax_skid;
     physics.velocity.x += physics.acceleration.x;
+    status = mario_status_enum.SKID;
     }
 /*----------------------------------------------------------
 Running right
@@ -246,6 +249,8 @@ else if( KeyBinding.D_RIGHT_pressed &&
          KeyBinding.B_BTN_pressed &&
          ( location == char_status_enum.GROUND ) )
     {
+    status = mario_status_enum.RUN;
+
     if( physics.velocity.x < 0 )
         {
         physics.velocity.x = 0;
@@ -271,6 +276,8 @@ else if( KeyBinding.D_LEFT_pressed &&
          KeyBinding.B_BTN_pressed &&
          ( location == char_status_enum.GROUND ) )
     {
+    status = mario_status_enum.RUN;
+
     if( physics.velocity.x > 0 )
         {
         physics.velocity.x = 0;
@@ -296,6 +303,8 @@ else if( KeyBinding.D_RIGHT_pressed &&
          !KeyBinding.B_BTN_pressed &&
          ( location == char_status_enum.GROUND ) )
     {
+    status = mario_status_enum.WALK;
+
     physics.acceleration.x = MarioPhysics.ax_walk;
     physics.velocity.x += physics.acceleration.x;
 
@@ -316,6 +325,8 @@ else if( KeyBinding.D_LEFT_pressed &&
          !KeyBinding.B_BTN_pressed &&
          ( location == char_status_enum.GROUND ) )
     {
+    status = mario_status_enum.WALK;
+
     physics.acceleration.x = -1 * MarioPhysics.ax_walk;
     physics.velocity.x += physics.acceleration.x;
 
@@ -337,6 +348,7 @@ else if( ( physics.velocity.x > MarioPhysics.vx_walk_min ) &&
     {
     physics.acceleration.x = -1 * MarioPhysics.ax_release;
     physics.velocity.x += physics.acceleration.x;
+    status = mario_status_enum.STILL;
     }
 /*----------------------------------------------------------
 Sliding left
@@ -346,6 +358,7 @@ else if( ( physics.velocity.x < -1 * MarioPhysics.vx_walk_min ) &&
     {
     physics.acceleration.x = MarioPhysics.ax_release;
     physics.velocity.x += physics.acceleration.x;
+    status = mario_status_enum.STILL;
     }
 /*----------------------------------------------------------
 Standing still
@@ -354,12 +367,20 @@ else if( location == char_status_enum.GROUND )
     {
     physics.acceleration.x = 0;
     physics.velocity.x = 0;
+    status = mario_status_enum.STILL;
     }
 
 /*----------------------------------------------------------
 Handle all collisions
 ----------------------------------------------------------*/
 update_hit_box( model.level.mario );
+
+if( model.level.mario.ground_status == char_status_enum.AIR )
+    {
+    status = mario_status_enum.JUMP;
+    }
+
+model.level.mario.status = status;
 
 /*----------------------------------------------------------
 Never scroll screen left
