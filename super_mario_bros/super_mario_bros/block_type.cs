@@ -57,7 +57,7 @@ public abstract class block_type {
 *
 ***********************************************************/
 
-public abstract void draw( SpriteBatch s, int x, int y );
+public abstract void draw( SpriteBatch s, int x, int y, int count );
 
 
 }

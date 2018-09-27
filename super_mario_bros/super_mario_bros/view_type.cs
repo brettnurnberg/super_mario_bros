@@ -145,6 +145,22 @@ Marios.load_content( game.Content );
 /***********************************************************
 *
 *   Method:
+*       unload_content
+*
+*   Description:
+*       Unloads content for the game.
+*
+***********************************************************/
+
+public void unload_content()
+{
+game.Content.Unload();
+} /* unload_content() */
+
+
+/***********************************************************
+*
+*   Method:
 *       resize_window
 *
 *   Description:

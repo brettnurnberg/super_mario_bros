@@ -43,6 +43,7 @@ public  int              width;
 public  int              height;
 public  int              min_height;
 public  int              max_height;
+public  int              animation_count;
 
 /*--------------------------------------------------------------------
                             METHODS
@@ -67,6 +68,8 @@ width = 213;
 blocks = new block_type[width, height];
 block_type cobble = new block_red_cobble_type();
 block_type stair = new block_stair_type();
+
+animation_count = 0;
 
 min_height = Blocks.size.Height * ( height - 1 ) + 8;
 max_height = min_height + ViewDims.view.Height;
@@ -221,7 +224,7 @@ for( int j = 0; j < height; j++ )
     {
     if( blocks[i, j] != null )
         {
-        blocks[i, j].draw( s, i, j );
+        blocks[i, j].draw( s, i, j, animation_count );
         }
     }
 } /* draw() */

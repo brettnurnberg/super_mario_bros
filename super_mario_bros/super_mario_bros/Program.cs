@@ -8,14 +8,15 @@
 *       the entry point.
 *
 *   TODO:
-*       Add block behavior (on hit)
-*       add mario status update in controller (for animations)
-*       add mario animations
+*       3. Add block behavior (on hit)
+*       4. add mario animations
+*           add mirrored sprites
+*           fix run cycle
+*           fix left/right implementation
 *       add enemies
 *       add pipes
 *       add mario sounds
 *       add music
-*       add background images
 *
 *********************************************************************/
 

@@ -37,7 +37,7 @@ public class mario_type : character_type {
 
 
 private const int run_frame_rate  = 5;
-private const int walk_frame_rate = 10;
+private const int walk_frame_rate = 8;
 
 /*--------------------------------------------------------------------
                            ATTRIBUTES
@@ -87,6 +87,9 @@ public override void draw( SpriteBatch s )
 {
 Texture2D sprite;
 int idx;
+int x_offset = 0;
+int y_offset = 0;
+SpriteEffects flip_state = SpriteEffects.None;
 
 switch( status )
     {
@@ -116,6 +119,15 @@ switch( status )
         break;
     }
 
+if( sprite == Marios.textures[(int)mario_enum.WALK2] )
+    {
+    y_offset++;
+    }
+else if( sprite == Marios.textures[(int)mario_enum.JUMP] )
+    {
+    x_offset -= 3;
+    }
+
 float x = (float)physics.position.x * ViewDims.scale / (float)( 1 << 12 );
 float y = (float)physics.position.y * ViewDims.scale / (float)( 1 << 12 );
 
@@ -125,8 +137,16 @@ if( ( physics.position.x & 0x0FFF ) == 0 )
     }
 y++;
 
+x += ( x_offset * ViewDims.scale );
+y += ( y_offset * ViewDims.scale );
+
+if( KeyBinding.D_LEFT_pressed )
+    {
+    flip_state = SpriteEffects.FlipHorizontally;
+    }
+
 Vector2 p = new Vector2( (int)( x ), (int)( y ) );
-s.Draw( sprite, p , null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, 0 );
+s.Draw( sprite, p , null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.scale, flip_state, 0 );
 } /* draw() */
 
 

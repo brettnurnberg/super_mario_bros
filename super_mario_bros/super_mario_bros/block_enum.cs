@@ -31,6 +31,8 @@ public enum block_enum
 {
 BRICK = (int)block_static_enum.BLOCK_COUNT,
 QUESTION_LIT,
+QUESTION_MID,
+QUESTION_DARK,
 
 BLOCK_COUNT
 }

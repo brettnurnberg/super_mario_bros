@@ -131,6 +131,7 @@ view.load_content();
 
 protected override void UnloadContent()
 {
+view.unload_content();
 } /* UnloadContent */
 
 
