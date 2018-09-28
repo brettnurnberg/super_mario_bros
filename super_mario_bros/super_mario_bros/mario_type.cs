@@ -35,17 +35,11 @@ namespace super_mario_bros {
 
 public class mario_type : character_type {
 
-
-private const int run_frame_rate  = 5;
-private const int walk_frame_rate = 8;
-
 /*--------------------------------------------------------------------
                            ATTRIBUTES
 --------------------------------------------------------------------*/
 
 public  mario_status_enum status;
-private int run_frame_cnt;
-private int walk_frame_cnt;
 
 /*--------------------------------------------------------------------
                             METHODS
@@ -66,8 +60,6 @@ public mario_type()
 physics = new physics_type();
 physics.hit_box.Width = 12;
 physics.hit_box.Height = 16;
-run_frame_cnt = 0;
-walk_frame_cnt = 0;
 status = mario_status_enum.STILL;
 ground_status = char_status_enum.GROUND;
 } /* mario_type() */
@@ -86,7 +78,6 @@ ground_status = char_status_enum.GROUND;
 public override void draw( SpriteBatch s )
 {
 Texture2D sprite;
-int idx;
 int x_offset = 0;
 int y_offset = 0;
 SpriteEffects flip_state = SpriteEffects.None;
@@ -97,16 +88,10 @@ switch( status )
         sprite = Marios.textures[(int)mario_enum.STILL];
         break;
     case mario_status_enum.WALK:
-        idx = walk_frame_cnt / walk_frame_rate;
-        idx = idx % 3;
-        walk_frame_cnt++;
-        sprite = Marios.textures[(int)mario_enum.WALK0 + idx];
+        sprite = Animations.mario_run.get_sprite();
         break;
     case mario_status_enum.RUN:
-        idx = run_frame_cnt / run_frame_rate;
-        idx = idx % 3;
-        run_frame_cnt++;
-        sprite = Marios.textures[(int)mario_enum.WALK0 + idx];
+        sprite = Animations.mario_run.get_sprite();
         break;
     case mario_status_enum.JUMP:
         sprite = Marios.textures[(int)mario_enum.JUMP];

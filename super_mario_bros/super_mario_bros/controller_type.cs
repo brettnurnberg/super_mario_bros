@@ -80,7 +80,7 @@ physics_type physics = model.level.mario.physics;
 char_status_enum location;
 mario_status_enum status = model.level.mario.status;
 
-model.level.map.animation_count++;
+Animations.update();
 
 location = model.level.mario.ground_status;
 

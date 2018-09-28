@@ -52,7 +52,7 @@ public class block_red_cobble_type: block_type {
 *
 ***********************************************************/
 
-public override void draw( SpriteBatch s, int x, int y, int count )
+public override void draw( SpriteBatch s, int x, int y )
 {
 Texture2D texture = Blocks.textures[(int)block_static_enum.RED_COBBLE];
 Vector2 position = new Vector2( x * Blocks.size.Width * ViewDims.scale, y * Blocks.size.Height * ViewDims.scale );

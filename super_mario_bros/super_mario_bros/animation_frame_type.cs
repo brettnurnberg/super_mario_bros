@@ -1,10 +1,10 @@
 /*********************************************************************
 *
 *   Class:
-*       block_question_type
+*       animation_frame_type
 *
 *   Description:
-*       Contains data for question block
+*       Contains data for an animation frame
 *
 *********************************************************************/
 
@@ -31,34 +31,37 @@ namespace super_mario_bros {
                              CLASS
 --------------------------------------------------------------------*/
 
-public class block_question_type: block_type {
+public class animation_frame_type {
 
 /*--------------------------------------------------------------------
                            ATTRIBUTES
 --------------------------------------------------------------------*/
 
+public  int     sprite_id;
+public  int     cnt;
+public  int     rolling_cnt;
+
 /*--------------------------------------------------------------------
                             METHODS
 --------------------------------------------------------------------*/
 
-
 /***********************************************************
 *
 *   Method:
-*       draw
+*       animation_frame_type
 *
 *   Description:
-*       Draws the given block.
+*       Constructor. Accepts the enum value for the texture
+*       and the number of frames the texture is active.
 *
 ***********************************************************/
 
-public override void draw( SpriteBatch s, int x, int y )
+public animation_frame_type( int id, int frame_cnt )
 {
-Texture2D texture = Animations.block_question.get_sprite();
-Vector2 position = new Vector2( x * Blocks.size.Width * ViewDims.scale, y * Blocks.size.Height * ViewDims.scale );
-
-s.Draw( texture, position , null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, 0 );
-}
+sprite_id = id;
+cnt = frame_cnt;
+rolling_cnt = 0;
+} /* animation_frame_type() */
 
 
 }
