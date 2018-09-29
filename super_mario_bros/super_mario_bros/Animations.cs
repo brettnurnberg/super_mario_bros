@@ -60,12 +60,50 @@ static public animation_type        block_question;
 
 static Animations()
 {
+int mario_run_rate = 6;
+
 animations = new List<animation_type>();
-//TODO: The textures list may not be initialized by this point in time
+
 mario_run = new animation_type( Marios.textures );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, 5 ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, 5 ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, 5 ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, mario_run_rate ) );
+mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
 
 block_question = new animation_type( Blocks.textures );
 block_question.add_frame( new animation_frame_type( (int)block_enum.QUESTION_LIT,  24 ) );

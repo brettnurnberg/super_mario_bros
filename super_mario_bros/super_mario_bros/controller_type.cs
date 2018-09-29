@@ -40,6 +40,7 @@ public class controller_type {
 private model_type model;
 private int v_idx;
 private char_status_enum prev_location;
+private Boolean left_map;
 
 /*--------------------------------------------------------------------
                             METHODS
@@ -59,6 +60,7 @@ public controller_type( model_type m )
 {
 model = m;
 v_idx = 0;
+left_map = false;
 } /* controller_type() */
 
 
@@ -377,9 +379,24 @@ else
 /*----------------------------------------------------------
 Handle all collisions
 ----------------------------------------------------------*/
-update_hit_box( model.level.mario );
+if( physics.position.y + physics.velocity.y < 0 )
+    {
+    physics.position += physics.velocity;
+    }
+else
+    {
+    update_hit_box( model.level.mario );
+    }
 
 model.level.mario.status = status;
+
+/*----------------------------------------------------------
+Lose a life if Mario falls off the map
+----------------------------------------------------------*/
+if( left_map )
+    {
+    lose_a_life();
+    }
 
 /*----------------------------------------------------------
 Never scroll screen left
@@ -578,8 +595,11 @@ Boolean result = false;
 
 for( int i = x[0]; i <= x[1]; i++ )
     {
-    check_boundary( i, y );
-    if( model.level.map.blocks[i, y] != null )
+    if( left_boundary( i, y ) )
+        {
+        break;
+        }
+    else if( model.level.map.blocks[i, y] != null )
         {
         result = true;
         break;
@@ -595,8 +615,11 @@ Boolean result = false;
 
 for( int j = y[1]; j <= y[0]; j++ )
     {
-    check_boundary( x, j );
-    if( model.level.map.blocks[x, j] != null )
+    if( left_boundary( x, j ) )
+        {
+        break;
+        }
+    else if( model.level.map.blocks[x, j] != null )
         {
         result = true;
         break;
@@ -610,26 +633,48 @@ return result;
 /***********************************************************
 *
 *   Method:
-*       check_boundary
+*       left_boundary
 *
 *   Description:
-*       If Mario has left the map, lose a life.
+*       Returns true if mario has left the map.
 *
 ***********************************************************/
 
-private void check_boundary( int x, int y )
+private Boolean left_boundary( int x, int y )
 {
+left_map = false;
+
 if( x < 0 || x >= model.level.map.width || y < 0 || y >= model.level.map.height )
     {
-    model.level.mario.physics.position.x = model.level.mario.physics.init_position.x;
-    model.level.mario.physics.position.y = model.level.mario.physics.init_position.y;
-    model.level.mario.physics.velocity.x = 0;
-    model.level.mario.physics.velocity.y = 0;
-    model.level.mario.physics.acceleration.x = 0;
-    model.level.mario.physics.acceleration.y = 0;
-    while( true );
+    left_map = true;
     }
-} /* check_boundary() */
+
+return left_map;
+} /* left_boundary() */
+
+
+/***********************************************************
+*
+*   Method:
+*       lose_a_life
+*
+*   Description:
+*       Lose a life.
+*
+***********************************************************/
+
+private void lose_a_life()
+{
+/* Temporary code. Will need to be replaced with lose a life */
+model.level.mario.physics.position.x = model.level.mario.physics.init_position.x;
+model.level.mario.physics.position.y = model.level.mario.physics.init_position.y;
+model.level.mario.physics.velocity.x = 0;
+model.level.mario.physics.velocity.y = 0;
+model.level.mario.physics.acceleration.x = 0;
+model.level.mario.physics.acceleration.y = 0;
+ViewDims.view.X = 0;
+ViewDims.view.Y = 0;
+} /* lose_a_life() */
 
 }
 }

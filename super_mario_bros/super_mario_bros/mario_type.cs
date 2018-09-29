@@ -78,8 +78,6 @@ ground_status = char_status_enum.GROUND;
 public override void draw( SpriteBatch s )
 {
 Texture2D sprite;
-int x_offset = 0;
-int y_offset = 0;
 SpriteEffects flip_state = SpriteEffects.None;
 
 switch( status )
@@ -104,15 +102,6 @@ switch( status )
         break;
     }
 
-if( sprite == Marios.textures[(int)mario_enum.WALK2] )
-    {
-    y_offset++;
-    }
-else if( sprite == Marios.textures[(int)mario_enum.JUMP] )
-    {
-    x_offset -= 3;
-    }
-
 float x = (float)physics.position.x * ViewDims.scale / (float)( 1 << 12 );
 float y = (float)physics.position.y * ViewDims.scale / (float)( 1 << 12 );
 
@@ -122,8 +111,7 @@ if( ( physics.position.x & 0x0FFF ) == 0 )
     }
 y++;
 
-x += ( x_offset * ViewDims.scale );
-y += ( y_offset * ViewDims.scale );
+x -= ( 3 * ViewDims.scale );
 
 if( KeyBinding.D_LEFT_pressed )
     {
