@@ -20,12 +20,18 @@ namespace super_mario_bros {
 
 public enum mario_enum
 {
-STILL,
-WALK0,
-WALK1,
-WALK2,
-JUMP,
-SKID,
+STILL_R,
+WALK0_R,
+WALK1_R,
+WALK2_R,
+JUMP_R,
+SKID_R,
+STILL_L,
+WALK0_L,
+WALK1_L,
+WALK2_L,
+JUMP_L,
+SKID_L,
 
 COUNT
 }

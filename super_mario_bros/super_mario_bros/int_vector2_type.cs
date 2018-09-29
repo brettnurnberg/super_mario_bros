@@ -119,5 +119,23 @@ public static bool operator !=( int_vector2_type value1, int_vector2_type value2
 return ( ( value1.x != value2.x ) || ( value1.y != value2.y ) );
 }
 
+public override bool Equals( object obj )
+{
+int_vector2_type v;
+
+if( obj == null || GetType() != obj.GetType() )
+    {
+    return false;
+    }
+
+v = (int_vector2_type)obj;
+return ( x == v.x && y == v.y );
+}
+
+public override int GetHashCode()
+{
+return base.GetHashCode();
+}
+
 }
 }

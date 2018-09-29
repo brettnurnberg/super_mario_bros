@@ -91,7 +91,14 @@ Update mario Y location on jump
 ----------------------------------------------------------*/
 if( location == char_status_enum.GROUND && KeyBinding.A_BTN_pressed )
     {
-    status = mario_status_enum.JUMP;
+    if( model.level.mario.facing_right() )
+        {
+        status = mario_status_enum.JUMP_R;
+        }
+    else
+        {
+        status = mario_status_enum.JUMP_L;
+        }
 
     physics.init_velocity.x = physics.velocity.x;
     physics.init_velocity.y = physics.velocity.y;
@@ -121,6 +128,15 @@ else if( prev_location == char_status_enum.GROUND &&
          location == char_status_enum.AIR &&
          physics.velocity.y == 0 )
     {
+    if( model.level.mario.facing_right() )
+        {
+        status = mario_status_enum.FALL_R;
+        }
+    else
+        {
+        status = mario_status_enum.FALL_L;
+        }
+
     physics.init_velocity.x = physics.velocity.x;
     physics.init_velocity.y = physics.velocity.y;
 
@@ -234,7 +250,7 @@ else
         {
         physics.acceleration.x = MarioPhysics.ax_skid;
         physics.velocity.x += physics.acceleration.x;
-        status = mario_status_enum.SKID;
+        status = mario_status_enum.SKID_R;
         }
     /*----------------------------------------------------------
     Skidding right
@@ -245,7 +261,7 @@ else
         {
         physics.acceleration.x = -1 * MarioPhysics.ax_skid;
         physics.velocity.x += physics.acceleration.x;
-        status = mario_status_enum.SKID;
+        status = mario_status_enum.SKID_L;
         }
     /*----------------------------------------------------------
     Running right
@@ -254,11 +270,18 @@ else
             KeyBinding.B_BTN_pressed &&
             ( location == char_status_enum.GROUND ) )
         {
-        status = mario_status_enum.RUN;
-
         if( physics.velocity.x < 0 )
             {
             physics.velocity.x = 0;
+            }
+
+        if( physics.velocity.x <= MarioPhysics.vx_walk_max )
+            {
+            status = mario_status_enum.WALK_R;
+            }
+        else
+            {
+            status = mario_status_enum.RUN_R;
             }
 
         physics.acceleration.x = MarioPhysics.ax_run;
@@ -281,11 +304,18 @@ else
             KeyBinding.B_BTN_pressed &&
             ( location == char_status_enum.GROUND ) )
         {
-        status = mario_status_enum.RUN;
-
         if( physics.velocity.x > 0 )
             {
             physics.velocity.x = 0;
+            }
+
+        if( physics.velocity.x >= -1 * MarioPhysics.vx_walk_max )
+            {
+            status = mario_status_enum.WALK_L;
+            }
+        else
+            {
+            status = mario_status_enum.RUN_L;
             }
 
         physics.acceleration.x = -1 * MarioPhysics.ax_run;
@@ -308,7 +338,7 @@ else
             !KeyBinding.B_BTN_pressed &&
             ( location == char_status_enum.GROUND ) )
         {
-        status = mario_status_enum.WALK;
+        status = mario_status_enum.WALK_R;
 
         physics.acceleration.x = MarioPhysics.ax_walk;
         physics.velocity.x += physics.acceleration.x;
@@ -330,7 +360,7 @@ else
             !KeyBinding.B_BTN_pressed &&
             ( location == char_status_enum.GROUND ) )
         {
-        status = mario_status_enum.WALK;
+        status = mario_status_enum.WALK_L;
 
         physics.acceleration.x = -1 * MarioPhysics.ax_walk;
         physics.velocity.x += physics.acceleration.x;
@@ -353,7 +383,15 @@ else
         {
         physics.acceleration.x = -1 * MarioPhysics.ax_release;
         physics.velocity.x += physics.acceleration.x;
-        status = mario_status_enum.STILL;
+
+        if( model.level.mario.facing_right() )
+            {
+            status = mario_status_enum.STILL_R;
+            }
+        else
+            {
+            status = mario_status_enum.STILL_L;
+            }
         }
     /*----------------------------------------------------------
     Sliding left
@@ -363,7 +401,15 @@ else
         {
         physics.acceleration.x = MarioPhysics.ax_release;
         physics.velocity.x += physics.acceleration.x;
-        status = mario_status_enum.STILL;
+
+        if( model.level.mario.facing_right() )
+            {
+            status = mario_status_enum.STILL_R;
+            }
+        else
+            {
+            status = mario_status_enum.STILL_L;
+            }
         }
     /*----------------------------------------------------------
     Standing still
@@ -372,7 +418,15 @@ else
         {
         physics.acceleration.x = 0;
         physics.velocity.x = 0;
-        status = mario_status_enum.STILL;
+
+        if( model.level.mario.facing_right() )
+            {
+            status = mario_status_enum.STILL_R;
+            }
+        else
+            {
+            status = mario_status_enum.STILL_L;
+            }
         }
     }
 

@@ -20,13 +20,19 @@ namespace super_mario_bros {
 
 public enum mario_status_enum
 {
-STILL,
-WALK,
-RUN,
-JUMP,
-SWIM,
-SKID,
-CROUCH
+STILL_R = 0,
+WALK_R,
+RUN_R,
+JUMP_R = 4,
+SKID_R,
+STILL_L,
+WALK_L,
+RUN_L,
+JUMP_L = 10,
+SKID_L,
+FALL_R,
+FALL_L
+
 }
 
 }

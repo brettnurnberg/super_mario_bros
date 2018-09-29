@@ -40,6 +40,7 @@ public class mario_type : character_type {
 --------------------------------------------------------------------*/
 
 public  mario_status_enum status;
+public  int sprite_id;
 
 /*--------------------------------------------------------------------
                             METHODS
@@ -60,7 +61,8 @@ public mario_type()
 physics = new physics_type();
 physics.hit_box.Width = 12;
 physics.hit_box.Height = 16;
-status = mario_status_enum.STILL;
+sprite_id = 0;
+status = mario_status_enum.STILL_R;
 ground_status = char_status_enum.GROUND;
 } /* mario_type() */
 
@@ -77,50 +79,94 @@ ground_status = char_status_enum.GROUND;
 
 public override void draw( SpriteBatch s )
 {
-Texture2D sprite;
-SpriteEffects flip_state = SpriteEffects.None;
+Texture2D sprite = null;
 
-switch( status )
+/*----------------------------------------------------------
+Get Mario's sprite
+----------------------------------------------------------*/
+if( ( status == mario_status_enum.WALK_L ) ||
+    ( status == mario_status_enum.WALK_R ) )
     {
-    case mario_status_enum.STILL:
-        sprite = Marios.textures[(int)mario_enum.STILL];
-        break;
-    case mario_status_enum.WALK:
-        sprite = Animations.mario_run.get_sprite();
-        break;
-    case mario_status_enum.RUN:
-        sprite = Animations.mario_run.get_sprite();
-        break;
-    case mario_status_enum.JUMP:
-        sprite = Marios.textures[(int)mario_enum.JUMP];
-        break;
-    case mario_status_enum.SKID:
-        sprite = Marios.textures[(int)mario_enum.SKID];
-        break;
-    default:
-        sprite = Marios.textures[(int)mario_enum.STILL];
-        break;
+    sprite_id = Animations.mario_walk.get_sprite();
+    }
+else if( ( status == mario_status_enum.RUN_L ) ||
+         ( status == mario_status_enum.RUN_R ) )
+    {
+    sprite_id = Animations.mario_run.get_sprite();
+    }
+else if( ( status != mario_status_enum.FALL_R ) &&
+         ( status != mario_status_enum.FALL_L ) )
+    {
+    sprite_id = (int)status;
     }
 
+/*----------------------------------------------------------
+Animated sprites are all to the right. If we are facing
+left, flip the sprite.
+----------------------------------------------------------*/
+if( ( status == mario_status_enum.WALK_L ) ||
+    ( status == mario_status_enum.RUN_L  ) )
+    {
+    sprite_id += ( (int)mario_enum.WALK0_L - (int)mario_enum.WALK0_R );
+    }
+
+sprite = Marios.textures[sprite_id];
+
+/*----------------------------------------------------------
+Get Mario's position
+----------------------------------------------------------*/
 float x = (float)physics.position.x * ViewDims.scale / (float)( 1 << 12 );
 float y = (float)physics.position.y * ViewDims.scale / (float)( 1 << 12 );
 
+/*----------------------------------------------------------
+Take care of single pixel rounding
+----------------------------------------------------------*/
 if( ( physics.position.x & 0x0FFF ) == 0 )
     {
     x++;
     }
 y++;
 
-x -= ( 3 * ViewDims.scale );
-
-if( KeyBinding.D_LEFT_pressed )
+/*----------------------------------------------------------
+Move the sprite to center Mario's head in the hitbox
+----------------------------------------------------------*/
+if( facing_right() )
     {
-    flip_state = SpriteEffects.FlipHorizontally;
+    x -= ( 3 * ViewDims.scale );
+    }
+else
+    {
+    x -= ( 1 * ViewDims.scale );
     }
 
+/*----------------------------------------------------------
+Draw mario
+----------------------------------------------------------*/
 Vector2 p = new Vector2( (int)( x ), (int)( y ) );
-s.Draw( sprite, p , null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.scale, flip_state, 0 );
+s.Draw( sprite, p , null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, 0 );
 } /* draw() */
+
+/***********************************************************
+*
+*   Method:
+*       facing_right
+*
+*   Description:
+*       Returns true if mario is facing right.
+*
+***********************************************************/
+
+public Boolean facing_right()
+{
+Boolean result = false;
+
+if( status <= mario_status_enum.SKID_R || status == mario_status_enum.FALL_R )
+    {
+    result = true;
+    }
+
+return result;
+} /* facing_right() */
 
 
 }

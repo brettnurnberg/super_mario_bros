@@ -40,6 +40,7 @@ public static class Animations {
 
 static public List<animation_type>  animations;
 
+static public animation_type        mario_walk;
 static public animation_type        mario_run;
 static public animation_type        block_question;
 
@@ -60,57 +61,100 @@ static public animation_type        block_question;
 
 static Animations()
 {
-int mario_run_rate = 6;
+int mario_run_rate  = 6;
+int mario_walk_rate = 9;
 
 animations = new List<animation_type>();
 
-mario_run = new animation_type( Marios.textures );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK2, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK1, mario_run_rate ) );
-mario_run.add_frame( new animation_frame_type( (int)mario_enum.WALK0, mario_run_rate ) );
+mario_walk = new animation_type();
+add_frame( mario_walk, (int)mario_enum.WALK1_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK0_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK1_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK0_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK2_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK0_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK2_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK0_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK2_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK1_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK2_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK1_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK0_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK1_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK0_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK2_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK0_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK2_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK0_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK2_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK0_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK2_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK1_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK2_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK1_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK2_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK1_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK0_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK1_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK0_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK1_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK0_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK2_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK0_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK2_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK1_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK2_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK1_R, mario_walk_rate );
+add_frame( mario_walk, (int)mario_enum.WALK0_R, mario_walk_rate );
 
-block_question = new animation_type( Blocks.textures );
-block_question.add_frame( new animation_frame_type( (int)block_enum.QUESTION_LIT,  24 ) );
-block_question.add_frame( new animation_frame_type( (int)block_enum.QUESTION_MID,  8  ) );
-block_question.add_frame( new animation_frame_type( (int)block_enum.QUESTION_DARK, 8  ) );
-block_question.add_frame( new animation_frame_type( (int)block_enum.QUESTION_MID,  8  ) );
+mario_run = new animation_type();
+add_frame( mario_run, (int)mario_enum.WALK1_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK0_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK1_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK0_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK2_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK0_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK2_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK0_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK2_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK1_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK2_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK1_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK0_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK1_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK0_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK2_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK0_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK2_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK0_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK2_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK0_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK2_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK1_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK2_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK1_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK2_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK1_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK0_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK1_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK0_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK1_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK0_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK2_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK0_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK2_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK1_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK2_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK1_R, mario_run_rate );
+add_frame( mario_run, (int)mario_enum.WALK0_R, mario_run_rate );
 
+block_question = new animation_type();
+add_frame( block_question, (int)block_enum.QUESTION_LIT,  24 );
+add_frame( block_question, (int)block_enum.QUESTION_MID,  8  );
+add_frame( block_question, (int)block_enum.QUESTION_DARK, 8  );
+add_frame( block_question, (int)block_enum.QUESTION_MID,  8  );
+
+animations.Add( mario_walk );
 animations.Add( mario_run );
 animations.Add( block_question );
 } /* Animations() */
@@ -133,6 +177,22 @@ foreach( animation_type a in animations )
     a.update();
     }
 } /* update() */
+
+
+/***********************************************************
+*
+*   Method:
+*       add_frame
+*
+*   Description:
+*       Adds a new frame to the given animation.
+*
+***********************************************************/
+
+static private void add_frame( animation_type a, int sprite_id, int frame_cnt )
+{
+a.add_frame( new animation_frame_type( sprite_id, frame_cnt ) );
+} /* add_frame() */
 
 
 }

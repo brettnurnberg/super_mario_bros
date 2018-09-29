@@ -38,7 +38,6 @@ public class animation_type {
                            ATTRIBUTES
 --------------------------------------------------------------------*/
 
-public  Texture2D[]                 textures;
 public  List<animation_frame_type>  frames;
 public  int                         frame_cnt;
 public  int                         tick_cnt;
@@ -58,9 +57,8 @@ public  int                         frame_idx;
 *
 ***********************************************************/
 
-public animation_type( Texture2D[] texture_list  )
+public animation_type()
 {
-textures = texture_list;
 reset();
 frames = new List<animation_frame_type>();
 } /* animation_type() */
@@ -106,9 +104,9 @@ frame_cnt += frame.cnt;
 *
 ***********************************************************/
 
-public Texture2D get_sprite()
+public int get_sprite()
 {
-return textures[frames[frame_idx].sprite_id];
+return frames[frame_idx].sprite_id;
 } /* get_sprite() */
 
 
