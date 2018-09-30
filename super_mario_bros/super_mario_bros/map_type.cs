@@ -38,6 +38,7 @@ public class map_type {
 --------------------------------------------------------------------*/
 
 public  block_type[,]    blocks;
+public  List<pipe_type>  pipes;
 public  List<decor_type> decors;
 public  int              width;
 public  int              height;
@@ -150,6 +151,14 @@ for( int j = 3; j < 11; j++ )
     {
     blocks[189, j] = stair;
     }
+
+pipes = new List<pipe_type>();
+pipes.Add( new pipe_type( this,  28, 9, true, 2 ) );
+pipes.Add( new pipe_type( this,  38, 8, true, 3 ) );
+pipes.Add( new pipe_type( this,  46, 7, true, 4 ) );
+pipes.Add( new pipe_type( this,  57, 7, true, 4 ) );
+pipes.Add( new pipe_type( this, 163, 9, true, 2 ) );
+pipes.Add( new pipe_type( this, 179, 9, true, 2 ) );
 
 decors = new List<decor_type>();
 while( x < width * Blocks.size.Width )

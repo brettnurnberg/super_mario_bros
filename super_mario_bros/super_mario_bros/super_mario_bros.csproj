@@ -48,6 +48,7 @@
     <Compile Include="Blocks.cs" />
     <Compile Include="block_brick_type.cs" />
     <Compile Include="block_enum.cs" />
+    <Compile Include="block_pipe_type.cs" />
     <Compile Include="block_question_type.cs" />
     <Compile Include="block_red_cobble_type.cs" />
     <Compile Include="block_stair_type.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="model_type.cs" />
     <Compile Include="physics_mario_type.cs" />
     <Compile Include="physics_type.cs" />
+    <Compile Include="pipe_type.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewDims.cs" />
