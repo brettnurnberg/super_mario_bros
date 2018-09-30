@@ -60,5 +60,38 @@ s.Draw( texture, position , null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.
 }
 
 
+/***********************************************************
+*
+*   Method:
+*       hit_bottom
+*
+*   Description:
+*       Behavior on hitting the bottom of the block.
+*       Returns true if the block is immobile.
+*
+***********************************************************/
+
+public override Boolean hit_bottom()
+{
+return true;
+}
+
+
+/***********************************************************
+*
+*   Method:
+*       hit_side
+*
+*   Description:
+*       Behavior on hitting the side of the block.
+*
+***********************************************************/
+
+public override void hit_side()
+{
+
+}
+
+
 }
 }

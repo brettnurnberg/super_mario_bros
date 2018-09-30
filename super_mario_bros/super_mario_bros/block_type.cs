@@ -60,5 +60,32 @@ public abstract class block_type {
 public abstract void draw( SpriteBatch s, int x, int y );
 
 
+/***********************************************************
+*
+*   Method:
+*       hit_bottom
+*
+*   Description:
+*       Behavior on hitting the bottom of the block.
+*       Returns true if the block is immobile.
+*
+***********************************************************/
+
+public abstract Boolean hit_bottom();
+
+
+/***********************************************************
+*
+*   Method:
+*       hit_side
+*
+*   Description:
+*       Behavior on hitting the side of the block.
+*
+***********************************************************/
+
+public abstract void hit_side();
+
+
 }
 }

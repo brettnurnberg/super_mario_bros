@@ -59,8 +59,8 @@ public  int sprite_id;
 public mario_type()
 {
 physics = new physics_type();
-physics.hit_box.Width = 12;
-physics.hit_box.Height = 16;
+physics.hit_box.Width = 10;
+physics.hit_box.Height = 12;
 sprite_id = 0;
 status = mario_status_enum.STILL_R;
 ground_status = char_status_enum.GROUND;
@@ -132,12 +132,13 @@ Move the sprite to center Mario's head in the hitbox
 ----------------------------------------------------------*/
 if( facing_right() )
     {
-    x -= ( 3 * ViewDims.scale );
+    x -= ( 4 * ViewDims.scale );
     }
 else
     {
-    x -= ( 1 * ViewDims.scale );
+    x -= ( 2 * ViewDims.scale );
     }
+y -= ( 4 * ViewDims.scale );
 
 /*----------------------------------------------------------
 Draw mario

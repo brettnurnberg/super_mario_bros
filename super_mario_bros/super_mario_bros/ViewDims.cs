@@ -6,6 +6,9 @@
 *   Description:
 *       Contains the dimensions for the view
 *
+*   TODO:
+*       I believe the x and y axes have different scales.
+*
 *********************************************************************/
 
 /*--------------------------------------------------------------------

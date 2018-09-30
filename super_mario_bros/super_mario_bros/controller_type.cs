@@ -501,7 +501,31 @@ Check for y collisions
 ----------------------------------------------------------*/
 if( contains_block( x, y[1] ) )
     {
+    int x_hit;
+
     push_down( c );
+
+    if( contains_block( x[1], y[1] ) && model.level.mario.facing_right() )
+        {
+        x_hit = x[1];
+        }
+    else if( contains_block( x[0], y[1] ) && !model.level.mario.facing_right() )
+        {
+        x_hit = x[0];
+        }
+    else if( contains_block( x[1], y[1] ) )
+        {
+        x_hit = x[1];
+        }
+    else
+        {
+        x_hit = x[0];
+        }
+
+    if( model.level.map.blocks[ x_hit, y[1] ].hit_bottom() )
+        {
+        c.physics.velocity.y = MarioPhysics.vy_hard_block;
+        }
     }
 else if( contains_block( x, y[0] ) )
     {
@@ -637,10 +661,6 @@ c.physics.position.x = ( ( ( x * Blocks.size.Width ) - c.physics.hit_box.Width )
 *       Returns true if the given series of blocks
 *       contains a solid block.
 *
-*   TODO:
-//this method will fail when mario falls off map - access out of bounds
-//call lose_life function when we try to access out of bounds
-*
 ***********************************************************/
 
 private Boolean contains_block( int[] x, int y )
@@ -649,7 +669,7 @@ Boolean result = false;
 
 for( int i = x[0]; i <= x[1]; i++ )
     {
-    if( left_boundary( i, y ) )
+    if( check_left_map( i, y ) )
         {
         break;
         }
@@ -669,7 +689,7 @@ Boolean result = false;
 
 for( int j = y[1]; j <= y[0]; j++ )
     {
-    if( left_boundary( x, j ) )
+    if( check_left_map( x, j ) )
         {
         break;
         }
@@ -683,18 +703,23 @@ for( int j = y[1]; j <= y[0]; j++ )
 return result;
 } /* contains_block() */
 
+private Boolean contains_block( int x, int y )
+{
+return ( model.level.map.blocks[x, y] != null );
+} /* contains_block() */
+
 
 /***********************************************************
 *
 *   Method:
-*       left_boundary
+*       check_left_map
 *
 *   Description:
 *       Returns true if mario has left the map.
 *
 ***********************************************************/
 
-private Boolean left_boundary( int x, int y )
+private Boolean check_left_map( int x, int y )
 {
 left_map = false;
 
@@ -704,7 +729,7 @@ if( x < 0 || x >= model.level.map.width || y < 0 || y >= model.level.map.height 
     }
 
 return left_map;
-} /* left_boundary() */
+} /* check_left_map() */
 
 
 /***********************************************************

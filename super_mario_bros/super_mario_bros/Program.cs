@@ -8,11 +8,11 @@
 *       the entry point.
 *
 *   TODO:
-*       3. Add block behavior (on hit)
-*       4. add mario animations
-*           add mirrored sprites
-*           fix run cycle
-*           fix left/right implementation
+*       Add block behavior (on hit)
+*           have items come out of the block
+*       Add item implementation (mushroom, flower, coin, star, 1-up)
+*       Draw castle at end
+*       Create flag pole implementation
 *       add enemies
 *       add pipes
 *       add mario sounds

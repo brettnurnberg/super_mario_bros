@@ -44,6 +44,8 @@ static public animation_type        mario_walk;
 static public animation_type        mario_run;
 static public animation_type        block_question;
 
+static public int                   frame_count;
+
 /*--------------------------------------------------------------------
                             METHODS
 --------------------------------------------------------------------*/
@@ -64,6 +66,7 @@ static Animations()
 int mario_run_rate  = 6;
 int mario_walk_rate = 9;
 
+frame_count = 0;
 animations = new List<animation_type>();
 
 mario_walk = new animation_type();
@@ -172,6 +175,8 @@ animations.Add( block_question );
 
 static public void update()
 {
+frame_count++;
+
 foreach( animation_type a in animations )
     {
     a.update();
@@ -193,6 +198,43 @@ static private void add_frame( animation_type a, int sprite_id, int frame_cnt )
 {
 a.add_frame( new animation_frame_type( sprite_id, frame_cnt ) );
 } /* add_frame() */
+
+
+/***********************************************************
+*
+*   Method:
+*       get_block_offset
+*
+*   Description:
+*       Returns the block offset for a given block and
+*       animation start time.
+*
+***********************************************************/
+
+static public int get_block_offset( int init_frame_cnt )
+{
+int offset;
+int delta_cnt = frame_count - init_frame_cnt;
+
+if( init_frame_cnt == 0 || delta_cnt >= 13 )
+    {
+    offset = 0;
+    }
+else if( delta_cnt < 4 )
+    {
+    offset = ( delta_cnt * 2 ) + 1;
+    }
+else if( delta_cnt < 8 )
+    {
+    offset = 9;
+    }
+else
+    {
+    offset = ( 11 - delta_cnt ) * 2 + 1;
+    }
+
+return offset;
+} /* get_block_offset() */
 
 
 }
