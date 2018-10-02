@@ -1,23 +1,10 @@
-﻿/*********************************************************************
+/*********************************************************************
 *
 *   Class:
-*       Program
+*       block_blue_cobble_type
 *
 *   Description:
-*       The main class for the application. Contains
-*       the entry point.
-*
-*   TODO:
-*       need to be able to lock the view in a set position
-*       add pipe animation
-*       Add block behavior (on hit)
-*           have items come out of the block
-*       Add item implementation (mushroom, flower, coin, star, 1-up)
-*       Draw castle at end
-*       Create flag pole implementation
-*       add enemies
-*       add mario sounds
-*       add music
+*       Contains data for blue cobblestone block
 *
 *********************************************************************/
 
@@ -25,6 +12,9 @@
                             INCLUDES
 --------------------------------------------------------------------*/
 
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 
 /*--------------------------------------------------------------------
@@ -41,42 +31,66 @@ namespace super_mario_bros {
                              CLASS
 --------------------------------------------------------------------*/
 
-public static class Program {
+public class block_blue_cobble_type: block_type {
 
 /*--------------------------------------------------------------------
                            ATTRIBUTES
 --------------------------------------------------------------------*/
-public static model_type        model;
-public static view_type         view;
-public static controller_type   controller;
 
 /*--------------------------------------------------------------------
                             METHODS
 --------------------------------------------------------------------*/
 
+
 /***********************************************************
 *
 *   Method:
-*       Main
+*       draw
 *
 *   Description:
-*       Entry point for the application.
+*       Draws the given block.
 *
 ***********************************************************/
 
-[STAThread]
-static void Main()
+public override void draw( SpriteBatch s, int x, int y )
 {
-model      = new model_type();
-controller = new controller_type( model );
-view       = new view_type( model );
+Texture2D texture = Blocks.textures[(int)block_static_enum.BLUE_COBBLE];
+Vector2 position = new Vector2( x * Blocks.size.Width * ViewDims.scale, y * Blocks.size.Height * ViewDims.scale );
+s.Draw( texture, position , null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, 0 );
+}
 
-using ( Game1 game = new Game1( model, controller, view ) )
-    {
-    game.Run();
-    }
 
-} /* Main() */
+/***********************************************************
+*
+*   Method:
+*       hit_bottom
+*
+*   Description:
+*       Behavior on hitting the bottom of the block.
+*       Returns true if the block is immobile.
+*
+***********************************************************/
+
+public override Boolean hit_bottom()
+{
+return true;
+}
+
+
+/***********************************************************
+*
+*   Method:
+*       hit_side
+*
+*   Description:
+*       Behavior on hitting the side of the block.
+*
+***********************************************************/
+
+public override void hit_side()
+{
+
+}
 
 
 }

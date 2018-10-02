@@ -46,6 +46,8 @@
     <Compile Include="animation_frame_type.cs" />
     <Compile Include="animation_type.cs" />
     <Compile Include="Blocks.cs" />
+    <Compile Include="block_blue_cobble_type.cs" />
+    <Compile Include="block_brick_blue_type.cs" />
     <Compile Include="block_brick_type.cs" />
     <Compile Include="block_enum.cs" />
     <Compile Include="block_pipe_type.cs" />

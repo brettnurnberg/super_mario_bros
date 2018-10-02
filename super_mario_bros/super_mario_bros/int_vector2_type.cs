@@ -116,7 +116,23 @@ return ( ( value1.x == value2.x ) && ( value1.y == value2.y ) );
 
 public static bool operator !=( int_vector2_type value1, int_vector2_type value2 )
 {
-return ( ( value1.x != value2.x ) || ( value1.y != value2.y ) );
+bool result;
+
+if( ( object.ReferenceEquals( value1, null ) && !object.ReferenceEquals( value2, null ) ) ||
+    ( !object.ReferenceEquals( value1, null ) && object.ReferenceEquals( value2, null ) ) )
+    {
+    result = true;
+    }
+else if( object.ReferenceEquals( value1, null ) && object.ReferenceEquals( value2, null ) )
+    {
+    result = false;
+    }
+else
+    {
+    result = ( ( value1.x != value2.x ) || ( value1.y != value2.y ) );
+    }
+
+return result;
 }
 
 public override bool Equals( object obj )

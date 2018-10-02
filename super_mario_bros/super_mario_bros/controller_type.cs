@@ -442,6 +442,24 @@ else
     update_hit_box( model.level.mario );
     }
 
+/*----------------------------------------------------------
+Check for entering a vertical pipe
+----------------------------------------------------------*/
+if( KeyBinding.D_DOWN_pressed )
+    {
+    pipe_type p = on_pipe();
+
+    if( null != p )
+        {
+        int x = model.level.mario.physics.position.x >> 16;
+        int y = ( ( model.level.mario.physics.position.y >> 12 ) + model.level.mario.physics.hit_box.Height ) >> 4;
+
+        p.check_entry( x, y, model.level.mario );
+        }
+    }
+
+
+
 model.level.mario.status = status;
 
 /*----------------------------------------------------------
@@ -562,6 +580,16 @@ if( contains_block( x[0], y ) )
 else if( contains_block( x[1], y ) )
     {
     push_left( c );
+
+    /*----------------------------------------------------------
+    Check for entering a horizontal pipe
+    ----------------------------------------------------------*/
+    if( ( model.level.map.blocks[x[1], y[0]] != null ) &&
+        ( model.level.map.blocks[x[1], y[0]].GetType() == typeof( block_pipe_type ) ) )
+        {
+        block_pipe_type p = (block_pipe_type)model.level.map.blocks[x[1], y[0]];
+        p.pipe.check_entry( x[1] - 1, y[0], model.level.mario );
+        }
     }
 
 } /* update_hit_box() */
@@ -754,6 +782,36 @@ model.level.mario.physics.acceleration.y = 0;
 ViewDims.view.X = 0;
 ViewDims.view.Y = 0;
 } /* lose_a_life() */
+
+
+/***********************************************************
+*
+*   Method:
+*       on_pipe
+*
+*   Description:
+*       Returns the pipe mario is standing on,
+*       or null if he is not on a pipe.
+*
+***********************************************************/
+
+private pipe_type on_pipe()
+{
+pipe_type p = null;
+int x0 = model.level.mario.physics.position.x >> 16;
+int x1 = ( ( model.level.mario.physics.position.x >> 12 ) + model.level.mario.physics.hit_box.Width ) >> 4;
+int y  = ( ( model.level.mario.physics.position.y >> 12 ) + model.level.mario.physics.hit_box.Height ) >> 4;
+y++;
+
+if( ( ( null != model.level.map.blocks[x0, y] ) && ( model.level.map.blocks[x0, y].GetType() == typeof( block_pipe_type ) ) ) &&
+    ( ( null != model.level.map.blocks[x1, y] ) && ( model.level.map.blocks[x1, y].GetType() == typeof( block_pipe_type ) ) ) )
+    {
+    block_pipe_type p_block = (block_pipe_type)model.level.map.blocks[x0, y];
+    p = p_block.pipe;
+    }
+
+return p;
+} /* on_pipe() */
 
 }
 }

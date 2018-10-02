@@ -44,8 +44,6 @@ private Game                    game;
 private GraphicsDeviceManager   graphics;
 private SpriteBatch             spriteBatch;
 
-private Color                   back_color;
-
 /*--------------------------------------------------------------------
                             METHODS
 --------------------------------------------------------------------*/
@@ -63,7 +61,6 @@ private Color                   back_color;
 public view_type( model_type m )
 {
 model = m;
-back_color = new Color( 92, 147, 255 );
 
 } /* view_type() */
 
@@ -80,9 +77,9 @@ back_color = new Color( 92, 147, 255 );
 
 public void draw()
 {
-game.GraphicsDevice.Clear( back_color );
+game.GraphicsDevice.Clear( model.level.map.get_back_color( model.level.mario.physics.position.x >> 16 ) );
 
-ViewDims.set_view_location( model.level );
+ViewDims.set_view_location( model );
 
 spriteBatch.Begin( SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation( ViewDims.view_scaled.X, ViewDims.view_scaled.Y, 0 ) );
 model.level.draw( spriteBatch );

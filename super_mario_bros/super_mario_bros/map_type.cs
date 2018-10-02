@@ -40,7 +40,11 @@ public class map_type {
 public  block_type[,]    blocks;
 public  List<pipe_type>  pipes;
 public  List<decor_type> decors;
+public  List<Rectangle>  view_locks;
+public  int              tier_count;
+public  int[]            tier_widths;
 public  int              width;
+public  Color[]          tier_colors;
 public  int              height;
 public  int              min_height;
 public  int              max_height;
@@ -63,14 +67,37 @@ public map_type()
 {
 int x = 0;
 
+view_locks = new List<Rectangle>();
+
+/*----------------------------------------------------------
+Set up level tiers
+----------------------------------------------------------*/
+tier_count = 2;
+tier_widths = new int[tier_count];
+tier_colors = new Color[tier_count];
+
+tier_colors[0] = new Color( 92, 147, 255 );
+tier_colors[1] = Color.Black;
+
 height = 13;
-width = 213;
-blocks = new block_type[width, height];
-block_type cobble = new block_red_cobble_type();
-block_type stair = new block_stair_type();
+tier_widths[0] = 225;
+tier_widths[1] = 17;
+
+width = 0;
+for( int i = 0; i < tier_count; i++ )
+    {
+    width += tier_widths[i];
+    }
 
 min_height = Blocks.size.Height * ( height - 1 ) + 8;
 max_height = min_height + ViewDims.view.Height;
+
+view_locks.Add( new Rectangle( tier_widths[0] * Blocks.size.Width, 0, 17 * Blocks.size.Width, 13 * Blocks.size.Height ) );
+
+/*----------------------------------------------------------
+Set up map sizes
+----------------------------------------------------------*/
+blocks = new block_type[width, height];
 
 for( int i = 0; i < width;  i++ )
 for( int j = 0; j < height; j++ )
@@ -78,7 +105,16 @@ for( int j = 0; j < height; j++ )
     blocks[i, j] = null;
     }
 
-for( int i = 0;  i < width;  i++ )
+/*----------------------------------------------------------
+Add static blocks
+----------------------------------------------------------*/
+/*----------------------------------------------
+Tier 0
+----------------------------------------------*/
+block_type cobble = new block_red_cobble_type();
+block_type stair = new block_stair_type();
+
+for( int i = 0;  i < tier_widths[0];  i++ )
 for( int j = 11; j < height; j++ )
     {
     if( ( i != 69 && i != 70 && i != 86 ) &&
@@ -88,6 +124,41 @@ for( int j = 11; j < height; j++ )
         }
     }
 
+blocks[198, 10] = stair;
+
+add_stairs( 134, 10, 4, stair, true );
+add_stairs( 140, 10, 4, stair, false );
+
+add_stairs( 148, 10, 4, stair, true );
+for( int j = 7; j < 11; j++ )
+    {
+    blocks[152, j] = stair;
+    }
+add_stairs( 155, 10, 4, stair, false );
+
+add_stairs( 181, 10, 8, stair, true );
+for( int j = 3; j < 11; j++ )
+    {
+    blocks[189, j] = stair;
+    }
+
+/*----------------------------------------------
+Tier 1
+----------------------------------------------*/
+block_type blue_cobble = new block_blue_cobble_type();
+
+for( int i = 0;  i < tier_widths[1];  i++ )
+for( int j = 11; j < height; j++ )
+    {
+    blocks[tier_widths[0] + i, j] = blue_cobble;
+    }
+
+/*----------------------------------------------------------
+Add non-static blocks
+----------------------------------------------------------*/
+/*----------------------------------------------
+Tier 0
+----------------------------------------------*/
 blocks[16, 7] = new block_question_type();
 blocks[20, 7] = new block_brick_type();
 blocks[21, 7] = new block_question_type();
@@ -133,25 +204,28 @@ blocks[169, 7] = new block_brick_type();
 blocks[170, 7] = new block_question_type();
 blocks[171, 7] = new block_brick_type();
 
-blocks[198, 10] = stair;
-
-
-add_stairs( 134, 10, 4, stair, true );
-add_stairs( 140, 10, 4, stair, false );
-
-add_stairs( 148, 10, 4, stair, true );
-for( int j = 7; j < 11; j++ )
+/*----------------------------------------------
+Tier 1
+----------------------------------------------*/
+for( int j = 0; j < height - 2; j++ )
     {
-    blocks[152, j] = stair;
-    }
-add_stairs( 155, 10, 4, stair, false );
-
-add_stairs( 181, 10, 8, stair, true );
-for( int j = 3; j < 11; j++ )
-    {
-    blocks[189, j] = stair;
+    blocks[tier_widths[0], j] = new block_brick_blue_type();
     }
 
+for( int i = 4; i < 11; i++ )
+    {
+    blocks[tier_widths[0] + i, 0]  = new block_brick_blue_type();
+    blocks[tier_widths[0] + i, 8]  = new block_brick_blue_type();
+    blocks[tier_widths[0] + i, 9]  = new block_brick_blue_type();
+    blocks[tier_widths[0] + i, 10] = new block_brick_blue_type();
+    }
+
+/*----------------------------------------------------------
+Add pipes
+----------------------------------------------------------*/
+/*----------------------------------------------
+Tier 0
+----------------------------------------------*/
 pipes = new List<pipe_type>();
 pipes.Add( new pipe_type( this,  28, 9, true, 2 ) );
 pipes.Add( new pipe_type( this,  38, 8, true, 3 ) );
@@ -160,19 +234,38 @@ pipes.Add( new pipe_type( this,  57, 7, true, 4 ) );
 pipes.Add( new pipe_type( this, 163, 9, true, 2 ) );
 pipes.Add( new pipe_type( this, 179, 9, true, 2 ) );
 
+/*----------------------------------------------
+Tier 1
+----------------------------------------------*/
+pipes.Add( new pipe_type( this, tier_widths[0] + 15, 0, true,  11 ) );
+pipes.Add( new pipe_type( this, tier_widths[0] + 13, 9, false, 3  ) );
+
+/*----------------------------------------------------------
+Add pipe links
+----------------------------------------------------------*/
+pipes[3].link_pipe( new int_vector2_type( ( tier_widths[0] + 2 ) * Blocks.size.Width, Blocks.size.Height ) );
+pipes[7].link_pipe( pipes[4] );
+
+/*----------------------------------------------------------
+Add decoration
+----------------------------------------------------------*/
 decors = new List<decor_type>();
-while( x < width * Blocks.size.Width )
+x = 0;
+for( int i = 0; i < 5; i++ )
     {
-    decors.Add( new decor_cloud_type( 136 + x, 17, 1 ) );
-    decors.Add( new decor_cloud_type( 312 + x, 1,  1 ) );
-    decors.Add( new decor_cloud_type( 440 + x, 17, 3 ) );
-    decors.Add( new decor_cloud_type( 584 + x, 1,  2 ) );
+    decors.Add( new decor_hill_type(  0   + x, 141    ) );
+    decors.Add( new decor_cloud_type( 136 + x, 17,  1 ) );
     decors.Add( new decor_bush_type(  184 + x, 160, 3 ) );
+    decors.Add( new decor_hill_type(  241 + x, 157    ) );
+    decors.Add( new decor_cloud_type( 312 + x, 1,   1 ) );
     decors.Add( new decor_bush_type(  377 + x, 160, 1 ) );
-    decors.Add( new decor_bush_type(  664 + x, 160, 2 ) );
-    decors.Add( new decor_hill_type(  0   + x, 141 ) );
-    decors.Add( new decor_hill_type(  241 + x, 157 ) );
-    decors.Add( new decor_hill_type(  768 + x, 141 ) );
+    decors.Add( new decor_cloud_type( 440 + x, 17,  3 ) );
+
+    if( i < 4 )
+        {
+        decors.Add( new decor_cloud_type( 584 + x, 1,   2 ) );
+        decors.Add( new decor_bush_type(  664 + x, 160, 2 ) );
+        }
 
     x += 768;
     }
@@ -234,6 +327,33 @@ for( int j = 0; j < height; j++ )
         }
     }
 } /* draw() */
+
+
+/***********************************************************
+*
+*   Method:
+*       get_back_color
+*
+*   Description:
+*       Draw the map.
+*
+***********************************************************/
+
+public Color get_back_color( int x )
+{
+int rolling_width = 0;
+
+for( int i = 0; i < tier_count; i++ )
+    {
+    rolling_width += tier_widths[i];
+    if( x < rolling_width )
+        {
+        return tier_colors[i];
+        }
+    }
+
+return Color.Black;
+} /* get_back_color() */
 
 
 }

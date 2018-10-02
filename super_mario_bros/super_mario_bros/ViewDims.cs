@@ -109,13 +109,17 @@ else
 *
 ***********************************************************/
 
-public static void set_view_location( level_type level )
+public static void set_view_location( model_type m )
 {
+level_type level = m.level;
+
 if( ( view.X + ( 100 << 12 )  ) < level.mario.physics.position.x )
     {
     int mario_x = level.mario.physics.position.x;
     view.X = mario_x - ( 100 << 12 );
     }
+
+check_locks( m );
 
 view_scaled.X = (int)( view.X * scale ) >> 12;
 
@@ -136,6 +140,34 @@ view_scaled.X *= -1;
 view_scaled.X += left_edge.Width;
 
 } /* set_window_size() */
+
+
+/***********************************************************
+*
+*   Method:
+*       check_locks
+*
+*   Description:
+*       Check for view locks.
+*
+***********************************************************/
+
+public static void check_locks( model_type m )
+{
+int_vector2_type position = new int_vector2_type();
+position.x = m.level.mario.physics.position.x >> 12;
+position.y = m.level.mario.physics.position.y >> 12;
+
+foreach( Rectangle r in m.level.map.view_locks )
+    {
+    if( r.Contains( position.x, position.y ) )
+        {
+        view.X = r.X << 12;
+        view.Y = r.Y << 12;
+        }
+    }
+
+} /* check_locks() */
 
 
 }

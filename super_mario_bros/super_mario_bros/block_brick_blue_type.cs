@@ -1,10 +1,10 @@
 /*********************************************************************
 *
 *   Class:
-*       block_pipe_type
+*       block_brick_blue_type
 *
 *   Description:
-*       Contains data for pipe block
+*       Contains data for brick block
 *
 *********************************************************************/
 
@@ -31,14 +31,13 @@ namespace super_mario_bros {
                              CLASS
 --------------------------------------------------------------------*/
 
-public class block_pipe_type: block_type {
+public class block_brick_blue_type: block_type {
 
 /*--------------------------------------------------------------------
                            ATTRIBUTES
 --------------------------------------------------------------------*/
 
-public  pipe_type pipe;
-private int texture_id;
+private int hit_frame_start;
 
 /*--------------------------------------------------------------------
                             METHODS
@@ -48,17 +47,16 @@ private int texture_id;
 /***********************************************************
 *
 *   Method:
-*       block_pipe_type
+*       block_brick_blue_type
 *
 *   Description:
 *       Constructor.
 *
 ***********************************************************/
 
-public block_pipe_type( pipe_type p, int t_id )
+public block_brick_blue_type()
 {
-pipe = p;
-texture_id = t_id;
+hit_frame_start= 0;
 }
 
 /***********************************************************
@@ -73,9 +71,12 @@ texture_id = t_id;
 
 public override void draw( SpriteBatch s, int x, int y )
 {
-Texture2D texture = Blocks.textures[texture_id];
+int y_offset;
+Texture2D texture = Blocks.textures[(int)block_enum.BRICK_BLUE];
 
-Vector2 position = new Vector2( x * Blocks.size.Width * ViewDims.scale, y * Blocks.size.Height * ViewDims.scale );
+y_offset = Animations.get_block_offset( hit_frame_start );
+
+Vector2 position = new Vector2( x * Blocks.size.Width * ViewDims.scale, ( y * Blocks.size.Height - y_offset ) * ViewDims.scale );
 s.Draw( texture, position , null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, 0 );
 }
 
@@ -93,7 +94,9 @@ s.Draw( texture, position , null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.
 
 public override Boolean hit_bottom()
 {
-return true;
+hit_frame_start = Animations.frame_count;
+
+return false;
 }
 
 
