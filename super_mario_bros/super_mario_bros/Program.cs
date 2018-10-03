@@ -8,7 +8,8 @@
 *       the entry point.
 *
 *   TODO:
-*       need to be able to lock the view in a set position
+*       fix pipe entry (only enter if holding left and on ground)
+*       fix pipe entry (zero velocity and acceleration)
 *       add pipe animation
 *       Add block behavior (on hit)
 *           have items come out of the block

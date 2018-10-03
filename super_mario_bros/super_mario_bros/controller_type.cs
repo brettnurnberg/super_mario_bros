@@ -584,7 +584,8 @@ else if( contains_block( x[1], y ) )
     /*----------------------------------------------------------
     Check for entering a horizontal pipe
     ----------------------------------------------------------*/
-    if( ( model.level.map.blocks[x[1], y[0]] != null ) &&
+    if( ( KeyBinding.D_RIGHT_pressed ) &&
+        ( model.level.map.blocks[x[1], y[0]] != null ) &&
         ( model.level.map.blocks[x[1], y[0]].GetType() == typeof( block_pipe_type ) ) )
         {
         block_pipe_type p = (block_pipe_type)model.level.map.blocks[x[1], y[0]];

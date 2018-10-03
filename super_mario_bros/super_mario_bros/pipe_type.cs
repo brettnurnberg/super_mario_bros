@@ -158,24 +158,31 @@ public Boolean check_entry( int _x, int _y, mario_type m )
 {
 Boolean entered = false;
 
-if( ( is_vertical && ( _x == x || _x == x + 1 ) && ( _y == y ) ) ||
-    ( !is_vertical && ( _x == x - 1 ) && ( _y == y + 1 ) ) )
+if( ( m.ground_status == char_status_enum.GROUND ) &&
+    ( ( is_vertical && ( _x == x || _x == ( x + 1 ) ) && ( _y == y ) ) ||
+    ( !is_vertical && ( _x == ( x - 1 ) ) && ( _y == ( y + 1 ) ) ) ) )
     {
     if( link_v != null )
         {
         m.physics.position.x = link_v.x << 12;
         m.physics.position.y = link_v.y << 12;
-
-        ViewDims.view.X = m.physics.position.x >> 12 - 4 * Blocks.size.Width;
-        ViewDims.view.Y = 0;
         }
     else if( link_p != null )
         {
         m.physics.position.x = ( link_p.x << 16 ) + ( 5 << 12 );
         m.physics.position.y = ( link_p.y << 16 ) - ( ( m.physics.hit_box.Height - 1 ) << 12 );
+        }
+    if( ( link_v != null ) ||
+        ( link_p != null ) )
+        {
+        m.physics.acceleration.x = 0;
+        m.physics.acceleration.y = 0;
+        m.physics.velocity.x = 0;
+        m.physics.velocity.y = 0;
 
-        ViewDims.view.X = m.physics.position.x >> 12 - 4 * Blocks.size.Width;
+        ViewDims.view.X = ( m.physics.position.x >> 12 ) - 4 * Blocks.size.Width;
         ViewDims.view.Y = 0;
+        entered = true;
         }
     }
 
