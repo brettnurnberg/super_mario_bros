@@ -1,23 +1,10 @@
-﻿/*********************************************************************
+/*********************************************************************
 *
 *   Class:
-*       Program
+*       decor_pole_type
 *
 *   Description:
-*       The main class for the application. Contains
-*       the entry point.
-*
-*   TODO:
-*       Draw castle at end
-*       Create flag pole implementation
-*           once on pole, start falling at v_desc and animation (set sprite based on height)
-*       add pipe animation
-*       Add block behavior (on hit)
-*           have items come out of the block
-*       Add item implementation (mushroom, flower, coin, star, 1-up)
-*       add enemies
-*       add mario sounds
-*       add music
+*       Contains data for a pole
 *
 *********************************************************************/
 
@@ -25,6 +12,9 @@
                             INCLUDES
 --------------------------------------------------------------------*/
 
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 
 /*--------------------------------------------------------------------
@@ -41,42 +31,51 @@ namespace super_mario_bros {
                              CLASS
 --------------------------------------------------------------------*/
 
-public static class Program {
+public class decor_pole_type: decor_type {
 
 /*--------------------------------------------------------------------
                            ATTRIBUTES
 --------------------------------------------------------------------*/
-public static model_type        model;
-public static view_type         view;
-public static controller_type   controller;
 
 /*--------------------------------------------------------------------
                             METHODS
 --------------------------------------------------------------------*/
 
+
 /***********************************************************
 *
 *   Method:
-*       Main
+*       decor_pole_type
 *
 *   Description:
-*       Entry point for the application.
+*       Constructor.
 *
 ***********************************************************/
 
-[STAThread]
-static void Main()
+public decor_pole_type( int _x, int _y )
 {
-model      = new model_type();
-controller = new controller_type( model );
-view       = new view_type( model );
+x = _x;
+y = _y;
+}
 
-using ( Game1 game = new Game1( model, controller, view ) )
-    {
-    game.Run();
-    }
 
-} /* Main() */
+/***********************************************************
+*
+*   Method:
+*       draw
+*
+*   Description:
+*       Draws the given decoration.
+*
+***********************************************************/
+
+public override void draw( SpriteBatch s )
+{
+Texture2D texture = Decor.textures[(int)decor_enum.FLAG_POLE];
+Vector2 position = new Vector2( x * ViewDims.scale, y * ViewDims.scale );
+
+s.Draw( texture, position, null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, 0 );
+}
 
 
 }

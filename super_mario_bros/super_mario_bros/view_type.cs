@@ -79,11 +79,22 @@ public void draw()
 {
 game.GraphicsDevice.Clear( model.level.map.get_back_color( model.level.mario.physics.position.x >> 16 ) );
 
-ViewDims.set_view_location( model );
+switch( model.game_status )
+    {
+    case game_status_enum.gameplay:
+        ViewDims.set_view_location( model );
+        spriteBatch.Begin( SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation( ViewDims.view_scaled.X, ViewDims.view_scaled.Y, 0 ) );
+        model.level.draw( spriteBatch );
+        spriteBatch.End();
+        break;
 
-spriteBatch.Begin( SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation( ViewDims.view_scaled.X, ViewDims.view_scaled.Y, 0 ) );
-model.level.draw( spriteBatch );
-spriteBatch.End();
+    case game_status_enum.level_complete:
+        spriteBatch.Begin( SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation( ViewDims.view_scaled.X, ViewDims.view_scaled.Y, 0 ) );
+        model.level.draw( spriteBatch );
+        spriteBatch.End();
+        break;
+
+    }
 
 DrawShape.Rectangle( ViewDims.left_edge,  Color.Black );
 DrawShape.Rectangle( ViewDims.right_edge, Color.Black );

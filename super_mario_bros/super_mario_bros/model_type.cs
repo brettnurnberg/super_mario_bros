@@ -37,9 +37,10 @@ public class model_type {
                            ATTRIBUTES
 --------------------------------------------------------------------*/
 
-public  level_type  level;
-public  int         life_count;
-public  int         score;
+public  level_type          level;
+public  int                 life_count;
+public  int                 score;
+public  game_status_enum    game_status;
 
 /*--------------------------------------------------------------------
                             METHODS
@@ -58,6 +59,7 @@ public  int         score;
 public model_type()
 {
 level = new level_type();
+game_status = game_status_enum.gameplay;
 } /* model_type() */
 
 }

@@ -40,7 +40,6 @@ public class controller_type {
 private model_type model;
 private int v_idx;
 private char_status_enum prev_location;
-private Boolean left_map;
 
 /*--------------------------------------------------------------------
                             METHODS
@@ -60,7 +59,6 @@ public controller_type( model_type m )
 {
 model = m;
 v_idx = 0;
-left_map = false;
 } /* controller_type() */
 
 
@@ -71,20 +69,50 @@ left_map = false;
 *
 *   Description:
 *       Updates the game logic.
-*       //update mario's status (for use with animations)
 *
 ***********************************************************/
 
 public void update()
 {
 KeyBinding.set_key_states();
-physics_type physics = model.level.mario.physics;
-char_status_enum location;
-mario_status_enum status = model.level.mario.status;
-
 Animations.update();
 
-location = model.level.mario.ground_status;
+/*----------------------------------------------------------
+Update mario during gameplay
+----------------------------------------------------------*/
+switch( model.game_status )
+    {
+    case game_status_enum.gameplay:
+        model.level.mario.status = update_mario();
+        break;
+
+    case game_status_enum.level_complete:
+        model.level.mario.status = update_mario_level_complete();
+        break;
+
+    case game_status_enum.lose_life:
+        lose_a_life();
+        break;
+    }
+
+} /* update() */
+
+
+/***********************************************************
+*
+*   Method:
+*       update_mario
+*
+*   Description:
+*       Updates mario during game play.
+*
+***********************************************************/
+
+private mario_status_enum update_mario()
+{
+physics_type physics = model.level.mario.physics;
+char_status_enum location = model.level.mario.ground_status;
+mario_status_enum status = model.level.mario.status;
 
 /*----------------------------------------------------------
 Update mario Y location on jump
@@ -433,6 +461,13 @@ else
 /*----------------------------------------------------------
 Handle all collisions
 ----------------------------------------------------------*/
+int x_pixel = ( ( physics.position.x + physics.velocity.x ) >> 12 ) + physics.hit_box.Width;
+
+if( ( ( model.level.map.flag_loc * Blocks.size.Width + 6 ) <= x_pixel ) &&
+    ( ( x_pixel >> 4 )  < model.level.map.tier_widths[0] ) )
+    {
+    model.game_status = game_status_enum.level_complete;
+    }
 if( physics.position.y + physics.velocity.y < 0 )
     {
     physics.position += physics.velocity;
@@ -458,18 +493,6 @@ if( KeyBinding.D_DOWN_pressed )
         }
     }
 
-
-
-model.level.mario.status = status;
-
-/*----------------------------------------------------------
-Lose a life if Mario falls off the map
-----------------------------------------------------------*/
-if( left_map )
-    {
-    lose_a_life();
-    }
-
 /*----------------------------------------------------------
 Never scroll screen left
 ----------------------------------------------------------*/
@@ -480,7 +503,44 @@ if( physics.position.x < ViewDims.view.X )
     physics.velocity.x = 0;
     }
 
-} /* update() */
+return status;
+} /* update_mario() */
+
+
+/***********************************************************
+*
+*   Method:
+*       update_mario_level_complete
+*
+*   Description:
+*       Updates mario after level is complete.
+*
+***********************************************************/
+
+private mario_status_enum update_mario_level_complete()
+{
+mario_status_enum status = model.level.mario.status;
+physics_type physics = model.level.mario.physics;
+
+//set status to falling when we hit the pole, then make a check if falling here
+
+if( ( physics.position.y >> 12 ) + physics.hit_box.Height < model.level.map.flag_base_y )
+    {
+    status = mario_status_enum.POLE_R;
+    physics.position.x = ( model.level.map.flag_loc * Blocks.size.Width - physics.hit_box.Width + 6 ) << 12;
+    physics.position.y += MarioPhysics.vy_desc_vine;
+
+    if( ( physics.position.y >> 12 ) + physics.hit_box.Height >= model.level.map.flag_base_y )
+        {
+        status = mario_status_enum.FALL_R; //temp to stop mario animation
+        model.level.mario.sprite_id = (int)mario_enum.POLE_0_R;
+        physics.position.y = ( model.level.map.flag_base_y - physics.hit_box.Height ) << 12;
+        //transfer to mario walking to castle - set state to mario walk controlled
+        }
+    }
+
+return status;
+}
 
 
 /***********************************************************
@@ -584,7 +644,8 @@ else if( contains_block( x[1], y ) )
     /*----------------------------------------------------------
     Check for entering a horizontal pipe
     ----------------------------------------------------------*/
-    if( ( KeyBinding.D_RIGHT_pressed ) &&
+    if( ( model.game_status == game_status_enum.gameplay ) &&
+        ( KeyBinding.D_RIGHT_pressed ) &&
         ( model.level.map.blocks[x[1], y[0]] != null ) &&
         ( model.level.map.blocks[x[1], y[0]].GetType() == typeof( block_pipe_type ) ) )
         {
@@ -750,10 +811,11 @@ return ( model.level.map.blocks[x, y] != null );
 
 private Boolean check_left_map( int x, int y )
 {
-left_map = false;
+Boolean left_map = false;
 
 if( x < 0 || x >= model.level.map.width || y < 0 || y >= model.level.map.height )
     {
+    model.game_status = game_status_enum.lose_life;
     left_map = true;
     }
 
@@ -782,6 +844,7 @@ model.level.mario.physics.acceleration.x = 0;
 model.level.mario.physics.acceleration.y = 0;
 ViewDims.view.X = 0;
 ViewDims.view.Y = 0;
+model.game_status = game_status_enum.gameplay;
 } /* lose_a_life() */
 
 

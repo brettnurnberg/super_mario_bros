@@ -66,6 +66,8 @@ public static readonly int[] ay_j_f    = {  0x0440,  0x03E0,  0x05D0 };
 public const int vy_j_max             = 0x4800;
 public const int vy_hard_block        = 0x1000;
 
+public const int vy_desc_vine         = 0x2000;
+
 
 /*--------------------------------------------------------------------
                             METHODS

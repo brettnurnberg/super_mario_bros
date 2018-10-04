@@ -48,6 +48,8 @@ public  Color[]          tier_colors;
 public  int              height;
 public  int              min_height;
 public  int              max_height;
+public  int              flag_loc;
+public  int              flag_base_y;
 
 /*--------------------------------------------------------------------
                             METHODS
@@ -92,6 +94,9 @@ for( int i = 0; i < tier_count; i++ )
 min_height = Blocks.size.Height * ( height - 1 ) + 8;
 max_height = min_height + ViewDims.view.Height;
 
+flag_loc = 198;
+flag_base_y = ( 0 + 10 ) * Blocks.size.Height;
+
 view_locks.Add( new Rectangle( tier_widths[0] * Blocks.size.Width, 0, 17 * Blocks.size.Width, 13 * Blocks.size.Height ) );
 
 /*----------------------------------------------------------
@@ -124,7 +129,7 @@ for( int j = 11; j < height; j++ )
         }
     }
 
-blocks[198, 10] = stair;
+blocks[flag_loc, 10] = stair;
 
 add_stairs( 134, 10, 4, stair, true );
 add_stairs( 140, 10, 4, stair, false );
@@ -269,6 +274,9 @@ for( int i = 0; i < 5; i++ )
 
     x += 768;
     }
+
+decors.Add( new decor_pole_type( flag_loc * Blocks.size.Width, 0 ) );
+decors.Add( new decor_flag_type( ( flag_loc * Blocks.size.Width ) - 8, 17 ) );
 
 } /* map_type() */
 

@@ -94,6 +94,10 @@ else if( ( status == mario_status_enum.RUN_L ) ||
     {
     sprite_id = Animations.mario_run.get_sprite();
     }
+else if( status == mario_status_enum.POLE_R )
+    {
+    sprite_id = Animations.get_mario_pole_sprite();
+    }
 else if( ( status != mario_status_enum.FALL_R ) &&
          ( status != mario_status_enum.FALL_L ) )
     {
@@ -161,7 +165,7 @@ public Boolean facing_right()
 {
 Boolean result = false;
 
-if( status <= mario_status_enum.SKID_R || status == mario_status_enum.FALL_R )
+if( status <= mario_status_enum.SKID_R || status == mario_status_enum.FALL_R || status == mario_status_enum.POLE_R )
     {
     result = true;
     }

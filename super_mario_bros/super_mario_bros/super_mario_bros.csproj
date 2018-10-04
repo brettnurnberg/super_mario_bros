@@ -63,10 +63,13 @@
     <Compile Include="decor_bush_type.cs" />
     <Compile Include="decor_cloud_type.cs" />
     <Compile Include="decor_enum.cs" />
+    <Compile Include="decor_flag_type.cs" />
     <Compile Include="decor_hill_type.cs" />
+    <Compile Include="decor_pole_type.cs" />
     <Compile Include="decor_type.cs" />
     <Compile Include="DrawShape.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="game_status_enum.cs" />
     <Compile Include="int_vector2_type.cs" />
     <Compile Include="KeyBinding.cs" />
     <Compile Include="level_type.cs" />
