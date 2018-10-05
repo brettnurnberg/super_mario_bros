@@ -25,7 +25,8 @@ transition_screen,
 gameplay,
 lose_life,
 pipe_transition,
-level_complete
+level_complete,
+level_score
 
 }
 

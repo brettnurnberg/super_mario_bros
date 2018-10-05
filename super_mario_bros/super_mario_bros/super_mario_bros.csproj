@@ -60,6 +60,7 @@
     <Compile Include="char_status_enum.cs" />
     <Compile Include="controller_type.cs" />
     <Compile Include="Decor.cs" />
+    <Compile Include="decor_block_type.cs" />
     <Compile Include="decor_bush_type.cs" />
     <Compile Include="decor_cloud_type.cs" />
     <Compile Include="decor_enum.cs" />

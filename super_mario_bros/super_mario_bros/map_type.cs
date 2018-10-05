@@ -50,6 +50,7 @@ public  int              min_height;
 public  int              max_height;
 public  int              flag_loc;
 public  int              flag_base_y;
+public  int              exit_loc_x;
 
 /*--------------------------------------------------------------------
                             METHODS
@@ -96,6 +97,7 @@ max_height = min_height + ViewDims.view.Height;
 
 flag_loc = 198;
 flag_base_y = ( 0 + 10 ) * Blocks.size.Height;
+exit_loc_x = ( 204 * Blocks.size.Width ) << 12;
 
 view_locks.Add( new Rectangle( tier_widths[0] * Blocks.size.Width, 0, 17 * Blocks.size.Width, 13 * Blocks.size.Height ) );
 
@@ -278,7 +280,49 @@ for( int i = 0; i < 5; i++ )
 decors.Add( new decor_pole_type( flag_loc * Blocks.size.Width, 0 ) );
 decors.Add( new decor_flag_type( ( flag_loc * Blocks.size.Width ) - 8, 17 ) );
 
+add_small_castle( 202, 10 );
+
 } /* map_type() */
+
+
+/***********************************************************
+*
+*   Method:
+*       add_small_castle
+*
+*   Description:
+*       Adds small castle to the map.
+*
+***********************************************************/
+
+public void add_small_castle( int x, int y )
+{
+
+decors.Add( new decor_block_type( x,     y,     (int)decor_enum.CASTLE ) );
+decors.Add( new decor_block_type( x,     y - 1, (int)decor_enum.CASTLE ) );
+decors.Add( new decor_block_type( x + 1, y,     (int)decor_enum.CASTLE ) );
+decors.Add( new decor_block_type( x + 1, y - 1, (int)decor_enum.CASTLE ) );
+decors.Add( new decor_block_type( x + 3, y,     (int)decor_enum.CASTLE ) );
+decors.Add( new decor_block_type( x + 3, y - 1, (int)decor_enum.CASTLE ) );
+decors.Add( new decor_block_type( x + 4, y,     (int)decor_enum.CASTLE ) );
+decors.Add( new decor_block_type( x + 4, y - 1, (int)decor_enum.CASTLE ) );
+decors.Add( new decor_block_type( x + 2, y - 3, (int)decor_enum.CASTLE ) );
+
+decors.Add( new decor_block_type( x + 2, y,     (int)decor_enum.CASTLE_DOOR_B ) );
+decors.Add( new decor_block_type( x + 2, y - 1, (int)decor_enum.CASTLE_DOOR_T ) );
+decors.Add( new decor_block_type( x + 1, y - 3, (int)decor_enum.CASTLE_WINDOW_R ) );
+decors.Add( new decor_block_type( x + 3, y - 3, (int)decor_enum.CASTLE_WINDOW_L ) );
+
+decors.Add( new decor_block_type( x,     y - 2, (int)decor_enum.CASTLE_TOP_SKY ) );
+decors.Add( new decor_block_type( x + 1, y - 2, (int)decor_enum.CASTLE_TOP ) );
+decors.Add( new decor_block_type( x + 2, y - 2, (int)decor_enum.CASTLE_TOP ) );
+decors.Add( new decor_block_type( x + 3, y - 2, (int)decor_enum.CASTLE_TOP ) );
+decors.Add( new decor_block_type( x + 4, y - 2, (int)decor_enum.CASTLE_TOP_SKY ) );
+decors.Add( new decor_block_type( x + 1, y - 4, (int)decor_enum.CASTLE_TOP_SKY ) );
+decors.Add( new decor_block_type( x + 2, y - 4, (int)decor_enum.CASTLE_TOP_SKY ) );
+decors.Add( new decor_block_type( x + 3, y - 4, (int)decor_enum.CASTLE_TOP_SKY ) );
+
+} /* add_small_castle() */
 
 
 /***********************************************************

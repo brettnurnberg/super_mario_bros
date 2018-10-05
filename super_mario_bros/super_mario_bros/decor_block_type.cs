@@ -1,22 +1,10 @@
-﻿/*********************************************************************
+/*********************************************************************
 *
 *   Class:
-*       Program
+*       decor_block_type
 *
 *   Description:
-*       The main class for the application. Contains
-*       the entry point.
-*
-*   TODO:
-*       Flag must fall with mario
-*       Add drawing layer implementation
-*       add pipe animation
-*       Add block behavior (on hit)
-*           have items come out of the block
-*       Add item implementation (mushroom, flower, coin, star, 1-up)
-*       add enemies
-*       add mario sounds
-*       add music
+*       Contains data for a decorative block
 *
 *********************************************************************/
 
@@ -24,6 +12,9 @@
                             INCLUDES
 --------------------------------------------------------------------*/
 
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 
 /*--------------------------------------------------------------------
@@ -40,42 +31,55 @@ namespace super_mario_bros {
                              CLASS
 --------------------------------------------------------------------*/
 
-public static class Program {
+public class decor_block_type: decor_type {
 
 /*--------------------------------------------------------------------
                            ATTRIBUTES
 --------------------------------------------------------------------*/
-public static model_type        model;
-public static view_type         view;
-public static controller_type   controller;
+
+private int texture_id;
 
 /*--------------------------------------------------------------------
                             METHODS
 --------------------------------------------------------------------*/
 
+
 /***********************************************************
 *
 *   Method:
-*       Main
+*       decor_block_type
 *
 *   Description:
-*       Entry point for the application.
+*       Constructor.
 *
 ***********************************************************/
 
-[STAThread]
-static void Main()
+public decor_block_type( int _x, int _y, int t_id )
 {
-model      = new model_type();
-controller = new controller_type( model );
-view       = new view_type( model );
+x = _x * Blocks.size.Width;
+y = _y * Blocks.size.Height;
+texture_id = t_id;
+}
 
-using ( Game1 game = new Game1( model, controller, view ) )
-    {
-    game.Run();
-    }
 
-} /* Main() */
+/***********************************************************
+*
+*   Method:
+*       draw
+*
+*   Description:
+*       Draws the given decoration.
+*
+***********************************************************/
+
+public override void draw( SpriteBatch s )
+{
+Vector2 position = new Vector2( x * ViewDims.scale, y * ViewDims.scale );
+Texture2D texture = Decor.textures[texture_id];
+
+s.Draw( texture, position, null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, 0 );
+
+}
 
 
 }

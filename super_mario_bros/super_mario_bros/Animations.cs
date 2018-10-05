@@ -213,13 +213,8 @@ a.add_frame( new animation_frame_type( sprite_id, frame_cnt ) );
 
 static public int get_mario_pole_sprite()
 {
-return ( ( ( frame_count / 5 ) % 2 ) + (int)mario_enum.POLE_0_R );
+return ( ( ( frame_count / 4 ) % 2 ) + (int)mario_enum.POLE_0_R );
 }
-
-/*static public int get_mario_pole_sprite( int base_offset )
-{
-return ( ( ( base_offset / 8 ) % 2 ) + (int)mario_enum.POLE_0_R );
-}*/ /* get_mario_pole_sprite() */
 
 
 /***********************************************************

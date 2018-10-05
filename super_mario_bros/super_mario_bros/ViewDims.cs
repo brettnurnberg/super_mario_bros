@@ -139,7 +139,26 @@ if( view_scaled.Bottom > level.map.min_height * ViewDims.scale )
 view_scaled.X *= -1;
 view_scaled.X += left_edge.Width;
 
-} /* set_window_size() */
+} /* set_view_location() */
+
+
+/***********************************************************
+*
+*   Method:
+*       move_view_location
+*
+*   Description:
+*       Increments the view location.
+*
+***********************************************************/
+
+public static void move_view_location( int subsubsub_pixel_x )
+{
+view.X += subsubsub_pixel_x;
+view_scaled.X = (int)( view.X * scale ) >> 12;
+view_scaled.X *= -1;
+view_scaled.X += left_edge.Width;
+} /* set_view_location() */
 
 
 /***********************************************************

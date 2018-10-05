@@ -166,6 +166,7 @@ if( ( m.ground_status == char_status_enum.GROUND ) &&
         {
         m.physics.position.x = link_v.x << 12;
         m.physics.position.y = link_v.y << 12;
+        m.ground_status = char_status_enum.AIR;
         }
     else if( link_p != null )
         {

@@ -85,7 +85,9 @@ Texture2D sprite = null;
 Get Mario's sprite
 ----------------------------------------------------------*/
 if( ( status == mario_status_enum.WALK_L ) ||
-    ( status == mario_status_enum.WALK_R ) )
+    ( status == mario_status_enum.WALK_R ) ||
+    ( status == mario_status_enum.WALK_CTRL_R ) ||
+    ( status == mario_status_enum.WALK_CTRL_L ) )
     {
     sprite_id = Animations.mario_walk.get_sprite();
     }
@@ -98,6 +100,10 @@ else if( status == mario_status_enum.POLE_R )
     {
     sprite_id = Animations.get_mario_pole_sprite();
     }
+else if( status == mario_status_enum.POLE_L )
+    {
+    sprite_id = (int)mario_enum.POLE_0_L;
+    }
 else if( ( status != mario_status_enum.FALL_R ) &&
          ( status != mario_status_enum.FALL_L ) )
     {
@@ -109,6 +115,7 @@ Animated sprites are all to the right. If we are facing
 left, flip the sprite.
 ----------------------------------------------------------*/
 if( ( status == mario_status_enum.WALK_L ) ||
+    ( status == mario_status_enum.WALK_CTRL_L ) ||
     ( status == mario_status_enum.RUN_L  ) )
     {
     sprite_id += ( (int)mario_enum.WALK0_L - (int)mario_enum.WALK0_R );
@@ -165,7 +172,7 @@ public Boolean facing_right()
 {
 Boolean result = false;
 
-if( status <= mario_status_enum.SKID_R || status == mario_status_enum.FALL_R || status == mario_status_enum.POLE_R )
+if( status <= mario_status_enum.SKID_R || status == mario_status_enum.FALL_R || status == mario_status_enum.POLE_R || status == mario_status_enum.WALK_CTRL_R )
     {
     result = true;
     }

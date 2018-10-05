@@ -40,6 +40,7 @@ public class controller_type {
 private model_type model;
 private int v_idx;
 private char_status_enum prev_location;
+private int init_frame_pole_l;
 
 /*--------------------------------------------------------------------
                             METHODS
@@ -191,75 +192,7 @@ Update mario Y location in air
 ----------------------------------------------------------*/
 else if( location == char_status_enum.AIR )
     {
-    if( KeyBinding.A_BTN_pressed && physics.velocity.y < 0 )
-        {
-        physics.acceleration.y = MarioPhysics.ay_j_a[v_idx];
-        physics.velocity.y += physics.acceleration.y;
-        }
-    else
-        {
-        physics.acceleration.y = MarioPhysics.ay_j_f[v_idx];
-        physics.velocity.y += physics.acceleration.y;
-        }
-
-    if( KeyBinding.D_RIGHT_pressed )
-        {
-        if( physics.velocity.x <= MarioPhysics.vx_walk_max )
-            {
-            physics.acceleration.x = MarioPhysics.ax_jf_walk;
-            }
-        else
-            {
-            physics.acceleration.x = MarioPhysics.ax_jf_run;
-            }
-
-        physics.velocity.x += physics.acceleration.x;
-        }
-    else if( KeyBinding.D_LEFT_pressed )
-        {
-        if( physics.velocity.x >= MarioPhysics.vx_walk_max )
-            {
-            physics.acceleration.x = MarioPhysics.ax_jb_run;
-            }
-        else if( ( physics.velocity.x < MarioPhysics.vx_walk_max ) &&
-                 ( physics.init_velocity.x >= MarioPhysics.vx_j_thresh ) )
-            {
-            physics.acceleration.x = MarioPhysics.ax_jb_run_walk;
-            }
-        else
-            {
-            physics.acceleration.x = MarioPhysics.ax_jb_walk;
-            }
-
-        physics.velocity.x += physics.acceleration.x;
-        }
-
-    /*----------------------------------------------------------
-    Keep speeds in bounds
-    ----------------------------------------------------------*/
-    if( ( physics.init_velocity.x <= MarioPhysics.vx_walk_max ) &&
-        ( physics.velocity.x > MarioPhysics.vx_walk_max ) )
-        {
-        physics.velocity.x = MarioPhysics.vx_walk_max;
-        }
-    else if( ( physics.init_velocity.x >= -1 * MarioPhysics.vx_walk_max ) &&
-             ( physics.velocity.x < -1 * MarioPhysics.vx_walk_max ) )
-        {
-        physics.velocity.x = -1 * MarioPhysics.vx_walk_max;
-        }
-
-    if( physics.velocity.y > MarioPhysics.vy_j_max )
-        {
-        physics.velocity.y = MarioPhysics.vy_j_max;
-        }
-    if( physics.velocity.x > MarioPhysics.vx_run_max )
-        {
-        physics.velocity.x = MarioPhysics.vx_run_max;
-        }
-    else if( physics.velocity.x < ( -1 * MarioPhysics.vx_run_max ) )
-        {
-        physics.velocity.x = -1 * MarioPhysics.vx_run_max;
-        }
+    update_mario_falling( physics );
     }
 /*----------------------------------------------------------
 Update mario Y location on ground
@@ -524,19 +457,92 @@ physics_type physics = model.level.mario.physics;
 
 //set status to falling when we hit the pole, then make a check if falling here
 
-if( ( physics.position.y >> 12 ) + physics.hit_box.Height < model.level.map.flag_base_y )
+switch( status )
     {
-    status = mario_status_enum.POLE_R;
-    physics.position.x = ( model.level.map.flag_loc * Blocks.size.Width - physics.hit_box.Width + 6 ) << 12;
-    physics.position.y += MarioPhysics.vy_desc_vine;
+    case mario_status_enum.FALL_L:
+        status = mario_status_enum.FALL_R;
+        break;
 
-    if( ( physics.position.y >> 12 ) + physics.hit_box.Height >= model.level.map.flag_base_y )
-        {
-        status = mario_status_enum.FALL_R; //temp to stop mario animation
-        model.level.mario.sprite_id = (int)mario_enum.POLE_0_R;
-        physics.position.y = ( model.level.map.flag_base_y - physics.hit_box.Height ) << 12;
-        //transfer to mario walking to castle - set state to mario walk controlled
-        }
+    case mario_status_enum.JUMP_L:
+        status = mario_status_enum.JUMP_R;
+        break;
+
+    case mario_status_enum.FALL_R:
+    case mario_status_enum.JUMP_R:
+        /*----------------------------------------------------------
+        Let mario fall till the top of the pole, then start descent
+        ----------------------------------------------------------*/
+        if( ( physics.position.y >> 16 ) >= ( ( model.level.map.flag_base_y - 144 ) >> 4 ) )
+            {
+            status = mario_status_enum.POLE_R;
+            }
+        else
+            {
+            update_mario_falling( physics );
+            physics.position.y += physics.velocity.y;
+            physics.position.x = ( model.level.map.flag_loc * Blocks.size.Width - physics.hit_box.Width + 6 ) << 12;
+            }
+        break;
+
+    case mario_status_enum.POLE_R:
+        /*----------------------------------------------------------
+        Slide down pole
+        ----------------------------------------------------------*/
+        physics.position.x = ( model.level.map.flag_loc * Blocks.size.Width - physics.hit_box.Width + 6 ) << 12;
+        physics.position.y += MarioPhysics.vy_desc_vine;
+
+        /*----------------------------------------------------------
+        Switch pole sides once mario hits the bottom
+        ----------------------------------------------------------*/
+        if( ( physics.position.y >> 12 ) + physics.hit_box.Height >= model.level.map.flag_base_y )
+            {
+            physics.position.y = ( model.level.map.flag_base_y - physics.hit_box.Height ) << 12;
+            physics.position.x += ( ( 2 + physics.hit_box.Width ) << 12 );
+            status = mario_status_enum.POLE_L;
+            init_frame_pole_l = Animations.frame_count;
+            }
+        break;
+
+    case mario_status_enum.POLE_L:
+        if( Animations.frame_count >= ( init_frame_pole_l + 30 ) )
+            {
+            status = mario_status_enum.WALK_CTRL_L;
+            init_frame_pole_l = Animations.frame_count;
+            }
+        break;
+
+    case mario_status_enum.WALK_CTRL_L:
+        if( Animations.frame_count >= ( init_frame_pole_l + 8 ) )
+            {
+            status = mario_status_enum.WALK_CTRL_R;
+            }
+        else if( Animations.frame_count >= ( init_frame_pole_l + 4 ) )
+            {
+            physics.position.x += ( 2 << 12 );
+            physics.position.y += ( ( Animations.frame_count - init_frame_pole_l - 4 ) << 12 );
+            }
+        else
+            {
+            physics.position.x += ( 2 << 12 );
+            }
+        break;
+
+    case mario_status_enum.WALK_CTRL_R:
+        physics.position.y = ( model.level.map.flag_base_y - physics.hit_box.Height + 17 ) << 12;
+        physics.position.x += MarioPhysics.vx_walk_no_ctrl_max;
+        ViewDims.move_view_location( MarioPhysics.vx_walk_no_ctrl_max );
+
+        if( physics.position.x >= model.level.map.exit_loc_x )
+            {
+            status = mario_status_enum.STILL_R;
+            //don't draw mario ( change his layer )
+            model.game_status = game_status_enum.level_score;
+            }
+        break;
+
+    default:
+        status = mario_status_enum.POLE_R;
+        break;
     }
 
 return status;
@@ -876,6 +882,90 @@ if( ( ( null != model.level.map.blocks[x0, y] ) && ( model.level.map.blocks[x0, 
 
 return p;
 } /* on_pipe() */
+
+
+/***********************************************************
+*
+*   Method:
+*       update_mario_falling
+*
+*   Description:
+*       Update mario physics while falling.
+*
+***********************************************************/
+
+private void update_mario_falling( physics_type physics )
+{
+if( KeyBinding.A_BTN_pressed && physics.velocity.y < 0 )
+    {
+    physics.acceleration.y = MarioPhysics.ay_j_a[v_idx];
+    physics.velocity.y += physics.acceleration.y;
+    }
+else
+    {
+    physics.acceleration.y = MarioPhysics.ay_j_f[v_idx];
+    physics.velocity.y += physics.acceleration.y;
+    }
+
+if( KeyBinding.D_RIGHT_pressed )
+    {
+    if( physics.velocity.x <= MarioPhysics.vx_walk_max )
+        {
+        physics.acceleration.x = MarioPhysics.ax_jf_walk;
+        }
+    else
+        {
+        physics.acceleration.x = MarioPhysics.ax_jf_run;
+        }
+
+    physics.velocity.x += physics.acceleration.x;
+    }
+else if( KeyBinding.D_LEFT_pressed )
+    {
+    if( physics.velocity.x >= MarioPhysics.vx_walk_max )
+        {
+        physics.acceleration.x = MarioPhysics.ax_jb_run;
+        }
+    else if( ( physics.velocity.x < MarioPhysics.vx_walk_max ) &&
+                ( physics.init_velocity.x >= MarioPhysics.vx_j_thresh ) )
+        {
+        physics.acceleration.x = MarioPhysics.ax_jb_run_walk;
+        }
+    else
+        {
+        physics.acceleration.x = MarioPhysics.ax_jb_walk;
+        }
+
+    physics.velocity.x += physics.acceleration.x;
+    }
+
+/*----------------------------------------------------------
+Keep speeds in bounds
+----------------------------------------------------------*/
+if( ( physics.init_velocity.x <= MarioPhysics.vx_walk_max ) &&
+    ( physics.velocity.x > MarioPhysics.vx_walk_max ) )
+    {
+    physics.velocity.x = MarioPhysics.vx_walk_max;
+    }
+else if( ( physics.init_velocity.x >= -1 * MarioPhysics.vx_walk_max ) &&
+            ( physics.velocity.x < -1 * MarioPhysics.vx_walk_max ) )
+    {
+    physics.velocity.x = -1 * MarioPhysics.vx_walk_max;
+    }
+
+if( physics.velocity.y > MarioPhysics.vy_j_max )
+    {
+    physics.velocity.y = MarioPhysics.vy_j_max;
+    }
+if( physics.velocity.x > MarioPhysics.vx_run_max )
+    {
+    physics.velocity.x = MarioPhysics.vx_run_max;
+    }
+else if( physics.velocity.x < ( -1 * MarioPhysics.vx_run_max ) )
+    {
+    physics.velocity.x = -1 * MarioPhysics.vx_run_max;
+    }
+} /* update_mario_falling() */
 
 }
 }

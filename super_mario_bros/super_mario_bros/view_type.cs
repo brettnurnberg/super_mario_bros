@@ -88,6 +88,7 @@ switch( model.game_status )
         spriteBatch.End();
         break;
 
+    case game_status_enum.level_score:
     case game_status_enum.level_complete:
         spriteBatch.Begin( SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation( ViewDims.view_scaled.X, ViewDims.view_scaled.Y, 0 ) );
         model.level.draw( spriteBatch );
