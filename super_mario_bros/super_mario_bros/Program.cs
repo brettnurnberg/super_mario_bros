@@ -8,9 +8,10 @@
 *       the entry point.
 *
 *   TODO:
-*       Flag must fall with mario
-*       add pipe animation - will require layers
+*       create level implementation
+*       rework map items for clarity
 *       scale x and y separately to fit 16 x 15 blocks on screen
+*       add pipe animation - will require layers
 *       Add block behavior (on hit)
 *           have items come out of the block
 *       Add item implementation (mushroom, flower, coin, star, 1-up)
