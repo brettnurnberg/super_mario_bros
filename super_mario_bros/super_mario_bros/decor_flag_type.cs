@@ -37,6 +37,9 @@ public class decor_flag_type: decor_type {
                            ATTRIBUTES
 --------------------------------------------------------------------*/
 
+public  int     width;
+public  int     height;
+
 /*--------------------------------------------------------------------
                             METHODS
 --------------------------------------------------------------------*/
@@ -56,6 +59,8 @@ public decor_flag_type( int _x, int _y )
 {
 x = _x;
 y = _y;
+width = 16;
+height = 16;
 }
 
 

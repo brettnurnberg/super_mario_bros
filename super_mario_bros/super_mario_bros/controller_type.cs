@@ -485,16 +485,30 @@ switch( status )
         break;
 
     case mario_status_enum.POLE_R:
+        Boolean mario_bottom = ( physics.position.y >> 12 ) + physics.hit_box.Height >= model.level.map.flag_base_y;
+        Boolean flag_bottom = model.level.map.flag.y + model.level.map.flag.height >= model.level.map.flag_base_y;
         /*----------------------------------------------------------
         Slide down pole
         ----------------------------------------------------------*/
         physics.position.x = ( model.level.map.flag_loc * Blocks.size.Width - physics.hit_box.Width + 6 ) << 12;
-        physics.position.y += MarioPhysics.vy_desc_vine;
+
+        if( !mario_bottom )
+            {
+            physics.position.y += MarioPhysics.vy_desc_vine;
+            }
+        else
+            {
+            //stop animation
+            }
+        if( !flag_bottom )
+            {
+            model.level.map.flag.y += ( MarioPhysics.vy_desc_vine >> 12 );
+            }
 
         /*----------------------------------------------------------
         Switch pole sides once mario hits the bottom
         ----------------------------------------------------------*/
-        if( ( physics.position.y >> 12 ) + physics.hit_box.Height >= model.level.map.flag_base_y )
+        if( mario_bottom && flag_bottom )
             {
             physics.position.y = ( model.level.map.flag_base_y - physics.hit_box.Height ) << 12;
             physics.position.x += ( ( 2 + physics.hit_box.Width ) << 12 );
@@ -535,7 +549,6 @@ switch( status )
         if( physics.position.x >= model.level.map.exit_loc_x )
             {
             status = mario_status_enum.STILL_R;
-            //don't draw mario ( change his layer )
             model.game_status = game_status_enum.level_score;
             }
         break;

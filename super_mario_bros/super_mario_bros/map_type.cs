@@ -51,6 +51,7 @@ public  int              max_height;
 public  int              flag_loc;
 public  int              flag_base_y;
 public  int              exit_loc_x;
+public  decor_flag_type  flag;
 
 /*--------------------------------------------------------------------
                             METHODS
@@ -97,7 +98,7 @@ max_height = min_height + ViewDims.view.Height;
 
 flag_loc = 198;
 flag_base_y = ( 0 + 10 ) * Blocks.size.Height;
-exit_loc_x = ( 204 * Blocks.size.Width ) << 12;
+exit_loc_x = ( 204 * Blocks.size.Width + 2 ) << 12;
 
 view_locks.Add( new Rectangle( tier_widths[0] * Blocks.size.Width, 0, 17 * Blocks.size.Width, 13 * Blocks.size.Height ) );
 
@@ -278,7 +279,8 @@ for( int i = 0; i < 5; i++ )
     }
 
 decors.Add( new decor_pole_type( flag_loc * Blocks.size.Width, 0 ) );
-decors.Add( new decor_flag_type( ( flag_loc * Blocks.size.Width ) - 8, 17 ) );
+flag = new decor_flag_type( ( flag_loc * Blocks.size.Width ) - 8, 17 );
+decors.Add( flag );
 
 add_small_castle( 202, 10 );
 

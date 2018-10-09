@@ -37,8 +37,8 @@ public abstract class decor_type {
                            ATTRIBUTES
 --------------------------------------------------------------------*/
 
-protected int x;
-protected int y;
+public int x;
+public int y;
 
 /*--------------------------------------------------------------------
                             METHODS
