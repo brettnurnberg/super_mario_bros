@@ -6,12 +6,6 @@
 *   Description:
 *       Contains data for a pipe
 *
-*   Could have block_pipe_type and it contains a reference to the pipe
-*   object. The draw() part of that bock_pipe would get the sprite from
-*   this pipe object. Then on pushing right on pipe side entry or down
-*   on pipe top entry, we would check the block, then check the corresponding
-*   pipe object for a destination pipe.
-*
 *********************************************************************/
 
 /*--------------------------------------------------------------------

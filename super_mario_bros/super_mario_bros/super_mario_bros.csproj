@@ -72,7 +72,9 @@
     <Compile Include="decor\decor_type.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="game_status_enum.cs" />
+    <Compile Include="levels\level_1_1_type.cs" />
     <Compile Include="levels\level_type.cs" />
+    <Compile Include="maps\map_1_1_type.cs" />
     <Compile Include="maps\map_type.cs" />
     <Compile Include="mario_status_enum.cs" />
     <Compile Include="mario_type.cs" />

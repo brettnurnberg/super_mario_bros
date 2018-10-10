@@ -32,7 +32,7 @@ namespace super_mario_bros {
                              CLASS
 --------------------------------------------------------------------*/
 
-public class level_type {
+public abstract class level_type {
 
 /*--------------------------------------------------------------------
                            ATTRIBUTES
@@ -62,13 +62,6 @@ public level_type()
 {
 enemies = new List<character_type>();
 mario = new mario_type();
-map = new map_type();
-int x_init = ( 3 * Blocks.size.Width ) << 12;
-int y_init = ( ( 11 * Blocks.size.Height - mario.physics.hit_box.Height ) + 1 ) << 12;
-
-mario.physics.init_position = new int_vector2_type( x_init, y_init );
-mario.physics.position.x = mario.physics.init_position.x;
-mario.physics.position.y = mario.physics.init_position.y;
 
 } /* level_type() */
 
@@ -83,17 +76,7 @@ mario.physics.position.y = mario.physics.init_position.y;
 *
 ***********************************************************/
 
-public void draw( SpriteBatch s )
-{
-map.draw( s );
-mario.draw( s );
-foreach( character_type enemy in enemies )
-    {
-    enemy.draw( s );
-    }
-
-
-} /* draw() */
+public abstract void draw( SpriteBatch s );
 
 
 }
