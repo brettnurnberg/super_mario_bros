@@ -87,7 +87,7 @@ else
     texture = Blocks.textures[Animations.block_question.get_sprite()];
     }
 
-Vector2 position = new Vector2( x * Blocks.size.Width * ViewDims.scale, ( y * Blocks.size.Height - y_offset ) * ViewDims.scale );
+Vector2 position = new Vector2( x * Blocks.size.Width * ViewDims.scale.X, ( y * Blocks.size.Height - y_offset ) * ViewDims.scale.Y );
 s.Draw( texture, position , null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, 0 );
 }
 

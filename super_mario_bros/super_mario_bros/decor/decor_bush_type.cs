@@ -77,8 +77,8 @@ public override void draw( SpriteBatch s )
 Texture2D border = Decor.textures[(int)decor_enum.CLOUD_BORDER];
 Texture2D inner  = Decor.textures[(int)decor_enum.CLOUD_INNER];
 Texture2D accent = Decor.textures[(int)decor_enum.CLOUD_ACCENT];
-Vector2 position = new Vector2( x * ViewDims.scale, y * ViewDims.scale );
-Vector2 offset   = new Vector2( 15 * ViewDims.scale, 0 );
+Vector2 position = new Vector2( x * ViewDims.scale.X, y * ViewDims.scale.Y );
+Vector2 offset   = new Vector2( 15 * ViewDims.scale.X, 0 );
 
 for( int i = 0; i < count; i++ )
     {

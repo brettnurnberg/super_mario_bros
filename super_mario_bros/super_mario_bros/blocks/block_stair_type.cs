@@ -55,7 +55,7 @@ public class block_stair_type: block_type {
 public override void draw( SpriteBatch s, int x, int y )
 {
 Texture2D texture = Blocks.textures[(int)block_static_enum.STAIR];
-Vector2 position = new Vector2( x * Blocks.size.Width * ViewDims.scale, y * Blocks.size.Height * ViewDims.scale );
+Vector2 position = new Vector2( x * Blocks.size.Width * ViewDims.scale.X, y * Blocks.size.Height * ViewDims.scale.Y );
 s.Draw( texture, position , null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, 0 );
 }
 

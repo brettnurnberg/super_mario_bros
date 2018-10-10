@@ -72,7 +72,7 @@ y = _y;
 public override void draw( SpriteBatch s )
 {
 Texture2D texture = Decor.textures[(int)decor_enum.FLAG_POLE];
-Vector2 position = new Vector2( x * ViewDims.scale, y * ViewDims.scale );
+Vector2 position = new Vector2( x * ViewDims.scale.X, y * ViewDims.scale.Y );
 
 s.Draw( texture, position, null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, 0 );
 }

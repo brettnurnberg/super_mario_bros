@@ -78,11 +78,11 @@ for( int i = 0; i < tier_count; i++ )
     width += tier_widths[i];
     }
 
-min_height = Blocks.size.Height * ( height - 1 ) + 8;
-max_height = min_height + ViewDims.view.Height;
+flag_loc.Height =  10 * Blocks.size.Height;
+flag_loc.Width =    1 * Blocks.size.Width;
+flag_loc.X =      198 * Blocks.size.Width;
+flag_loc.Y =        0 * Blocks.size.Height;
 
-flag_loc = 198;
-flag_base_y = ( 0 + 10 ) * Blocks.size.Height;
 exit_loc_x = ( 204 * Blocks.size.Width + 2 ) << 12;
 
 view_locks.Add( new Rectangle( tier_widths[0] * Blocks.size.Width, 0, 17 * Blocks.size.Width, 13 * Blocks.size.Height ) );
@@ -117,7 +117,7 @@ for( int j = 11; j < height; j++ )
         }
     }
 
-blocks[flag_loc, 10] = stair;
+blocks[flag_loc.X / Blocks.size.Width, 10] = stair;
 
 add_stairs( 134, 10, 4, stair, true );
 add_stairs( 140, 10, 4, stair, false );
@@ -261,8 +261,8 @@ for( int i = 0; i < 5; i++ )
     x += 768;
     }
 
-decors.Add( new decor_pole_type( flag_loc * Blocks.size.Width, 0 ) );
-flag = new decor_flag_type( ( flag_loc * Blocks.size.Width ) - 8, 17 );
+decors.Add( new decor_pole_type( flag_loc.X, 0 ) );
+flag = new decor_flag_type( ( flag_loc.X ) - 8, 17 );
 decors.Add( flag );
 
 add_small_castle( 202, 10 );

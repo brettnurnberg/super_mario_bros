@@ -41,17 +41,18 @@ public  block_type[,]    blocks;
 public  List<pipe_type>  pipes;
 public  List<decor_type> decors;
 public  List<Rectangle>  view_locks;
+
+public  decor_flag_type  flag;
+
 public  int              tier_count;
 public  int[]            tier_widths;
-public  int              width;
 public  Color[]          tier_colors;
+
+public  int              width;
 public  int              height;
-public  int              min_height;
-public  int              max_height;
-public  int              flag_loc;
-public  int              flag_base_y;
+
+public  Rectangle        flag_loc;
 public  int              exit_loc_x;
-public  decor_flag_type  flag;
 
 /*--------------------------------------------------------------------
                             METHODS
@@ -72,6 +73,7 @@ public map_type()
 view_locks = new List<Rectangle>();
 pipes = new List<pipe_type>();
 decors = new List<decor_type>();
+flag_loc = new Rectangle();
 
 } /* map_type() */
 

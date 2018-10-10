@@ -74,7 +74,7 @@ texture_id = t_id;
 
 public override void draw( SpriteBatch s )
 {
-Vector2 position = new Vector2( x * ViewDims.scale, y * ViewDims.scale );
+Vector2 position = new Vector2( x * ViewDims.scale.X, y * ViewDims.scale.Y );
 Texture2D texture = Decor.textures[texture_id];
 
 s.Draw( texture, position, null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, 0 );

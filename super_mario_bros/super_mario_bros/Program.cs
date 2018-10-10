@@ -8,13 +8,12 @@
 *       the entry point.
 *
 *   TODO:
-*       create level implementation
-*       rework map items for clarity
-*       scale x and y separately to fit 16 x 15 blocks on screen
+*       rework map to be 15 blocks tall
+*       fix flag falling - start and end flag at right times
 *       add pipe animation - will require layers
+*       Add item implementation (mushroom, flower, coin, star, 1-up)
 *       Add block behavior (on hit)
 *           have items come out of the block
-*       Add item implementation (mushroom, flower, coin, star, 1-up)
 *       add enemies
 *       add mario sounds
 *       add music

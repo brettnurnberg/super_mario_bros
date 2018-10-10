@@ -76,7 +76,7 @@ Texture2D texture = Blocks.textures[(int)block_enum.BRICK];
 
 y_offset = Animations.get_block_offset( hit_frame_start );
 
-Vector2 position = new Vector2( x * Blocks.size.Width * ViewDims.scale, ( y * Blocks.size.Height - y_offset ) * ViewDims.scale );
+Vector2 position = new Vector2( x * Blocks.size.Width * ViewDims.scale.X, ( y * Blocks.size.Height - y_offset ) * ViewDims.scale.Y );
 s.Draw( texture, position , null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, 0 );
 }
 

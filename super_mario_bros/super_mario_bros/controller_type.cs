@@ -79,7 +79,7 @@ KeyBinding.set_key_states();
 Animations.update();
 
 /*----------------------------------------------------------
-Update mario during gameplay
+Update mario status
 ----------------------------------------------------------*/
 switch( model.game_status )
     {
@@ -396,7 +396,7 @@ Handle all collisions
 ----------------------------------------------------------*/
 int x_pixel = ( ( physics.position.x + physics.velocity.x ) >> 12 ) + physics.hit_box.Width;
 
-if( ( ( model.level.map.flag_loc * Blocks.size.Width + 6 ) <= x_pixel ) &&
+if( ( ( model.level.map.flag_loc.X + 6 ) <= x_pixel ) &&
     ( ( x_pixel >> 4 )  < model.level.map.tier_widths[0] ) )
     {
     model.game_status = game_status_enum.level_complete;
@@ -472,7 +472,7 @@ switch( status )
         /*----------------------------------------------------------
         Let mario fall till the top of the pole, then start descent
         ----------------------------------------------------------*/
-        if( ( physics.position.y >> 16 ) >= ( ( model.level.map.flag_base_y - 144 ) >> 4 ) )
+        if( ( physics.position.y >> 16 ) >= ( ( model.level.map.flag_loc.Bottom - 144 ) >> 4 ) )
             {
             status = mario_status_enum.POLE_R;
             }
@@ -480,17 +480,17 @@ switch( status )
             {
             update_mario_falling( physics );
             physics.position.y += physics.velocity.y;
-            physics.position.x = ( model.level.map.flag_loc * Blocks.size.Width - physics.hit_box.Width + 6 ) << 12;
+            physics.position.x = ( model.level.map.flag_loc.X - physics.hit_box.Width + 6 ) << 12;
             }
         break;
 
     case mario_status_enum.POLE_R:
-        Boolean mario_bottom = ( physics.position.y >> 12 ) + physics.hit_box.Height >= model.level.map.flag_base_y;
-        Boolean flag_bottom = model.level.map.flag.y + model.level.map.flag.height >= model.level.map.flag_base_y;
+        Boolean mario_bottom = ( physics.position.y >> 12 ) + physics.hit_box.Height >= model.level.map.flag_loc.Bottom;
+        Boolean flag_bottom = model.level.map.flag.y + model.level.map.flag.height >= model.level.map.flag_loc.Bottom;
         /*----------------------------------------------------------
         Slide down pole
         ----------------------------------------------------------*/
-        physics.position.x = ( model.level.map.flag_loc * Blocks.size.Width - physics.hit_box.Width + 6 ) << 12;
+        physics.position.x = ( model.level.map.flag_loc.X - physics.hit_box.Width + 6 ) << 12;
 
         if( !mario_bottom )
             {
@@ -510,7 +510,7 @@ switch( status )
         ----------------------------------------------------------*/
         if( mario_bottom && flag_bottom )
             {
-            physics.position.y = ( model.level.map.flag_base_y - physics.hit_box.Height ) << 12;
+            physics.position.y = ( model.level.map.flag_loc.Bottom - physics.hit_box.Height ) << 12;
             physics.position.x += ( ( 2 + physics.hit_box.Width ) << 12 );
             status = mario_status_enum.POLE_L;
             init_frame_pole_l = Animations.frame_count;
@@ -542,7 +542,7 @@ switch( status )
         break;
 
     case mario_status_enum.WALK_CTRL_R:
-        physics.position.y = ( model.level.map.flag_base_y - physics.hit_box.Height + 17 ) << 12;
+        physics.position.y = ( model.level.map.flag_loc.Bottom - physics.hit_box.Height + 17 ) << 12;
         physics.position.x += MarioPhysics.vx_walk_no_ctrl_max;
         ViewDims.move_view_location( MarioPhysics.vx_walk_no_ctrl_max );
 

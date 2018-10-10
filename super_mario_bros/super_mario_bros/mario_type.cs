@@ -126,8 +126,8 @@ sprite = Marios.textures[sprite_id];
 /*----------------------------------------------------------
 Get Mario's position
 ----------------------------------------------------------*/
-float x = (float)physics.position.x * ViewDims.scale / (float)( 1 << 12 );
-float y = (float)physics.position.y * ViewDims.scale / (float)( 1 << 12 );
+float x = (float)physics.position.x * ViewDims.scale.X / (float)( 1 << 12 );
+float y = (float)physics.position.y * ViewDims.scale.Y / (float)( 1 << 12 );
 
 /*----------------------------------------------------------
 Take care of single pixel rounding
@@ -143,13 +143,13 @@ Move the sprite to center Mario's head in the hitbox
 ----------------------------------------------------------*/
 if( facing_right() )
     {
-    x -= ( 4 * ViewDims.scale );
+    x -= ( 4 * ViewDims.scale.X );
     }
 else
     {
-    x -= ( 2 * ViewDims.scale );
+    x -= ( 2 * ViewDims.scale.X );
     }
-y -= ( 4 * ViewDims.scale );
+y -= ( 4 * ViewDims.scale.Y );
 
 /*----------------------------------------------------------
 Draw mario
