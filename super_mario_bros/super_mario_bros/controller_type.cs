@@ -472,7 +472,7 @@ switch( status )
         /*----------------------------------------------------------
         Let mario fall till the top of the pole, then start descent
         ----------------------------------------------------------*/
-        if( ( physics.position.y >> 16 ) >= ( ( model.level.map.flag_loc.Bottom - 144 ) >> 4 ) )
+        if( ( physics.position.y >> 16 ) >= ( ( model.level.map.flag_loc.Top ) >> 4 ) )
             {
             status = mario_status_enum.POLE_R;
             }
@@ -486,7 +486,7 @@ switch( status )
 
     case mario_status_enum.POLE_R:
         Boolean mario_bottom = ( physics.position.y >> 12 ) + physics.hit_box.Height >= model.level.map.flag_loc.Bottom;
-        Boolean flag_bottom = model.level.map.flag.y + model.level.map.flag.height >= model.level.map.flag_loc.Bottom;
+        Boolean flag_bottom = ( model.level.map.flag.y + model.level.map.flag.height + 4 ) >= model.level.map.flag_loc.Bottom;
         /*----------------------------------------------------------
         Slide down pole
         ----------------------------------------------------------*/

@@ -75,7 +75,6 @@ scale.X = scale.Y * stretch;
 
 view_scaled.X = 0;
 view_scaled.Y = 0;
-view_scaled.Y = (int)( 32.0F * scale.Y ); //temp fix- move map down
 view_scaled.Height = window.Height;
 view_scaled.Width  = (int)( (float)view.Width * scale.X );
 
