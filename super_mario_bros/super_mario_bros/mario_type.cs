@@ -41,6 +41,7 @@ public class mario_type : character_type {
 
 public  mario_status_enum status;
 public  int sprite_id;
+public  float layer;
 
 /*--------------------------------------------------------------------
                             METHODS
@@ -64,6 +65,7 @@ physics.hit_box.Height = 12;
 sprite_id = 0;
 status = mario_status_enum.STILL_R;
 ground_status = char_status_enum.GROUND;
+layer = (float)layer_enum.MARIO / (float)layer_enum.COUNT;
 } /* mario_type() */
 
 
@@ -99,6 +101,10 @@ else if( ( status == mario_status_enum.RUN_L ) ||
 else if( status == mario_status_enum.POLE_R )
     {
     sprite_id = Animations.get_mario_pole_sprite();
+    }
+else if( status == mario_status_enum.POLE_BOTTOM_R )
+    {
+    sprite_id = (int)mario_enum.POLE_0_R;
     }
 else if( status == mario_status_enum.POLE_L )
     {
@@ -155,7 +161,7 @@ y -= ( 4 * ViewDims.scale.Y );
 Draw mario
 ----------------------------------------------------------*/
 Vector2 p = new Vector2( (int)( x ), (int)( y ) );
-s.Draw( sprite, p , null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, 0 );
+s.Draw( sprite, p , null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, layer );
 } /* draw() */
 
 /***********************************************************
@@ -172,7 +178,7 @@ public Boolean facing_right()
 {
 Boolean result = false;
 
-if( status <= mario_status_enum.SKID_R || status == mario_status_enum.FALL_R || status == mario_status_enum.POLE_R || status == mario_status_enum.WALK_CTRL_R )
+if( status <= mario_status_enum.SKID_R || status == mario_status_enum.FALL_R || status == mario_status_enum.POLE_R || status == mario_status_enum.WALK_CTRL_R || status == mario_status_enum.POLE_BOTTOM_R )
     {
     result = true;
     }

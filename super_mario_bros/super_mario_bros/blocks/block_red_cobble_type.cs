@@ -56,7 +56,7 @@ public override void draw( SpriteBatch s, int x, int y )
 {
 Texture2D texture = Blocks.textures[(int)block_static_enum.RED_COBBLE];
 Vector2 position = new Vector2( x * Blocks.size.Width * ViewDims.scale.X, y * Blocks.size.Height * ViewDims.scale.Y );
-s.Draw( texture, position , null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, 0 );
+s.Draw( texture, position , null, Color.White, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, (float)layer_enum.BLOCKS / (float)layer_enum.COUNT );
 }
 
 

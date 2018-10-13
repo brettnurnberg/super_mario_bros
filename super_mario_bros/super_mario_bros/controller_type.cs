@@ -423,6 +423,10 @@ if( KeyBinding.D_DOWN_pressed )
         int y = ( ( model.level.mario.physics.position.y >> 12 ) + model.level.mario.physics.hit_box.Height ) >> 4;
 
         p.check_entry( x, y, model.level.mario );
+        //don't change position yet, just check (or recieve position here?)
+        //then change position after the transition
+        //hold in pipe transition until out
+        //then transfer back to "in game"
         }
     }
 
@@ -472,7 +476,7 @@ switch( status )
         /*----------------------------------------------------------
         Let mario fall till the top of the pole, then start descent
         ----------------------------------------------------------*/
-        if( ( physics.position.y >> 16 ) >= ( ( model.level.map.flag_loc.Top ) >> 4 ) )
+        if( ( ( physics.position.y + physics.hit_box.Height - ( 8 << 12 ) ) >> 16 ) >= ( ( model.level.map.flag_loc.Top ) >> 4 ) )
             {
             status = mario_status_enum.POLE_R;
             }
@@ -485,6 +489,7 @@ switch( status )
         break;
 
     case mario_status_enum.POLE_R:
+    case mario_status_enum.POLE_BOTTOM_R:
         Boolean mario_bottom = ( physics.position.y >> 12 ) + physics.hit_box.Height >= model.level.map.flag_loc.Bottom;
         Boolean flag_bottom = ( model.level.map.flag.y + model.level.map.flag.height + 4 ) >= model.level.map.flag_loc.Bottom;
         /*----------------------------------------------------------
@@ -498,7 +503,7 @@ switch( status )
             }
         else
             {
-            //stop animation
+            status = mario_status_enum.POLE_BOTTOM_R;
             }
         if( !flag_bottom )
             {
@@ -670,6 +675,8 @@ else if( contains_block( x[1], y ) )
         {
         block_pipe_type p = (block_pipe_type)model.level.map.blocks[x[1], y[0]];
         p.pipe.check_entry( x[1] - 1, y[0], model.level.mario );
+        //don't change position yet, just check (or recieve position here?)
+        //then change position after the transition
         }
     }
 

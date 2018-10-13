@@ -1,10 +1,10 @@
 /*********************************************************************
 *
 *   Class:
-*       mario_status_enum
+*       layer_enum
 *
 *   Description:
-*       Contains all types of blocks
+*       Contains list of all layers
 *
 *********************************************************************/
 
@@ -18,26 +18,20 @@ namespace super_mario_bros {
                              ENUM
 --------------------------------------------------------------------*/
 
-public enum mario_status_enum
+public enum layer_enum
 {
-STILL_R = 0,
-WALK_R,
-RUN_R,
-JUMP_R = 4,
-SKID_R,
-STILL_L,
-WALK_L,
-RUN_L,
-JUMP_L = 10,
-SKID_L,
-FALL_R,
-FALL_L,
-POLE_R,
-POLE_L,
-WALK_CTRL_R,
-WALK_CTRL_L,
-POLE_BOTTOM_R
+TOP,
 
+MARIO,
+ITEM,
+ENEMY,
+BLOCKS,
+DECOR,
+
+COUNT,
+BOTTOM = COUNT,
+
+INVALID
 }
 
 }

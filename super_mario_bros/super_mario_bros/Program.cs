@@ -8,8 +8,6 @@
 *       the entry point.
 *
 *   TODO:
-*       rework map to be 15 blocks tall
-*       fix flag falling - start and end flag at right times
 *       add pipe animation - will require layers
 *       Add item implementation (mushroom, flower, coin, star, 1-up)
 *       Add block behavior (on hit)
