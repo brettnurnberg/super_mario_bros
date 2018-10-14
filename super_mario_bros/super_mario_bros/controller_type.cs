@@ -41,6 +41,8 @@ private model_type model;
 private int v_idx;
 private char_status_enum prev_location;
 private int init_frame_pole_l;
+private int init_frame;
+private pipe_type pipe_entered;
 
 /*--------------------------------------------------------------------
                             METHODS
@@ -89,6 +91,10 @@ switch( model.game_status )
 
     case game_status_enum.level_complete:
         model.level.mario.status = update_mario_level_complete();
+        break;
+
+    case game_status_enum.pipe_transition:
+        model.level.mario.status = animate_mario_pipe();
         break;
 
     case game_status_enum.lose_life:
@@ -413,7 +419,8 @@ else
 /*----------------------------------------------------------
 Check for entering a vertical pipe
 ----------------------------------------------------------*/
-if( KeyBinding.D_DOWN_pressed )
+if( ( KeyBinding.D_DOWN_pressed ) &&
+    ( model.level.mario.ground_status == char_status_enum.GROUND ) )
     {
     pipe_type p = on_pipe();
 
@@ -422,11 +429,13 @@ if( KeyBinding.D_DOWN_pressed )
         int x = model.level.mario.physics.position.x >> 16;
         int y = ( ( model.level.mario.physics.position.y >> 12 ) + model.level.mario.physics.hit_box.Height ) >> 4;
 
-        p.check_entry( x, y, model.level.mario );
-        //don't change position yet, just check (or recieve position here?)
-        //then change position after the transition
-        //hold in pipe transition until out
-        //then transfer back to "in game"
+        if( p.is_linked( model.level.mario.physics.position.x, y << 16 ) )
+            {
+            model.game_status = game_status_enum.pipe_transition;
+            pipe_entered = p;
+            init_frame = Animations.frame_count;
+            model.pipe_status = pipe_status_enum.ENTER;
+            }
         }
     }
 
@@ -570,6 +579,96 @@ return status;
 /***********************************************************
 *
 *   Method:
+*       animate_mario_pipe
+*
+*   Description:
+*       Updates mario during a pipe transition.
+*
+***********************************************************/
+
+private mario_status_enum animate_mario_pipe()
+{
+mario_status_enum status = model.level.mario.status;
+physics_type physics = model.level.mario.physics;
+
+model.level.mario.layer = (float)layer_enum.BEHIND_PIPE / (float)layer_enum.COUNT;
+
+switch( model.pipe_status )
+    {
+    case pipe_status_enum.ENTER:
+        if( Animations.frame_count >= ( init_frame + 48 ) )
+            {
+            init_frame = Animations.frame_count;
+            model.pipe_status = pipe_status_enum.BLACK;
+            pipe_entered.set_destination( model.level.mario );
+            }
+
+        if( pipe_entered.is_vertical )
+            {
+            physics.position.y += ( 1 << 12 );
+
+            if( model.level.mario.facing_right() )
+                {
+                status = mario_status_enum.STILL_R;
+                }
+            else
+                {
+                status = mario_status_enum.STILL_L;
+                }
+            }
+        else
+            {
+            if( Animations.frame_count >= ( init_frame + 16 ) )
+                {
+                model.level.mario.layer = (float)layer_enum.INVALID / (float)layer_enum.COUNT;
+                }
+
+            physics.position.x += MarioPhysics.vx_walk_no_ctrl_max;
+            status = mario_status_enum.WALK_R;
+            }
+        break;
+
+    case pipe_status_enum.BLACK:
+        if( Animations.frame_count >= ( init_frame + 24 ) )
+            {
+            if( pipe_entered.link_is_pipe() )
+                {
+                model.level.mario.physics.position.y += ( 32 << 12 );
+                init_frame = Animations.frame_count;
+                model.pipe_status = pipe_status_enum.EXIT;
+                }
+            else
+                {
+                model.level.mario.ground_status = char_status_enum.AIR;
+                model.level.mario.layer = (float)layer_enum.MARIO / (float)layer_enum.COUNT;
+                model.game_status = game_status_enum.gameplay;
+                }
+            }
+        break;
+
+    case pipe_status_enum.EXIT:
+        if( Animations.frame_count >= ( init_frame + 92 ) )
+            {
+            model.game_status = game_status_enum.gameplay;
+            model.level.mario.layer = (float)layer_enum.MARIO / (float)layer_enum.COUNT;
+            }
+        if( Animations.frame_count >= ( init_frame + 60 ) )
+            {
+            model.level.mario.physics.position.y -= ( 1 << 12 );
+            }
+
+        status = mario_status_enum.STILL_R;
+        break;
+    }
+
+
+return status;
+}
+
+
+/***********************************************************
+*
+*   Method:
 *       update_hit_box
 *
 *   Description:
@@ -668,15 +767,21 @@ else if( contains_block( x[1], y ) )
     /*----------------------------------------------------------
     Check for entering a horizontal pipe
     ----------------------------------------------------------*/
-    if( ( model.game_status == game_status_enum.gameplay ) &&
+    if( ( c.ground_status == char_status_enum.GROUND ) &&
+        ( model.game_status == game_status_enum.gameplay ) &&
         ( KeyBinding.D_RIGHT_pressed ) &&
         ( model.level.map.blocks[x[1], y[0]] != null ) &&
         ( model.level.map.blocks[x[1], y[0]].GetType() == typeof( block_pipe_type ) ) )
         {
         block_pipe_type p = (block_pipe_type)model.level.map.blocks[x[1], y[0]];
-        p.pipe.check_entry( x[1] - 1, y[0], model.level.mario );
-        //don't change position yet, just check (or recieve position here?)
-        //then change position after the transition
+
+        if( p.pipe.is_linked( c.physics.position.x, y[0] << 16 ) )
+            {
+            model.game_status = game_status_enum.pipe_transition;
+            pipe_entered = p.pipe;
+            init_frame = Animations.frame_count;
+            model.pipe_status = pipe_status_enum.ENTER;
+            }
         }
     }
 

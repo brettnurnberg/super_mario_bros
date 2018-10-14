@@ -39,7 +39,7 @@ public class pipe_type {
 
 private pipe_type link_p;
 private int_vector2_type link_v;
-private Boolean is_vertical;
+public  Boolean is_vertical;
 private int x;
 private int y;
 
@@ -140,49 +140,112 @@ link_p = null;
 /***********************************************************
 *
 *   Method:
-*       check_entry
+*       is_linked
 *
 *   Description:
-*       Checks if the pipe can be entered. Returns true
-*       if the pipe was entered.
+*       Returns true if the pipe is linked.
 *
 ***********************************************************/
 
-public Boolean check_entry( int _x, int _y, mario_type m )
+public Boolean is_linked( int sss_x, int sss_y )
 {
-Boolean entered = false;
+Boolean linked = false;
+int block_x = sss_x >> 16;
+int block_y = sss_y >> 16;
+int pixel_x = ( sss_x >> 12 ) % Blocks.size.Width;
+Boolean eligible = false;
 
-if( ( m.ground_status == char_status_enum.GROUND ) &&
-    ( ( is_vertical && ( _x == x || _x == ( x + 1 ) ) && ( _y == y ) ) ||
-    ( !is_vertical && ( _x == ( x - 1 ) ) && ( _y == ( y + 1 ) ) ) ) )
+if( is_vertical )
     {
-    if( link_v != null )
+    if( ( block_x == x ) && ( block_y == y ) )
         {
-        m.physics.position.x = link_v.x << 12;
-        m.physics.position.y = link_v.y << 12;
-        m.ground_status = char_status_enum.AIR;
+        if( pixel_x > 3 )
+            {
+            eligible = true;
+            }
         }
-    else if( link_p != null )
+    else if( ( block_x == ( x + 1 ) ) && ( block_y == y ) )
         {
-        m.physics.position.x = ( link_p.x << 16 ) + ( 5 << 12 );
-        m.physics.position.y = ( link_p.y << 16 ) - ( ( m.physics.hit_box.Height - 1 ) << 12 );
+        if( pixel_x < 3 )
+            {
+            eligible = true;
+            }
         }
-    if( ( link_v != null ) ||
-        ( link_p != null ) )
+    }
+else
+    {
+    if( ( block_x == ( x - 1 ) ) && ( block_y == ( y + 1 ) ) )
         {
-        m.physics.acceleration.x = 0;
-        m.physics.acceleration.y = 0;
-        m.physics.velocity.x = 0;
-        m.physics.velocity.y = 0;
-
-        ViewDims.view.X = ( m.physics.position.x >> 12 ) - 4 * Blocks.size.Width;
-        ViewDims.view.Y = 0;
-        entered = true;
+        eligible = true;
         }
     }
 
-return entered;
+if( eligible )
+    {
+    if( ( link_v != null ) ||
+        ( link_p != null ) )
+        {
+        linked = true;
+        }
+    }
+
+return linked;
 } /* link_pipe() */
+
+
+/***********************************************************
+*
+*   Method:
+*       link_is_pipe
+*
+*   Description:
+*       Returns true if the pipe destination is a pipe.
+*
+***********************************************************/
+
+public Boolean link_is_pipe()
+{
+return ( link_p != null );
+} /* link_is_pipe() */
+
+
+/***********************************************************
+*
+*   Method:
+*       set_destination
+*
+*   Description:
+*       Sets mario's location to the destination pipe.
+*
+***********************************************************/
+
+public void set_destination( mario_type m )
+{
+int viewx = 0;
+int viewy = 0;
+
+if( link_v != null )
+    {
+    m.physics.position.x = link_v.x << 12;
+    m.physics.position.y = link_v.y << 12;
+    viewx = m.physics.position.x - ( ( 4 * Blocks.size.Width ) << 12 );
+    }
+else if( link_p != null )
+    {
+    m.physics.position.x = ( link_p.x << 16 ) + ( 10 << 12 );
+    m.physics.position.y = ( link_p.y << 16 ) - ( ( m.physics.hit_box.Height - 1 ) << 12 );
+    viewx = ( link_p.x - 3 ) << 16;
+    }
+
+m.physics.acceleration.x = 0;
+m.physics.acceleration.y = 0;
+m.physics.velocity.x = 0;
+m.physics.velocity.y = 0;
+
+viewy = 0;
+ViewDims.set_view_location( viewx, viewy );
+
+} /* set_destination() */
 
 }
 }

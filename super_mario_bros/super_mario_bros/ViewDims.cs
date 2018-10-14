@@ -110,7 +110,31 @@ else
 *
 ***********************************************************/
 
-public static void set_view_location( model_type m )
+public static void set_view_location( int subsubsub_pixel_x, int subsubsub_pixel_y )
+{
+view.X = subsubsub_pixel_x;
+view.Y = subsubsub_pixel_y;
+
+view_scaled.X = (int)( view.X * scale.X ) >> 12;
+view_scaled.Y = (int)( view.Y * scale.Y ) >> 12;
+
+view_scaled.X *= -1;
+view_scaled.X += left_edge.Width;
+
+} /* set_view_location() */
+
+
+/***********************************************************
+*
+*   Method:
+*       view_follow_mario
+*
+*   Description:
+*       Updates the view location to follow mario.
+*
+***********************************************************/
+
+public static void view_follow_mario( model_type m )
 {
 level_type level = m.level;
 
@@ -127,7 +151,7 @@ view_scaled.X = (int)( view.X * scale.X ) >> 12;
 view_scaled.X *= -1;
 view_scaled.X += left_edge.Width;
 
-} /* set_view_location() */
+} /* view_follow_mario() */
 
 
 /***********************************************************
@@ -146,7 +170,7 @@ view.X += subsubsub_pixel_x;
 view_scaled.X = (int)( view.X * scale.X ) >> 12;
 view_scaled.X *= -1;
 view_scaled.X += left_edge.Width;
-} /* set_view_location() */
+} /* move_view_location() */
 
 
 /***********************************************************

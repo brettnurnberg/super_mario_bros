@@ -8,7 +8,6 @@
 *       the entry point.
 *
 *   TODO:
-*       add pipe animation - will require layers
 *       Add item implementation (mushroom, flower, coin, star, 1-up)
 *       Add block behavior (on hit)
 *           have items come out of the block

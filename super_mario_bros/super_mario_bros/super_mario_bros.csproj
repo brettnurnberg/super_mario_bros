@@ -82,6 +82,7 @@
     <Compile Include="model_type.cs" />
     <Compile Include="physics_mario_type.cs" />
     <Compile Include="physics_type.cs" />
+    <Compile Include="pipe_status_enum.cs" />
     <Compile Include="pipe_type.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

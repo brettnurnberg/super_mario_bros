@@ -1,10 +1,10 @@
 /*********************************************************************
 *
 *   Class:
-*       layer_enum
+*       pipe_status_enum
 *
 *   Description:
-*       Contains list of all layers
+*       Pipe transition states
 *
 *********************************************************************/
 
@@ -18,24 +18,12 @@ namespace super_mario_bros {
                              ENUM
 --------------------------------------------------------------------*/
 
-public enum layer_enum
+public enum pipe_status_enum
 {
-TOP,
+ENTER,
+BLACK,
+EXIT
 
-MARIO,
-ITEM,
-ENEMY,
-BLOCKS,
-BEHIND_PIPE,
-DECOR,
-DECOR1,
-DECOR2,
-DECOR3,
-
-COUNT,
-BOTTOM = COUNT,
-
-INVALID
 }
 
 }

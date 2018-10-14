@@ -82,20 +82,35 @@ game.GraphicsDevice.Clear( model.level.map.get_back_color( model.level.mario.phy
 switch( model.game_status )
     {
     case game_status_enum.gameplay:
-        ViewDims.set_view_location( model );
-        spriteBatch.Begin( SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation( ViewDims.view_scaled.X, ViewDims.view_scaled.Y, 0 ) );
+        ViewDims.view_follow_mario( model );
+        spriteBatch.Begin( SpriteSortMode.BackToFront, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation( ViewDims.view_scaled.X, ViewDims.view_scaled.Y, 0 ) );
         model.level.draw( spriteBatch );
         spriteBatch.End();
         break;
 
     case game_status_enum.level_score:
-        spriteBatch.Begin( SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation( ViewDims.view_scaled.X, ViewDims.view_scaled.Y, 0 ) );
+        spriteBatch.Begin( SpriteSortMode.BackToFront, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation( ViewDims.view_scaled.X, ViewDims.view_scaled.Y, 0 ) );
         model.level.map.draw( spriteBatch );
         spriteBatch.End();
         break;
 
+    case game_status_enum.pipe_transition:
+        switch( model.pipe_status )
+            {
+            case pipe_status_enum.BLACK:
+                game.GraphicsDevice.Clear( Color.Black );
+                break;
+
+            default:
+                spriteBatch.Begin( SpriteSortMode.BackToFront, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation( ViewDims.view_scaled.X, ViewDims.view_scaled.Y, 0 ) );
+                model.level.draw( spriteBatch );
+                spriteBatch.End();
+                break;
+            }
+        break;
+
     case game_status_enum.level_complete:
-        spriteBatch.Begin( SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation( ViewDims.view_scaled.X, ViewDims.view_scaled.Y, 0 ) );
+        spriteBatch.Begin( SpriteSortMode.BackToFront, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation( ViewDims.view_scaled.X, ViewDims.view_scaled.Y, 0 ) );
         model.level.draw( spriteBatch );
         spriteBatch.End();
         break;

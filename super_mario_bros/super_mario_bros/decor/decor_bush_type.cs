@@ -82,15 +82,15 @@ Vector2 offset   = new Vector2( 15 * ViewDims.scale.X, 0 );
 
 for( int i = 0; i < count; i++ )
     {
-    s.Draw( border, position + ( i * offset ), null, Color.Black, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, (float)layer_enum.DECOR / (float)layer_enum.COUNT );
+    s.Draw( border, position + ( i * offset ), null, Color.Black, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, (float)layer_enum.DECOR3 / (float)layer_enum.COUNT );
     }
 for( int i = 0; i < count; i++ )
     {
-    s.Draw( inner, position + ( i * offset ), null, Decor.bush, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, (float)layer_enum.DECOR / (float)layer_enum.COUNT );
+    s.Draw( inner, position + ( i * offset ), null, Decor.bush, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, (float)layer_enum.DECOR2 / (float)layer_enum.COUNT );
     }
 for( int i = 0; i < count; i++ )
     {
-    s.Draw( accent, position + ( i * offset ), null, Decor.bush_accent, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, (float)layer_enum.DECOR / (float)layer_enum.COUNT );
+    s.Draw( accent, position + ( i * offset ), null, Decor.bush_accent, 0, new Vector2( 0, 0 ), ViewDims.scale, SpriteEffects.None, (float)layer_enum.DECOR1 / (float)layer_enum.COUNT );
     }
 
 }
